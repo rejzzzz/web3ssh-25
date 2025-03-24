@@ -1,7 +1,7 @@
 import GradientBackground from '@components/GradientBackground';
 // import { GeistSans } from 'geist/font/sans';
-import Navbar2024 from '@components/components2024/Navbar2024';
-import Footer2024 from '@components/components2024/Footer2024';
+import Navbar from '@components/components2024/Navbar2024';
+import Footer from '@components/components2024/Footer2024';
 
 export default function ArchiveLayout({
   children,
@@ -23,9 +23,9 @@ export default function ArchiveLayout({
       </div>
 
       {/* Content */}
-      <Navbar2024 />
+      <Navbar />
       {children}
-      <Footer2024 />
+      <Footer />
     </>
   );
 }

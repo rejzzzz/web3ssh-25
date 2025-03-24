@@ -1,19 +1,19 @@
 [
   {
     "title": "Home",
-    "url": "/"
+    "url": "/archive2024"
   },
   {
     "title": "Speakers",
-    "url": "/#speakers"
+    "url": "/archive2024/#speakers"
   },
   {
     "title": "Guides",
-    "url": "/#guides"
+    "url": "/archive2024/#guides"
   },
   {
     "title": "Schedule",
-    "url": "/#schedule"
+    "url": "/archive2024/#schedule"
   },
   {
     "title": "Hackathon",
@@ -21,6 +21,6 @@
   },
   {
     "title": "FAQ",
-    "url": "/#faq"
+    "url": "/archive2024/#faq"
   }
 ]

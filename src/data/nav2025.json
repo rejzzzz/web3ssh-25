@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Home",
+    "url": "/"
+  },
+  {
+    "title": "Speakers",
+    "url": "/#speakers"
+  },
+  {
+    "title": "Guides",
+    "url": "/#guides"
+  },
+  {
+    "title": "Schedule",
+    "url": "/#schedule"
+  },
+  {
+    "title": "Hackathon",
+    "url": "/"
+  },
+  {
+    "title": "FAQ",
+    "url": "/#faq"
+  }
+]

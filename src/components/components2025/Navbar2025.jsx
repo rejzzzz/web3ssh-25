@@ -5,7 +5,7 @@ import gsap from 'gsap/gsap-core';
 import Linkedin from '@public/icons/linkedin.svg';
 import XIcon from '@public/icons/x-logo.svg';
 import Instagram from '@public/icons/instagram.svg';
-import navData from '@data/nav.json';
+import navData from '@data/nav2025.json';
 import Image from 'next/image';
 import web3sshLogo from '@public/web3ssh.webp';
 import iiitLogo from '@public/iiits.webp';
