@@ -42,6 +42,12 @@
         "profilePic": "/team/default.jpg",
         "link": "#",
         "link_title": ""
+      },
+      {
+        "name": "Aryan Sharma",
+        "profilePic": "/team/aryan_sharma.webp",
+        "link": "#",
+        "link_title": ""
       }
     ]
   },
@@ -136,12 +142,6 @@
   {
     "role": "PR Team",
     "members": [
-      {
-        "name": "Aryan Sharma",
-        "profilePic": "/team/aryan_sharma.webp",
-        "link": "#",
-        "link_title": ""
-      },
       {
         "name": "Amodini Ap",
         "profilePic": "/team/amodini_ap.webp",
