@@ -1,4 +1,4 @@
-import footerData from '../../data/footer.json';
+import footerData from '../../data/2025/footer.json';
 import Instagram from '@public/icons/instagram.svg';
 
 export default function Footer() {

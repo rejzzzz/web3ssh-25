@@ -5,7 +5,7 @@ import gsap from 'gsap/gsap-core';
 import Linkedin from '@public/icons/linkedin.svg';
 import XIcon from '@public/icons/x-logo.svg';
 import Instagram from '@public/icons/instagram.svg';
-import navData from '@data/nav2025.json';
+import navData from '@data/2025/nav2025.json';
 import Image from 'next/image';
 import web3sshLogo from '@public/web3ssh.webp';
 import iiitLogo from '@public/iiits.webp';
@@ -14,6 +14,7 @@ export default function Navbar() {
   const [topbarPosition, setTopbarPosition] = useState('0');
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -39,8 +40,26 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll);
 
+    // Close dropdown when clicking outside
+    const handleClickOutside = (e) => {
+      const dropdownButton = document.getElementById('dropdown-button');
+      const dropdownMenu = document.getElementById('dropdown-menu');
+
+      if (
+        dropdownButton &&
+        !dropdownButton.contains(e.target) &&
+        dropdownMenu &&
+        !dropdownMenu.contains(e.target)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('click', handleClickOutside);
     };
   }, [lastScrollY]);
 
@@ -90,22 +109,60 @@ export default function Navbar() {
               <li key={index}>
                 <a
                   href={item.url}
-                  className="text-sm lg:text-lg px-1 py-1 rounded-md cursor-pointer hover:font-semibold hover:scale-125 hover:-translate-y-1"
+                  className="text-sm lg:text-lg px-1 py-1 rounded-md cursor-pointer hover:font-semibold hover:scale-125 hover:-translate-y-1 transition-all duration-300"
                 >
                   {item.title}
                 </a>
               </li>
             ))}
-            {/* Added Archive 2024 Button */}
-            <li>
-              <a
-                href="/archive2024"
-                className="text-sm lg:text-lg px-1 py-1 rounded-md cursor-pointer hover:font-semibold hover:scale-125 hover:-translate-y-1"
-              >
-                2024
-              </a>
-            </li>
           </ul>
+
+          {/* Dropdown Button */}
+          <div className="relative inline-block text-left">
+            <button
+              id="dropdown-button"
+              type="button"
+              className="inline-flex justify-center items-center text-sm lg:text-lg  px-1 py-1 rounded-md cursor-pointer hover:font-semibold transition-all duration-300"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              Archives
+              <svg
+                className={`-mr-1 ml-2 h-5 w-5 transition-transform duration-300 ${
+                  isDropdownOpen ? 'rotate-90' : ''
+                }`}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              id="dropdown-menu"
+              className={`
+                ${
+                  isDropdownOpen
+                    ? 'opacity-100 translate-y-0 pointer-events-auto'
+                    : 'opacity-0 -translate-y-2 pointer-events-none'
+                }
+                origin-top-right absolute right-0 w-32 rounded-md shadow-lg bg-transparent ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none transition-all duration-300 ease-in-out
+              `}
+            >
+              <div className="py-1">
+                <a
+                  href="/archives/2024"
+                  className="block px-3 py-2 mt-2 text-sm lg:text-lg text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300 text-center"
+                >
+                  2024
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="w-full min-w-fit h-full mr-5 sm:mr-0 flex justify-end sm:justify-around items-center">

@@ -88,7 +88,7 @@ const HeroSection = () => {
               </span>
             </button>
           </a>
-          <a href="/archive2024" target="_blank">
+          <a href="/archives/2024">
             <button className="w-full h-full bg-[#3770FF] flex items-center justify-center p-3 text-lg rounded-full hover:-translate-y-1 transform transition duration-400">
               <span className="p-0.5 inline-flex items-center">
                 Check Out Web3SSH 2024

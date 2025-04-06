@@ -1,0 +1,35 @@
+[
+  {
+    "sectionHead": "Organizers",
+    "sectionItems": [
+      { "text": "IIIT Sri City", "href": "https://iiits.ac.in" },
+      { "text": "Team", "href": "/team/2025" },
+      { "text": "Pricing", "href": "/join" },
+      { "text": "FAQ", "href": "#faq" }
+    ]
+  },
+  {
+    "sectionHead": "Join us",
+    "sectionItems": [
+      { "text": "Call for Speakers", "href": "/cfs" },
+      { "text": "Sponsor us", "href": "/pitch" },
+      { "text": "Promotional Partners", "href": "/promo" },
+      { "text": "Students Brochure", "href": "/brochure" }
+    ]
+  },
+  {
+    "sectionHead": "Documentation",
+    "sectionItems": [
+      { "text": "Sessions", "href": "#" },
+      { "text": "Quizzes", "href": "#" }
+    ]
+  },
+  {
+    "sectionHead": "Developers",
+    "sectionItems": [
+      { "text": "Hackathon", "href": "https://web3ssh.devfolio.co/" },
+      { "text": "Curriculum", "href": "#" },
+      { "text": "Guides", "href": "#" }
+    ]
+  }
+]
