@@ -1,6 +1,17 @@
 import { AnimatedTooltip } from '../ui/animated-tooltip';
+import j3dai_logo from './../../../public/partners2025/J3d.ai_Logo_White.png';
 
 export default function Partners() {
+  const sponsors = [];
+  const partners = [
+    {
+      name: 'J3D.ai',
+      logo: j3dai_logo,
+      link: 'https://j3d.ai/',
+      type: 'Intelligence Partner',
+    },
+  ];
+
   return (
     <section className="mt-[50px] mb-[100px] bg-white bg-opacity-0 w-full flex justify-center items-center p-2 font-sans font-medium">
       <div className="w-full lg:pb-0">
@@ -17,7 +28,23 @@ export default function Partners() {
           <div className="w-full h-fit space-y-6">
             <h1 className="text-white text-4xl text-center mb-5">Partners</h1>
             <div className="flex w-full h-fit justify-center items-center flex-wrap">
-              <div className="text-white text-2xl p-4">Coming Soon</div>
+              {partners.map((partner, index) => (
+                <a
+                  key={index}
+                  className="p-4 flex flex-col items-center justify-center transform transition duration-300 hover:scale-105 hover:translate-y-2 cursor-pointer"
+                  target="_blank"
+                  href={partner.link}
+                >
+                  <div className="h-[120px] flex justify-center items-center">
+                    <img
+                      src={partner.logo.src}
+                      alt={partner.name}
+                      className="w-[160px] h-[auto] sm:h-[50px] md:w-[160px] md:h-[auto]"
+                    />
+                  </div>
+                  <div className="text-white text-xl">{partner.type}</div>
+                </a>
+              ))}
             </div>
           </div>
         </div>
