@@ -31,12 +31,12 @@ const nextConfig = {
           'https://drive.google.com/file/d/1fa5Zmy4cOSogwEWpy-PuJLb28t_OUOpa/view?usp=sharing',
         permanent: false,
       },
-      {
-        source: '/register',
-        destination:
-          'https://docs.google.com/forms/d/e/1FAIpQLSd5Di8MKfGigs0tGXBXriaJmZqWgvu0FmbXOUwwGC4ypBAB2g/viewform?usp=sf_link',
-        permanent: false,
-      },
+      // {
+      //   source: '/register',
+      //   destination:
+      //     'https://docs.google.com/forms/d/e/1FAIpQLSd5Di8MKfGigs0tGXBXriaJmZqWgvu0FmbXOUwwGC4ypBAB2g/viewform?usp=sf_link',
+      //   permanent: false,
+      // },
       {
         source: '/hackathon',
         destination:
