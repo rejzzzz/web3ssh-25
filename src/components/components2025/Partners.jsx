@@ -17,14 +17,22 @@ export default function Partners() {
       <div className="w-full lg:pb-0">
         <div className="w-full h-fit grid grid-cols-1 gap-14 sm:grid-cols-2 sm:gap-5 md:grid-cols-2 text-gray-400">
           {/* Sponsors Section */}
-          <div className="w-full h-fit space-y-6">
-            <h1 className="text-white text-4xl text-center mb-5">Sponsors</h1>
-            <div className="flex w-full h-fit justify-center items-center flex-wrap">
-              <div className="text-white text-2xl p-4">Coming Soon</div>
-            </div>
-          </div>
+                <div className="w-full h-fit space-y-6">
+                <h1 className="text-white text-4xl text-center mb-5">Sponsors</h1>
+                <div className="flex w-full h-fit justify-center items-center flex-wrap">
+                  <div className="text-white text-2xl p-4"><svg width="150" height="150" viewBox="0 0 115 182">
+                  <path d="M57.5054 181V135.84L1.64064 103.171L57.5054 181Z" fill="#828485" stroke="#3b3b3b" stroke-linejoin="round"></path>
+                  <path d="M57.6906 181V135.84L113.555 103.171L57.6906 181Z" fill="#303131" stroke="#3b3b3b" stroke-linejoin="round"></path>
+                  <path d="M57.5055 124.615V66.9786L1 92.2811L57.5055 124.615Z" fill="#353636" stroke="#3b3b3b" stroke-linejoin="round"></path>
+                  <path d="M57.6903 124.615V66.9786L114.196 92.2811L57.6903 124.615Z" fill="#141414" stroke="#3b3b3b" stroke-linejoin="round"></path>
+                  <path d="M1.00006 92.2811L57.5054 1V66.9786L1.00006 92.2811Z" fill="#828485" stroke="#3b3b3b" stroke-linejoin="round"></path>
+                  <path d="M114.196 92.2811L57.6906 1V66.9786L114.196 92.2811Z" fill="#303131" stroke="#3b3b3b" stroke-linejoin="round"></path>
+                </svg>
+                </div>
+                </div>
+                </div>
 
-          {/* Partners Section */}
+                {/* Partners Section */}
           <div className="w-full h-fit space-y-6">
             <h1 className="text-white text-4xl text-center mb-5">Partners</h1>
             <div className="flex w-full h-fit justify-center items-center flex-wrap">
