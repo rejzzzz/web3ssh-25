@@ -2,7 +2,7 @@ import { AnimatedTooltip } from '../ui/animated-tooltip';
 import j3dai_logo from './../../../public/partners2025/J3d.ai_Logo_White.png';
 
 export default function Partners() {
-  const sponsors = [];
+  const sponsors = ["https://ethereum.org/en/"];
   const partners = [
     {
       name: 'J3D.ai',
@@ -21,6 +21,7 @@ export default function Partners() {
                 <h1 className="text-white text-4xl text-center mb-5">Sponsors</h1>
                 <div className="flex w-full h-fit justify-center items-center flex-wrap">
                   <div className="text-white text-2xl p-4">
+                  <a href={sponsors[0]} target="_blank">
                   <svg width="500" height="400" viewBox="0 0 960 660" className="p-4 flex flex-col items-center justify-center transform transition duration-300 hover:scale-105 hover:translate-y-2 cursor-pointer">
                   <g transform="translate(410, -20)">
                     <path d="M57.5054 181V135.84L1.64064 103.171L57.5054 181Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
@@ -42,6 +43,7 @@ export default function Partners() {
                     <path d="M960.1,604.6v48a3.93,3.93,0,0,1-3.8,3.8,3.74,3.74,0,0,1-3.8-3.8v-48c0-16.1-9.1-31.9-27.1-31.9-22.5,0-31.1,24.1-31.1,42.9v37a3.93,3.93,0,0,1-3.8,3.8,3.74,3.74,0,0,1-3.8-3.8v-48c0-16.1-9.1-31.9-27.1-31.9-22.8,0-32.2,18-31.4,41.8,0,.5.3,1.6,0,1.9v36.1a3.77,3.77,0,0,1-3,3.8,3.72,3.72,0,0,1-4.5-3.7v-82a3.77,3.77,0,0,1,3-3.8,3.72,3.72,0,0,1,4.5,3.7v13.7c6.4-11.5,18-19,31.4-19,15.3,0,27.1,9.7,31.9,23.9,6.2-13.9,18.2-23.9,33.8-23.9C947.5,565.2,960.1,584.2,960.1,604.6Z" fill="#ffffff"/>
                   </g>
                 </svg>
+                </a>
                 </div>
                 </div>
                 </div>
