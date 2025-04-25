@@ -23,12 +23,12 @@ export default function Partners() {
                   <div className="text-white text-2xl p-4">
                   <svg width="960" height="660" viewBox="0 0 960 660">
                   <g transform="translate(410, 0)">
-                    <path d="M57.5054 181V135.84L1.64064 103.171L57.5054 181Z" fill="#828485" stroke="#828485" stroke-linejoin="round"></path>
-                    <path d="M57.6906 181V135.84L113.555 103.171L57.6906 181Z" fill="#303131" stroke="#303131" stroke-linejoin="round"></path>
-                    <path d="M57.5055 124.615V66.9786L1 92.2811L57.5055 124.615Z" fill="#353636" stroke="#353636" stroke-linejoin="round"></path>
-                    <path d="M57.6903 124.615V66.9786L114.196 92.2811L57.6903 124.615Z" fill="#141414" stroke="#141414" stroke-linejoin="round"></path>
-                    <path d="M1.00006 92.2811L57.5054 1V66.9786L1.00006 92.2811Z" fill="#828485" stroke="#828485" stroke-linejoin="round"></path>
-                    <path d="M114.196 92.2811L57.6906 1V66.9786L114.196 92.2811Z" fill="#303131" stroke="#303131" stroke-linejoin="round"></path>
+                    <path d="M57.5054 181V135.84L1.64064 103.171L57.5054 181Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
+                    <path d="M57.6906 181V135.84L113.555 103.171L57.6906 181Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
+                    <path d="M57.5055 124.615V66.9786L1 92.2811L57.5055 124.615Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
+                    <path d="M57.6903 124.615V66.9786L114.196 92.2811L57.6903 124.615Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
+                    <path d="M1.00006 92.2811L57.5054 1V66.9786L1.00006 92.2811Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
+                    <path d="M114.196 92.2811L57.6906 1V66.9786L114.196 92.2811Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
                   </g>
                   
                   <g transform="translate(280, 20) scale(0.4)">
