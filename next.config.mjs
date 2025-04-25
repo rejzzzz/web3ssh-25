@@ -34,7 +34,7 @@ const nextConfig = {
       {
         source: '/brochure/2025',
         destination:
-          'https://drive.google.com/file/d/1xUaOB2wJybJloh7NdsofJAIgmi9LsPKk/view',
+          'https://drive.google.com/file/d/1ovsHUJgKd7Ai7pKjtV3WkF8gOhjuX7V6/view?usp=drive_link',
         permanent: false,
       },
       // {

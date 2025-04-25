@@ -17,7 +17,7 @@ export default function Footer() {
                 web3ssh
               </h1>
             </a>
-            <p className="text-sm"> © 2024</p>
+            <p className="text-sm"> © 2025</p>
           </div>
 
           <div className="w-full block sm:flex text-sm mt-6 lg:mt-0">
