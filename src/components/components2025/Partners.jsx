@@ -21,8 +21,8 @@ export default function Partners() {
                 <h1 className="text-white text-4xl text-center mb-5">Sponsors</h1>
                 <div className="flex w-full h-fit justify-center items-center flex-wrap">
                   <div className="text-white text-2xl p-4">
-                  <svg width="500" height="400" viewBox="0 0 960 660">
-                  <g transform="translate(410, -10)">
+                  <svg width="500" height="400" viewBox="0 0 960 660" className="p-4 flex flex-col items-center justify-center transform transition duration-300 hover:scale-105 hover:translate-y-2 cursor-pointer">
+                  <g transform="translate(410, -20)">
                     <path d="M57.5054 181V135.84L1.64064 103.171L57.5054 181Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
                     <path d="M57.6906 181V135.84L113.555 103.171L57.6906 181Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
                     <path d="M57.5055 124.615V66.9786L1 92.2811L57.5055 124.615Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round"></path>
