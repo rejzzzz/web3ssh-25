@@ -1,8 +1,10 @@
+'use client';
 import { AnimatedTooltip } from '../ui/animated-tooltip';
 import j3dai_logo from './../../../public/partners2025/J3d.ai_Logo_White.png';
+import { Ethereum } from './sponsors/Ethereum';
 
 export default function Partners() {
-  const sponsors = [];
+  const sponsors = ["https://ethereum.org/en/"];
   const partners = [
     {
       name: 'J3D.ai',
@@ -17,14 +19,18 @@ export default function Partners() {
       <div className="w-full lg:pb-0">
         <div className="w-full h-fit grid grid-cols-1 gap-14 sm:grid-cols-2 sm:gap-5 md:grid-cols-2 text-gray-400">
           {/* Sponsors Section */}
-          <div className="w-full h-fit space-y-6">
-            <h1 className="text-white text-4xl text-center mb-5">Sponsors</h1>
-            <div className="flex w-full h-fit justify-center items-center flex-wrap">
-              <div className="text-white text-2xl p-4">Coming Soon</div>
-            </div>
-          </div>
+                <div className="w-full h-fit space-y-6">
+                <h1 className="text-white text-4xl text-center mb-5">Sponsors</h1>
+                <div className="flex w-full h-fit justify-center items-center flex-wrap">
+                  <div className="text-white text-2xl p-4">
+                <a href={sponsors[0]} target="_blank" rel="noopener noreferrer">
+                  <Ethereum />
+                </a>
+                </div>
+                </div>
+                </div>
 
-          {/* Partners Section */}
+                {/* Partners Section */}
           <div className="w-full h-fit space-y-6">
             <h1 className="text-white text-4xl text-center mb-5">Partners</h1>
             <div className="flex w-full h-fit justify-center items-center flex-wrap">
