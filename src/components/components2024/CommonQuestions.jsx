@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import faqData from '@data/faq.json';
+import faqData from '@data/2024/faq.json';
 
 const CommonQuestions = () => {
   const [expandedItem, setExpandedItem] = useState(null);
@@ -61,7 +61,9 @@ const CommonQuestions = () => {
                       : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <p className="pb-3 text-xl text-gray-300 font-sans">{item.answer}</p>
+                  <p className="pb-3 text-xl text-gray-300 font-sans">
+                    {item.answer}
+                  </p>
                 </div>
               </div>
             ))}

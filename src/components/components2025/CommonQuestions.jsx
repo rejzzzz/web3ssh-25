@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import faqData from '@data/faq2025.json';
+import faqData from '@data/2025/faq2025.json';
 
 const CommonQuestions = () => {
   const [expandedItem, setExpandedItem] = useState(null);

@@ -9,9 +9,10 @@ export default {
   theme: {
     extend: {
       height: {
-        'herosection': 'calc(100vh - 70px)',
+        herosection: 'calc(100vh - 70px)',
       },
       fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
         sans: ['Montserrat', 'sans-serif'],
         exo: ['Exo', 'sans-serif'],
         raleway: ['Raleway', 'sans-serif'],

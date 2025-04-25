@@ -3,6 +3,8 @@
 import clsx from 'clsx';
 import { TypewriterEffect } from '../ui/typewriter-effect';
 import { Highlight } from '@components/ui/hero-highlight';
+import ethLogoWhite from '@public/partners2025/eth-logo-white.svg';
+import Image from 'next/image';
 import React from 'react';
 
 const HeroSection = () => {
@@ -35,15 +37,27 @@ const HeroSection = () => {
         'pt-0',
       )}
     >
+      {/* ETHEREUM + Presents */}
+      <div className="text-center mt-0 leading-tight">
+        <Image
+          src={ethLogoWhite}
+          alt="Ethereum Logo"
+          width={200}
+          height={50}
+          className="mx-auto"
+        />
+        <p className="text-base font-roboto sm:text-lg text-white">Presents</p>
+      </div>
+
       {/* Add margin-top to push the TypewriterEffect lower */}
-      <div className="mt-16 lg:mt-20">
+      <div className="mt-2 lg:mt-4">
         <TypewriterEffect
           words={words}
-          className="px-10 min-h-[220px] sm:min-h-[160px] lg:min-h-[100px]"
+          className="px-10 min-h-[200px] sm:min-h-[140px] lg:min-h-[80px]"
         />
       </div>
 
-      <div className="text-2xl lg:text-3xl mb-6 text-center text-white font-sans font-semibold">
+      <div className="text-2xl mt-0 lg:text-3xl mb-3 text-center text-white font-sans font-semibold">
         Organized by IIIT SriCity
       </div>
 
@@ -55,10 +69,10 @@ const HeroSection = () => {
       <div>
         <div className="mt-8">
           <div className="text-2xl font-sans font-medium">
-            Summer School: Will be updated Soon
+            Summer School: 29 June to 3 July
           </div>
           <div className="text-2xl font-sans font-medium">
-            Hackathon: Will be updated Soon
+            Hackathon: 3 July to 6 July
           </div>
         </div>
       </div>

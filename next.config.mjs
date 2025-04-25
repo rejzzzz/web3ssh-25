@@ -31,6 +31,12 @@ const nextConfig = {
           'https://drive.google.com/file/d/1fa5Zmy4cOSogwEWpy-PuJLb28t_OUOpa/view?usp=sharing',
         permanent: false,
       },
+      {
+        source: '/brochure/2025',
+        destination:
+          'https://drive.google.com/file/d/1ovsHUJgKd7Ai7pKjtV3WkF8gOhjuX7V6/view?usp=drive_link',
+        permanent: false,
+      },
       // {
       //   source: '/register',
       //   destination:
