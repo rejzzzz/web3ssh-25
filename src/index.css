@@ -14,8 +14,11 @@
   --circle-size: 80%;
   --blending: hard-light;
 }
-#root{
+#root {
   margin-top: 70px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 @keyframes moveInCircle {
   0% {
@@ -208,3 +211,17 @@
 body {
   overflow-x: hidden;
 }
+
+/* Add this to your index.css */
+html, body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
