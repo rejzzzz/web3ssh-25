@@ -63,59 +63,56 @@ export const Schedule = () => {
   return (
     <section
       id="schedule"
-      className="mx-auto px-4 md:px-8 max-w-screen-xl py-6 pt-8"
+      className="mx-auto px-4 sm:px-6 md:px-8 max-w-5xl py-8 sm:py-12"
     >
-      <h1 className="text-center md:text-left font-bold text-4xl md:text-5xl tracking-wide text-white">
+      <h1 className="text-center font-bold text-3xl sm:text-4xl md:text-5xl tracking-wide text-white mb-8">
         Schedule
       </h1>
-      <div className="flex gap-1 md:gap-2 mt-8 justify-start md:justify-around max-w-[100vw] flex-wrap">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6">
         {Object.keys(scheduleData).map((date, index) => (
           <div
             key={date}
             onClick={() => setActiveDate(date)}
-            className="cursor-pointer"
+            className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${
+              activeDate === date ? 'scale-110' : 'hover:scale-105'
+            }`}
           >
             <div
-              className={`ml-1 text-gray-200 text-sm md:text-base font-bold py-1 px-2 bg-gradient-to-l from-gray-900 to-cyan-900 rounded-tl-lg rounded-tr-lg ${activeDate === date ? 'bg-cyan-700' : ''}`}
+              className={`w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full text-white font-semibold text-sm sm:text-base ${
+                activeDate === date
+                  ? 'bg-cyan-600 shadow-lg'
+                  : 'bg-gray-800 bg-opacity-50 border border-white border-opacity-30'
+              }`}
             >
               Day {index + 1}
             </div>
-            <a
-              href={`#schedule-${date.replace(/ /g, '-')}`}
-              className={`py-2 px-2 w-[120px] text-sm md:text-base tracking-wide inline-block font-semibold text-white ${activeDate === date ? 'bg-[#222]' : 'backdrop-blur-sm bg-black bg-opacity-20'} rounded-bl-lg rounded-br-lg border border-white border-opacity-50 transition-all duration-300`}
-            >
-              <span className="flex items-center justify-center">{date}</span>
-            </a>
           </div>
         ))}
       </div>
-      <div className="mt-10">
+      <div className="mt-6 text-center">
+        <span className="text-white text-lg sm:text-xl md:text-2xl font-semibold">
+          {activeDate}
+        </span>
+      </div>
+      <div className="mt-8 space-y-4">
         {scheduleData[activeDate].map((event, index) => (
-          <div key={index} className="flex">
+          <div
+            key={index}
+            className="flex flex-col sm:flex-row bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 rounded-lg overflow-hidden"
+          >
             <div
-              className={`flex border-r-2 border-white border-opacity-50 ${event.first ? '' : 'pt-3'} ${event.last ? '' : 'pb-3'}`}
+              className={`w-full sm:w-32 md:w-40 bg-gradient-to-r from-gray-900 to-cyan-900 text-white p-3 sm:p-4 flex flex-col justify-center items-center sm:items-start border-b sm:border-b-0 sm:border-r border-white border-opacity-30`}
             >
-              <div className="w-24 md:w-36 items-center justify-between flex rounded-l-lg bg-gradient-to-r backdrop-blur-sm bg-black bg-opacity-20 border border-white border-opacity-50">
-                <div className="ml-1 md:ml-2">
-                  <div className="text-white font-bold text-sm md:text-lg">
-                    {event.time}
-                  </div>
-                  <div className="text-gray-100 text-xs md:text-sm">
-                    {activeDate}
-                  </div>
-                </div>
-                <div className="w-2 md:w-4 border-t-2 border-white border-opacity-40"></div>
+              <div className="text-sm sm:text-base md:text-lg font-bold">
+                {event.time}
+              </div>
+              <div className="text-xs sm:text-sm text-gray-300 hidden sm:block">
+                {activeDate}
               </div>
             </div>
-            <div
-              className={`backdrop-blur-sm bg-black bg-opacity-20 flex-1 rounded-r-lg border border-white border-opacity-50 ${event.first ? '' : 'mt-3'} ${event.last ? '' : 'mb-3'}`}
-            >
-              <div className="flex py-2 md:py-4 px-1 md:px-4 items-center gap-2 md:gap-4 my-4">
-                <div className="flex flex-col mx-3 md:mx-0 items-center md:items-start text-center md:text-start">
-                  <div className="text-white font-bold text-base md:text-xl md:mx-4 my-3">
-                    {event.title}
-                  </div>
-                </div>
+            <div className="flex-1 p-3 sm:p-4 flex items-center">
+              <div className="text-white font-semibold text-base sm:text-lg md:text-xl">
+                {event.title}
               </div>
             </div>
           </div>
