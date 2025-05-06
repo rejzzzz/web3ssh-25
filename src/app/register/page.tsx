@@ -158,7 +158,7 @@ export default function Page() {
 
                   <div className="flex flex-col md:flex-row gap-4 mt-6">
                     <a
-                      href="#register-form"
+                      href="https://forms.gle/cycBNcRgkxvkQCHq5"
                       className="flex-1 py-4 bg-violet-600/80 hover:bg-violet-500/80 text-white font-bold rounded-lg transition-all duration-300 text-xl text-center backdrop-blur-md shadow-lg border border-white/10"
                     >
                       Register Now
@@ -261,7 +261,7 @@ export default function Page() {
                       </div>
                       <div className="space-y-4">
                         <div className="bg-white/10 p-4 rounded-lg">
-                          <div className="font-semibold mb-2">Minimal Qualification</div>
+                          <div className="font-semibold mb-2">Certificate of Appreciation</div>
                           <p className="text-white/90">Ambassador certificate for getting your first referral</p>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg">
@@ -273,7 +273,7 @@ export default function Page() {
                           <p className="text-white/90">Goodies Kit</p>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg">
-                          <div className="font-semibold mb-2">Top 5 Ambassadors (15+ Registrations)</div>
+                          <div className="font-semibold mb-2">Top 5 Ambassadors (Minimum 15 Registrations)</div>
                           <p className="text-white/90">Special Goodies Kit + Social Media Shoutout</p>
                         </div>
                       </div>
@@ -282,7 +282,7 @@ export default function Page() {
 
                   <div className="flex flex-col md:flex-row gap-4 mt-6">
                     <a
-                      href="#register-ambassador"
+                      href="https://forms.gle/K41G1GBuLo43DBjy9"
                       className="flex-1 py-4 bg-violet-600/80 hover:bg-violet-500/80 text-white font-bold rounded-lg transition-all duration-300 text-xl text-center backdrop-blur-md shadow-lg border border-white/10"
                     >
                       Register as Ambassador
