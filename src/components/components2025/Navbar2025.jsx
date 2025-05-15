@@ -15,6 +15,7 @@ export default function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -40,10 +41,12 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Close dropdown when clicking outside
+    // Close dropdown and mobile menu when clicking outside
     const handleClickOutside = (e) => {
       const dropdownButton = document.getElementById('dropdown-button');
       const dropdownMenu = document.getElementById('dropdown-menu');
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
 
       if (
         dropdownButton &&
@@ -52,6 +55,15 @@ export default function Navbar() {
         !dropdownMenu.contains(e.target)
       ) {
         setIsDropdownOpen(false);
+      }
+
+      if (
+        mobileMenuButton &&
+        !mobileMenuButton.contains(e.target) &&
+        mobileMenu &&
+        !mobileMenu.contains(e.target)
+      ) {
+        setIsMobileMenuOpen(false);
       }
     };
 
@@ -66,8 +78,8 @@ export default function Navbar() {
   const containerStyle = {
     position: 'fixed',
     top: topbarPosition,
-    width: 'calc(100vw - 100px)',
-    left: '50px',
+    width: 'calc(100vw - 40px)',
+    left: '20px',
     marginTop: '20px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -76,6 +88,7 @@ export default function Navbar() {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     borderRadius: '20px',
     backdropFilter: 'blur(10px)',
+    zIndex: 50,
   };
 
   const socialIconStyle = {
@@ -100,7 +113,79 @@ export default function Navbar() {
             alt="web3ssh logo"
             style={{ height: '50px' }}
             onClick={() => (window.location.href = '/')}
+            className="cursor-pointer"
           />
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          id="mobile-menu-button"
+          className="sm:hidden flex items-center px-3 py-2 text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isMobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+
+        {/* Mobile Menu */}
+        <div
+          id="mobile-menu"
+          className={`
+            sm:hidden fixed top-[100px] left-0 w-full bg-black bg-opacity-90 backdrop-blur-lg
+            ${isMobileMenuOpen ? 'block' : 'hidden'}
+            transition-all duration-300 ease-in-out
+          `}
+        >
+          <div className="px-4 py-2 space-y-1">
+            {navData.map((item, index) => (
+              <a
+                key={index}
+                href={item.url}
+                className="block px-3 py-2 text-base text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.title}
+              </a>
+            ))}
+            <a
+              href="/archives/2024"
+              className="block px-3 py-2 text-base text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Archives - 2024
+            </a>
+            <div className="flex justify-center space-x-4 py-4">
+              <a href="https://www.linkedin.com/company/web3ssh/" target="_blank">
+                <img style={socialIconStyle} src={Linkedin.src} alt="Linkedin" />
+              </a>
+              <a href="https://x.com/web3ssh" target="_blank">
+                <img style={socialIconStyle} src={XIcon.src} alt="X" />
+              </a>
+              <a href="https://www.instagram.com/web3ssh/" target="_blank">
+                <img style={socialIconStyle} src={Instagram.src} alt="Instagram" />
+              </a>
+            </div>
+          </div>
         </div>
 
         <div className="hidden sm:flex justify-between gap-6 items-center">

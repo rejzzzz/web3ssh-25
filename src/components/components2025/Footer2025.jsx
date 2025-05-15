@@ -4,36 +4,36 @@ import Instagram from '@public/icons/instagram.svg';
 export default function Footer() {
   return (
     <>
-      <footer className="bg-black bg-opacity-70 text-white pt-12 pb-8 px-4">
+      <footer className="bg-black bg-opacity-70 text-white pt-8 sm:pt-12 pb-6 sm:pb-8 px-4">
         <div className="mx-auto px-4 container overflow-hidden flex flex-col lg:flex-row justify-between">
-          <div className="md:1/3 lg:w-1/4">
-            <a href="/" className="flex mr-4">
+          <div className="w-full lg:w-1/4 mb-6 lg:mb-0">
+            <a href="/" className="flex items-center">
               <img
                 src="/web3ssh.webp"
-                className="w-20 h-20 ml-4 lg:ml-0"
+                className="w-16 h-16 sm:w-20 sm:h-20"
                 alt="Web3SSH logo"
               />
-              <h1 className="font-sans justify-center items-center text-3xl my-6 lg:my-2 xl:my-6 h-10">
+              <h1 className="font-sans text-2xl sm:text-3xl ml-2 sm:ml-4">
                 web3ssh
               </h1>
             </a>
-            <p className="text-sm"> © 2025</p>
+            <p className="text-sm mt-2"> © 2025</p>
           </div>
 
-          <div className="w-full block sm:flex text-sm mt-6 lg:mt-0">
+          <div className="w-full block sm:flex text-sm">
             {footerData.map((section, index) => (
               <ul
                 key={index}
-                className="text-gray-700 list-none p-0 font-sans font-normal flex flex-col text-left w-full px-5"
+                className="text-gray-700 list-none p-0 font-sans font-normal flex flex-col text-left w-full px-2 sm:px-5 mb-4 sm:mb-0"
               >
-                <li className="inline-block py-2 px-3 text-white uppercase font-normal text-xl tracking-wide ">
+                <li className="inline-block py-2 px-3 text-white uppercase font-normal text-lg sm:text-xl tracking-wide">
                   {section.sectionHead}
                 </li>
                 {section.sectionItems.map((item, idx) => (
                   <li key={idx}>
                     <a
                       href={item.href}
-                      className="text-lg font-normal inline-block py-2 px-3  text-gray-400 hover:text-white hover:font-bold no-underline"
+                      className="text-base sm:text-lg font-normal inline-block py-1 sm:py-2 px-3 text-gray-400 hover:text-white hover:font-bold no-underline"
                     >
                       {item.text}
                     </a>
@@ -41,20 +41,21 @@ export default function Footer() {
                 ))}
               </ul>
             ))}
-            <div className="text-gray-700 flex flex-col w-full">
-              <div className="inline-block py-2 px-3 text-white uppercase font-bold text-xl tracking-wide">
+            <div className="text-gray-700 flex flex-col w-full px-2 sm:px-5">
+              <div className="inline-block py-2 px-3 text-white uppercase font-bold text-lg sm:text-xl tracking-wide">
                 Follow Us
               </div>
-              <div className="flex justify-between px-1 mt-2">
+              <div className="flex flex-wrap justify-start sm:justify-between px-1 mt-2 gap-2 sm:gap-0">
                 <a
-                  className="flex items-center text-gray-300 m-1 px-0.5 hover:text-white no-underline"
+                  className="flex items-center text-gray-300 hover:text-white no-underline"
                   href="https://www.linkedin.com/company/web3ssh/"
                 >
                   <svg
                     version="1.1"
                     viewBox="0 0 512 512"
-                    height="43"
-                    width="43"
+                    height="36"
+                    width="36"
+                    className="sm:h-[43px] sm:w-[43px]"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -64,15 +65,16 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a
-                  className="flex items-center text-gray-300 m-1 px-0.5 hover:text-white no-underline"
+                  className="flex items-center text-gray-300 hover:text-white no-underline"
                   href="https://t.me/web3ssh"
                 >
                   <svg
                     data-name="Layer 1"
                     id="Layer_1"
                     viewBox="0 0 512 512"
-                    height="43"
-                    width="43"
+                    height="36"
+                    width="36"
+                    className="sm:h-[43px] sm:w-[43px]"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <title />
@@ -83,14 +85,15 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a
-                  className="flex items-center text-gray-300 m-1 px-0.5 hover:text-white no-underline"
+                  className="flex items-center text-gray-300 hover:text-white no-underline"
                   href="https://www.instagram.com/web3ssh"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    width="43"
-                    height="43"
+                    width="36"
+                    height="36"
+                    className="sm:h-[43px] sm:w-[43px]"
                   >
                     <path
                       fill="white"
@@ -104,15 +107,16 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a
-                  className="flex items-center text-gray-300 m-1 px-0.5 hover:text-white no-underline"
+                  className="flex items-center text-gray-300 hover:text-white no-underline"
                   href="https://x.com/web3ssh"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
-                    width="50"
-                    height="50"
+                    width="36"
+                    height="36"
+                    className="sm:h-[43px] sm:w-[43px]"
                     viewBox="0 0 48 48"
                   >
                     <path
@@ -136,14 +140,15 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a
-                  className="flex items-center text-gray-300 m-1 px-0.5 hover:text-white no-underline"
+                  className="flex items-center text-gray-300 hover:text-white no-underline"
                   href="https://github.com/web3ssh-iiits"
                 >
                   <svg
                     fill="white"
                     viewBox="0 0 25 25"
-                    height="43"
-                    width="43"
+                    height="36"
+                    width="36"
+                    className="sm:h-[43px] sm:w-[43px]"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
