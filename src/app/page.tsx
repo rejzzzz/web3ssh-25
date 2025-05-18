@@ -3,7 +3,7 @@ import HeroSection from '@components/components2025/HeroSection2025';
 // import AnalyticsSection from '@components/components2024/AnalyticsSection';
 import { JoinUs } from '@components/WhyJoin';
 import Speakers from '@components/components2025/Speakers';
-import Guides from '@components/components2025/Guides';
+//import Guides from '@components/components2025/Guides';
 // import dynamic from 'next/dynamic';
 import SessionTypes from '@components/components2025/SessionTypes';
 // import KeyComponents from '@components/KeyComponents';
@@ -22,7 +22,7 @@ export default function Page() {
         <HeroSection />
         <Partners />
         <Speakers />
-        <Guides />
+        
         <SessionTypes />
         <Schedule />
         {/* <KeyComponents /> */}
