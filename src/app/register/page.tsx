@@ -160,7 +160,7 @@ export default function Page() {
 
                     <div className="flex flex-col md:flex-row gap-4 mt-8">
                       <a
-                        href="https://forms.gle/cycBNcRgkxvkQCHq5"
+                        href="https://forms.gle/x4Cej5WX152fwts59"
                         className="flex-1 py-4 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold rounded-lg transition-all duration-300 text-xl text-center backdrop-blur-md shadow-lg hover:shadow-purple-500/40 border border-white/20 hover:translate-y-[-3px]"
                       >
                         Register Now
@@ -279,7 +279,7 @@ export default function Page() {
 
                     <div className="flex flex-col md:flex-row gap-4 mt-8">
                       <a
-                        href="https://forms.gle/K41G1GBuLo43DBjy9"
+                        href="https://forms.gle/bBEfJZCfH51HKHW36 "
                         className="flex-1 py-4 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold rounded-lg transition-all duration-300 text-xl text-center backdrop-blur-md shadow-lg hover:shadow-purple-500/40 border border-white/20 hover:translate-y-[-3px]"
                       >
                         Register as Ambassador
