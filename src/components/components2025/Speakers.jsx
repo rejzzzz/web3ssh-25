@@ -1,4 +1,6 @@
 import React from 'react';
+import SpeakerCard from './../daywiseoverview/SpeakerCardV2';
+import speakers from '../../data/2025/speakers.json';
 
 export default function SpeakersPanel() {
   return (
@@ -9,10 +11,16 @@ export default function SpeakersPanel() {
       >
         <h1>Speakers</h1>
       </div>
-      <div className="max-w-[1200px] w-[80%] flex justify-center items-center">
-        <div className="text-white text-2xl md:text-3xl font-sans font-medium">
-          Coming Soon
-        </div>
+      <div className="max-w-[1200px] w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {speakers.map((speaker) => (
+          <SpeakerCard
+            key={speaker.name}
+            title={speaker.name}
+            experience={speaker.experience}
+            imgSrc={speaker.imageUrl}
+            data={speaker.details}
+          />
+        ))}
       </div>
     </div>
   );

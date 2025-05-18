@@ -1,6 +1,6 @@
 import React from 'react';
 import SpeakerCard from './../daywiseoverview/SpeakerCardV2';
-import speakers from '../../data/speakers.json';
+import speakers from '../../data/2024/speakers.json';
 
 export default function SpeakersPanel() {
   return (

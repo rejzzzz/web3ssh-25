@@ -22,7 +22,7 @@ export default function Page() {
         <HeroSection />
         <Partners />
         <Speakers />
-        <Guides />
+        
         <SessionTypes />
         <Schedule />
         {/* <KeyComponents /> */}
