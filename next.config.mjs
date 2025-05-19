@@ -28,13 +28,13 @@ const nextConfig = {
       {
         source: '/brochure',
         destination:
-          'https://drive.google.com/file/d/1wmr05QY9ebaUiBqkTeSoYrb9qdzvIUGy/view?usp=sharing',
+          'https://drive.google.com/file/d/1fa5Zmy4cOSogwEWpy-PuJLb28t_OUOpa/view?usp=sharing',
         permanent: false,
       },
       {
         source: '/brochure/2025',
         destination:
-          'https://drive.google.com/file/d/1vKCB_v8u_O4M_SveumdSWN7ZrKicg-80/view?usp=sharing',
+          'https://drive.google.com/file/d/1wmr05QY9ebaUiBqkTeSoYrb9qdzvIUGy/view?usp=sharing',
         permanent: false,
       },
       // {
