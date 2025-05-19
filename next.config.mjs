@@ -28,7 +28,7 @@ const nextConfig = {
       {
         source: '/brochure',
         destination:
-          'https://drive.google.com/file/d/1fa5Zmy4cOSogwEWpy-PuJLb28t_OUOpa/view?usp=sharing',
+          'https://drive.google.com/file/d/1wmr05QY9ebaUiBqkTeSoYrb9qdzvIUGy/view?usp=sharing',
         permanent: false,
       },
       {
