@@ -1,17 +1,9 @@
+import ProjectsGrid from "../../../components/components2025/projects-grid"
 
-import Navbar from "@components/components2024/Navbar2024"
-
-
-export default function Page(){
-
-    return(
-        <>
-            <Navbar/>
-           <div>
-            Projects
-           </div>
-
-        </>
-    )
-
+export default function Page() {
+  return (
+    <main className="min-h-screen bg-white dark:bg-neutral-950">
+      <ProjectsGrid />
+    </main>
+  )
 }
