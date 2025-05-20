@@ -6,6 +6,12 @@
     "details": "Founder & CEO @ J3D.AI (Jedi) | McK | Building the Decentralized Global Brain | TedX Speaker | IDG & SDG | Hydrogen | Longevity | Meditation 3"
   },
   {
+    "name": "Prasanna Lohar",
+    "experience": "CEO @ Block Stack | President of India Blockchain Forum",
+    "imageUrl": "/speakers2025/prasanna.webp",
+    "details": "CEO of Block Stack and President of India Blockchain Forum, driving innovation in blockchain and Web3. He advises Union Bank of India and was formerly Chief Innovation Officer at DCB Bank. A LinkedIn Top Voice and board member, he’s recognized for leadership in fintech, regtech, and digital banking."
+  },
+  {
     "name": "Ravikant Agrawal",
     "experience": "Director of Growth at Privado ID | Ex-Polygon Labs | Co-founder Blockster Labs",
     "imageUrl": "/speakers2025/Ravikant-Agrawal.webp",
@@ -22,11 +28,5 @@
     "experience": "Blockchain Engineer at Amberdata | Creator @SarahBensonCodes",
     "imageUrl": "/speakers2025/sarah-benson.webp",
     "details": "Specializes in robust blockchain systems | Shares practical insights and career inspiration through @SarahBensonCodes"
-  },
-  {
-    "name": "Dr. Mallikarjun Reddy Dorsala",
-    "experience": "Assistant Professor IIIT Sri City",
-    "imageUrl": "/speakers/dr_mallikarjun_reddy_dorsala.webp",
-    "details": "Ph.D. From NIT-W and IDRBT | Ex Blockchain researcher at McKinley Rice | Ethereum Developer | Web3"
   }
 ]
