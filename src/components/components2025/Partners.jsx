@@ -1,7 +1,7 @@
 'use client';
 import { AnimatedTooltip } from '../ui/animated-tooltip';
 import j3dai_logo from './../../../public/partners2025/J3d.ai_Logo_White.png';
-import Ethereum from './../../../public/partners2025/eth-logo-white.svg';
+import geodeworkLogo from './../../../public/partners2025/geodework-white.png';
 
 export default function Partners() {
   const items = [
@@ -10,8 +10,8 @@ export default function Partners() {
       list: [
         {
           name: 'Ethereum',
-          logo: Ethereum,
-          link: 'https://ethereum.org/en/',
+          logo: geodeworkLogo,
+          link: 'https://geodework.com/',
           type: 'Title Sponsor',
         },
       ],

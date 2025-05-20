@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { TypewriterEffect } from '../ui/typewriter-effect';
-import ethLogoWhite from '@public/partners2025/eth-logo-white.svg';
+import geodeworkLogo from '@public/partners2025/geodework-white.png';
 import Image from 'next/image';
 import React from 'react';
 
@@ -26,11 +26,11 @@ export default function HeroSection() {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-80px)] sm:min-h-fit z-10 text-white pt-4 sm:pt-20 px-4 sm:px-6">
+    <div className="flex flex-col items-center min-h-[calc(100vh-80px)] sm:min-h-fit z-10 text-white pt-4 sm:pt-10 px-4 sm:px-6">
       {/* Logo + Presents */}
       <div className="text-center mt-0 sm:mt-2">
         <Image
-          src={ethLogoWhite}
+          src={geodeworkLogo}
           alt="Ethereum Logo"
           width={120}
           height={30}
