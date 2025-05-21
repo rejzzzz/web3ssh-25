@@ -26,6 +26,11 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
+    "types": [
+      "estree",
+      "react",
+      "react-dom"
+    ],
     "plugins": [
       {
         "name": "next"
