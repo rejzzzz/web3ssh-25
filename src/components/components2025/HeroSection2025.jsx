@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { TypewriterEffect } from '../ui/typewriter-effect';
-import geodeworkLogo from '@public/partners2025/geodework-white.png';
+import geodeworkLogo from '@public/partners2025/eth-logo-white.svg';
 import Image from 'next/image';
 import React from 'react';
 
@@ -36,7 +36,6 @@ export default function HeroSection() {
           height={30}
           className="mx-auto w-[100px] sm:w-[120px]"
         />
-        <p className="text-xs sm:text-base mt-2">Presents</p>
       </div>
 
       {/* Title + Info */}
