@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useMemo } from "react"
+import { useId, useRef } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import { useOutsideClick } from "../../hooks/use-outside-click"
 import {
@@ -27,7 +27,6 @@ export interface Project {
   YoutubeLink: string
   ProblemSolve: string
   Challenges: string
-  imageUrl?: string
 }
 
 interface ProjectCardProps {
@@ -36,170 +35,6 @@ interface ProjectCardProps {
   isActive: boolean
   onClose: () => void
 }
-
-// Web3 themed SVG components
-const BlockchainIllustration = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" className="w-full h-full">
-    <defs>
-      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: "#6366f1", stopOpacity: 0.8 }} />
-        <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 0.8 }} />
-      </linearGradient>
-    </defs>
-    <rect width="800" height="500" fill="url(#grad1)" opacity="0.2" />
-    <g fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <g key={i}>
-          <rect x={100 + i * 80} y={150} width="60" height="60" rx="4" />
-          <line x1={130 + i * 80} y1={210} x2={130 + i * 80} y2={240} />
-          <rect x={100 + i * 80} y={240} width="60" height="60" rx="4" />
-          {i < 7 && <line x1={160 + i * 80} y1={180} x2={180 + i * 80} y2={180} />}
-          {i < 7 && <line x1={160 + i * 80} y1={270} x2={180 + i * 80} y2={270} />}
-        </g>
-      ))}
-    </g>
-  </svg>
-)
-
-const SmartContractIllustration = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" className="w-full h-full">
-    <defs>
-      <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: "#10b981", stopOpacity: 0.8 }} />
-        <stop offset="100%" style={{ stopColor: "#3b82f6", stopOpacity: 0.8 }} />
-      </linearGradient>
-    </defs>
-    <rect width="800" height="500" fill="url(#grad2)" opacity="0.2" />
-    <g fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7">
-      <rect x="250" y="150" width="300" height="200" rx="8" />
-      <line x1="250" y1="190" x2="550" y2="190" />
-      <text x="270" y="175" fill="currentColor" fontSize="16">
-        Smart Contract
-      </text>
-      <g transform="translate(270, 210)">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <g key={i}>
-            <line x1="0" y1={i * 25} x2="260" y2={i * 25} strokeDasharray="5,5" />
-            <text x="10" y={i * 25 - 10} fill="currentColor" fontSize="12">
-              {
-                [
-                  "function transfer()",
-                  "modifier onlyOwner()",
-                  "event Transfer()",
-                  "mapping balances",
-                  "uint256 totalSupply",
-                ][i]
-              }
-            </text>
-          </g>
-        ))}
-      </g>
-    </g>
-  </svg>
-)
-
-const DecentralizedAppIllustration = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" className="w-full h-full">
-    <defs>
-      <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: "#f59e0b", stopOpacity: 0.8 }} />
-        <stop offset="100%" style={{ stopColor: "#ef4444", stopOpacity: 0.8 }} />
-      </linearGradient>
-    </defs>
-    <rect width="800" height="500" fill="url(#grad3)" opacity="0.2" />
-    <g fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7">
-      <circle cx="400" cy="250" r="120" />
-      <g>
-        {Array.from({ length: 8 }).map((_, i) => {
-          const angle = (i * Math.PI) / 4
-          const x1 = 400 + 120 * Math.cos(angle)
-          const y1 = 250 + 120 * Math.sin(angle)
-          const x2 = 400 + 180 * Math.cos(angle)
-          const y2 = 250 + 180 * Math.sin(angle)
-          return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
-        })}
-      </g>
-      <g>
-        {Array.from({ length: 8 }).map((_, i) => {
-          const angle = (i * Math.PI) / 4
-          const x = 400 + 180 * Math.cos(angle)
-          const y = 250 + 180 * Math.sin(angle)
-          return <circle key={i} cx={x} cy={y} r="15" />
-        })}
-      </g>
-    </g>
-  </svg>
-)
-
-const NFTIllustration = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" className="w-full h-full">
-    <defs>
-      <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style={{ stopColor: "#ec4899", stopOpacity: 0.8 }} />
-        <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 0.8 }} />
-      </linearGradient>
-    </defs>
-    <rect width="800" height="500" fill="url(#grad4)" opacity="0.2" />
-    <g fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7">
-      <rect x="300" y="150" width="200" height="200" rx="8" />
-      <path d="M300,200 L500,200 M350,150 L350,350 M450,150 L450,350 M300,250 L500,250 M300,300 L500,300" />
-      <text x="320" y="180" fill="currentColor" fontSize="16">
-        NFT
-      </text>
-      <text x="370" y="180" fill="currentColor" fontSize="16">
-        Collection
-      </text>
-      <g>
-        {Array.from({ length: 9 }).map((_, i) => {
-          const row = Math.floor(i / 3)
-          const col = i % 3
-          const x = 325 + col * 50
-          const y = 225 + row * 50
-          return <circle key={i} cx={x} cy={y} r="10" />
-        })}
-      </g>
-    </g>
-  </svg>
-)
-
-const DeFiIllustration = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" className="w-full h-full">
-    <defs>
-      <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: "#0ea5e9", stopOpacity: 0.8 }} />
-        <stop offset="100%" style={{ stopColor: "#6366f1", stopOpacity: 0.8 }} />
-      </linearGradient>
-    </defs>
-    <rect width="800" height="500" fill="url(#grad5)" opacity="0.2" />
-    <g fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7">
-      <path d="M200,250 C200,180 300,180 400,250 C500,320 600,320 600,250" />
-      <path d="M200,300 C200,230 300,230 400,300 C500,370 600,370 600,300" />
-      <g>
-        {Array.from({ length: 5 }).map((_, i) => {
-          const x = 200 + i * 100
-          const y = 250 + (i % 2 === 0 ? 0 : 50)
-          return (
-            <g key={i}>
-              <circle cx={x} cy={y} r="10" />
-              <text x={x - 20} y={y - 20} fill="currentColor" fontSize="14">
-                {["Lending", "Swap", "Yield", "Stake", "Pool"][i]}
-              </text>
-            </g>
-          )
-        })}
-      </g>
-    </g>
-  </svg>
-)
-
-// Array of Web3 themed illustrations
-const illustrations = [
-  BlockchainIllustration,
-  SmartContractIllustration,
-  DecentralizedAppIllustration,
-  NFTIllustration,
-  DeFiIllustration,
-]
 
 // Array of Web3 themed icons from Lucide
 const web3Icons = [
@@ -214,23 +49,50 @@ const web3Icons = [
   { icon: Cpu, label: "Consensus" },
 ]
 
+// Map project names to their corresponding image paths
+const projectImageMap: Record<string, string> = {
+  "Project-1_Decentrald": "/projects/Project-1_Decentrald.png",
+  "Project-2_Happy Piggy Bank": "/projects/Project-2_Happy Piggy Bank.png",
+  "Project-3_Tokenize": "/projects/Project-3_Tokenize.png",
+  "Project-4_SAVE X ROSS": "/projects/Project-4_SAVE X ROSS.png",
+  "Project-5_Blockchain-based...": "/projects/Project-5_Blockchain-based....png",
+  "Project-6_TeraChain": "/projects/Project-6_TeraChain.png",
+  "Project-7_Multi-Send Application": "/projects/Project-7_Multi-Send Application.png",
+  "Project-8_PharmZy": "/projects/Project-8_PharmZy.png",
+  "Project-9_Decentralised": "/projects/Project-9_Decentralised.png",
+  "Project-10_MedPulseAI": "/projects/Project-10_MedPulseAI.png",
+  "Project-11_Attend Smart": "/projects/Project-11_Attend Smart.png",
+  "Project-12_JewelAssure": "/projects/Project-12_JewelAssure.png",
+  "Project-13_AUTHENTICITY SENTINEL AI (ASA)": "/projects/Project-13_AUTHENTICITY SENTINEL AI (ASA).png",
+  "Project-14_CrediFlow": "/projects/Project-14_CrediFlow.png",
+  "Project-15_EthSplit": "/projects/Project-15_EthSplit.png",
+  "Project-16_Music_NFT": "/projects/Project-16_Music_NFT.png",
+  "Project-17_Lockie": "/projects/Project-17_Lockie.png",
+  "Project-18_Carbon": "/projects/Project-18_Carbon.png",
+  "Project-19_fund33": "/projects/Project-19_fund33.png",
+  "Project-20_SecureSwap": "/projects/Project-20_SecureSwap.png",
+  "Project-21_Xfile": "/projects/Project-21_Xfile.png",
+  "Project-22_KNOW": "/projects/Project-22_KNOW.png",
+  "Project-23_Grantitude": "/projects/Project-23_Grantitude.png",
+  "Project-24_Voting dAPP": "/projects/Project-24_Voting dAPP.png",
+  "Project-25_Dfiles": "/projects/Project-25_Dfiles.png",
+  "Project-26_Mercado": "/projects/Project-26_Mercado.png",
+  "Project-27_CHARITY CHAIN": "/projects/Project-27_CHARITY CHAIN.png",
+  "Project-28_Artify - Decentralized Art Marketplace": "/projects/Project-28_Artify - Decentralized Art Marketplace.png",
+  "Project-29_ThriftyDapp": "/projects/Project-29_ThriftyDapp.png",
+  "Project-30_TendersRaid": "/projects/Project-30_TendersRaid.png",
+  "Project-31_EngageCoin": "/projects/Project-31_EngageCoin.png",
+  "Project-32_medKART": "/projects/Project-32_medKART.png",
+}
+
 export default function ProjectCard({ project, onOpen, isActive, onClose }: ProjectCardProps) {
   const ref = useRef<HTMLDivElement>(null)
   const id = useId()
 
   useOutsideClick(ref, onClose)
 
-  // Generate a random illustration based on project name
-  const randomIllustration = useMemo(() => {
-    // Use project name to generate a consistent random index
-    const hash = project.ProjectName.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
-    const illustrationIndex = hash % illustrations.length
-    const Illustration = illustrations[illustrationIndex]
-    return <Illustration />
-  }, [project.ProjectName])
-
   // Generate random Web3 icons for the project
-  const projectIcons = useMemo(() => {
+  const projectIcons = (() => {
     // Use project name to generate a consistent set of icons
     const hash = project.ProjectName.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
     const numIcons = 3 + (hash % 3) // 3-5 icons
@@ -243,10 +105,45 @@ export default function ProjectCard({ project, onOpen, isActive, onClose }: Proj
     }
 
     return selectedIcons
-  }, [project.ProjectName])
+  })()
 
-  const defaultImage = `/placeholder.svg?height=400&width=600`
-  const imageUrl = project.imageUrl || defaultImage
+  // Function to find the best matching image path based on the project name
+  const findMatchingImagePath = (projectName: string): string => {
+    // First try exact match
+    if (projectImageMap[projectName]) {
+      return projectImageMap[projectName]
+    }
+
+    // If no exact match, try to find partial matches
+    const partialMatches = Object.keys(projectImageMap).filter(
+      (key) => projectName.includes(key) || key.includes(projectName),
+    )
+
+    if (partialMatches.length > 0) {
+      // Return the first partial match
+      return projectImageMap[partialMatches[0]]
+    }
+
+    // If no match found, return a placeholder
+    return getPlaceholderSVG();
+  }
+
+  // Get the correct image path based on the project name
+  const imageUrl = findMatchingImagePath(project.ProjectName)
+
+  function getPlaceholderSVG() {
+    const svg = `
+      <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#f0f0f0"/>
+        <text x="50%" y="50%" font-family="Arial" font-size="24" fill="#666" 
+          text-anchor="middle" dominant-baseline="middle">
+          No Image Available
+        </text>
+      </svg>
+    `.trim();
+  
+    return `data:image/svg+xml;base64,${btoa(svg)}`;
+  }
 
   return (
     <>
@@ -292,19 +189,18 @@ export default function ProjectCard({ project, onOpen, isActive, onClose }: Proj
                 layoutId={`image-${project.ProjectName}-${id}`}
                 className="relative h-60 lg:h-80 overflow-hidden"
               >
-                {/* Placeholder illustration */}
-                <div className="absolute inset-0 opacity-70 dark:opacity-50">{randomIllustration}</div>
-
-                {/* Actual image (if available) */}
-                {project.imageUrl && (
-                  <img
-                    width={600}
-                    height={400}
-                    src={imageUrl || "/placeholder.svg"}
-                    alt={`${project.ProjectName} project image`}
-                    className="w-full h-full sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-center relative z-10"
-                  />
-                )}
+                {/* Project image */}
+                <img
+                  width={600}
+                  height={400}
+                  src={imageUrl || "/placeholder.svg"}
+                  alt={`${project.ProjectName} project image`}
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.svg?height=400&width=600"
+                    e.currentTarget.onerror = null
+                  }}
+                  className="w-full h-full sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-center relative z-10"
+                />
 
                 {/* Project name overlay */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-20">
@@ -429,19 +325,18 @@ export default function ProjectCard({ project, onOpen, isActive, onClose }: Proj
                 layoutId={`image-${project.ProjectName}-${id}`}
                 className="relative h-40 w-40 md:h-14 md:w-14 rounded-lg overflow-hidden"
               >
-                {/* Small preview of the illustration */}
-                <div className="absolute inset-0 opacity-70 dark:opacity-50">{randomIllustration}</div>
-
-                {/* Actual image (if available) */}
-                {project.imageUrl && (
-                  <img
-                    width={100}
-                    height={100}
-                    src={imageUrl || "/placeholder.svg"}
-                    alt={`${project.ProjectName} project thumbnail`}
-                    className="h-full w-full object-cover object-center relative z-10"
-                  />
-                )}
+                {/* Project thumbnail */}
+                <img
+                  width={100}
+                  height={100}
+                  src={imageUrl || "/placeholder.svg"}
+                  alt={`${project.ProjectName} project thumbnail`}
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.svg?height=100&width=100"
+                    e.currentTarget.onerror = null
+                  }}
+                  className="h-full w-full object-cover object-center relative z-10"
+                />
               </motion.div>
               <div>
                 <motion.h3

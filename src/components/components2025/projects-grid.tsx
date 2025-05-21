@@ -14,8 +14,7 @@ export default function ProjectsGrid() {
       try {
         setLoading(true)
 
-        // Import the JSON file directly instead of using fetch
-        // This works better with Next.js static imports
+        
         const projectData = (await import("../../data/2024/projects.json")).default
 
         setProjects(projectData)
