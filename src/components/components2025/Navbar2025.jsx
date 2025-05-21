@@ -243,7 +243,13 @@ export default function Navbar() {
                   href="/archives/2024"
                   className="block px-3 py-2 mt-2 text-sm lg:text-lg text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300 text-center"
                 >
-                  2024
+                  Archives 2024
+                </a>
+                <a
+                  href="/projects/2024"
+                  className="block px-3 py-2 mt-2 text-sm lg:text-lg text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300 text-center"
+                >
+                  Projects 2024
                 </a>
               </div>
             </div>
@@ -253,15 +259,8 @@ export default function Navbar() {
         <div className="w-full min-w-fit h-full mr-5 sm:mr-0 flex justify-end sm:justify-around items-center">
           <ul className="w-fit hidden lg:flex justify-center items-center mx-5 lg:gap-5 md:gap-1 gap-6">
             <li>
-              <a
-                href="https://www.linkedin.com/company/web3ssh/"
-                target="_blank"
-              >
-                <img
-                  style={socialIconStyle}
-                  src={Linkedin.src}
-                  alt="Linkedin"
-                />
+              <a href="https://www.linkedin.com/company/web3ssh/" target="_blank">
+                <img style={socialIconStyle} src={Linkedin.src} alt="Linkedin" />
               </a>
             </li>
             <li>
@@ -271,11 +270,7 @@ export default function Navbar() {
             </li>
             <li>
               <a href="https://www.instagram.com/web3ssh/" target="_blank">
-                <img
-                  style={socialIconStyle}
-                  src={Instagram.src}
-                  alt="Instagram"
-                />
+                <img style={socialIconStyle} src={Instagram.src} alt="Instagram" />
               </a>
             </li>
           </ul>
