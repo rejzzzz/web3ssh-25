@@ -2,6 +2,7 @@
 import { AnimatedTooltip } from '../ui/animated-tooltip';
 import j3dai_logo from './../../../public/partners2025/J3d.ai_Logo_White.png';
 import geodeworkLogo from './../../../public/partners2025/geodework-white.png';
+import iiitiansNetworkLogo from '@public/partners/iiitans_network_logo.webp';
 
 export default function Partners() {
   const items = [
@@ -24,6 +25,12 @@ export default function Partners() {
           logo: j3dai_logo,
           link: 'https://j3d.ai/',
           type: 'Intelligence Partner',
+        },
+        {
+          name: 'IIITians Network',
+          logo: iiitiansNetworkLogo,
+          link: 'https://iiitiansnetwork.com/',
+          type: 'Community Partner',
         },
       ],
     },
