@@ -282,7 +282,7 @@ export default function Navbar() {
             >
               {isMounted && (
                 <img
-                  src="./download-icon.svg"
+                  src="/download-icon.svg"
                   alt="Download"
                   className="w-6 h-6 mr-2"
                 />
