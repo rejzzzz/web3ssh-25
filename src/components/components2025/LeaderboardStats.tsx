@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, Trophy, Award, TrendingUp, Target } from 'lucide-react';
+import { Users, Trophy, TrendingUp } from 'lucide-react';
 import { LeaderboardData } from './LeaderboardPage';
 
 interface StatsCardProps {
@@ -40,7 +40,7 @@ const StatsCard = ({
         backdropFilter: 'blur(10px)',
         borderRadius: '20px',
       }}
-      className="relative p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden"
+      className="relative p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
@@ -48,13 +48,13 @@ const StatsCard = ({
       </div>
 
       <div className="relative z-10">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-6">
           <motion.div
             whileHover={{ rotate: 360, scale: 1.1 }}
             transition={{ duration: 0.5 }}
-            className={`p-3 rounded-xl bg-gradient-to-r ${color} shadow-lg`}
+            className={`p-4 rounded-xl bg-gradient-to-r ${color} shadow-lg`}
           >
-            <Icon className="w-6 h-6 text-white" />
+            <Icon className="w-8 h-8 text-white" />
           </motion.div>
 
           {trend && (
@@ -62,10 +62,10 @@ const StatsCard = ({
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: delay + 0.2 }}
-              className="flex items-center space-x-1 px-2 py-1 bg-emerald-400/20 rounded-full border border-emerald-400/30"
+              className="flex items-center space-x-1 px-3 py-2 bg-emerald-400/20 rounded-full border border-emerald-400/30"
             >
-              <TrendingUp className="w-3 h-3 text-emerald-400" />
-              <span className="text-xs font-medium text-emerald-400">
+              <TrendingUp className="w-4 h-4 text-emerald-400" />
+              <span className="text-sm font-medium text-emerald-400">
                 +{trend}%
               </span>
             </motion.div>
@@ -76,13 +76,13 @@ const StatsCard = ({
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: delay + 0.1 }}
-          className="text-3xl font-bold text-white mb-2"
+          className="text-4xl md:text-5xl font-bold text-white mb-3"
         >
           {value}
         </motion.div>
 
-        <div className="text-gray-300 text-sm font-medium mb-1">{label}</div>
-        <div className="text-gray-400 text-xs">{description}</div>
+        <div className="text-gray-300 text-lg font-medium mb-2">{label}</div>
+        <div className="text-gray-400 text-sm">{description}</div>
       </div>
     </div>
   </motion.div>
@@ -93,42 +93,29 @@ interface LeaderboardStatsProps {
 }
 
 export default function LeaderboardStats({ data }: LeaderboardStatsProps) {
+  // Calculate active ambassadors (those with participants > 0) - with fallback to 0
+  const activeAmbassadors = data?.data.filter(
+    (ambassador) => ambassador.participants > 0,
+  ).length;
+
   const statsData = [
     {
       icon: Users,
-      value: data?.totalAmbassadors || 0,
-      label: 'Total Ambassadors',
-      description: 'Active community leaders',
-      color: 'from-gray-600 to-gray-700',
+      value: activeAmbassadors || 0,
+      label: 'Active Ambassadors',
+      description: 'Ambassadors with successful referrals',
+      color: 'from-purple-600 to-indigo-700',
       delay: 0.1,
-      trend: 12,
+      trend: 25,
     },
     {
       icon: Trophy,
       value: data?.totalParticipantsWithReferrals || 0,
-      label: 'Successful Referrals',
-      description: 'Participants recruited',
+      label: 'Referred Participants',
+      description: 'Total participants recruited by ambassadors',
       color: 'from-emerald-500 to-teal-600',
       delay: 0.2,
-      trend: 25,
-    },
-    {
-      icon: Award,
-      value: data?.totalParticipantsInSheet || 0,
-      label: 'Total Participants',
-      description: 'Event registrations',
-      color: 'from-purple-600 to-indigo-700',
-      delay: 0.3,
-      trend: 18,
-    },
-    {
-      icon: Target,
-      value: data?.totalParticipantsWithoutReferrals || 0,
-      label: 'Direct Signups',
-      description: 'Without referral codes',
-      color: 'from-blue-500 to-cyan-600',
-      delay: 0.4,
-      trend: 8,
+      trend: 32,
     },
   ];
 
@@ -137,7 +124,7 @@ export default function LeaderboardStats({ data }: LeaderboardStatsProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
-      className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+      className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto"
     >
       {statsData.map((stat, index) => (
         <StatsCard key={index} {...stat} />
