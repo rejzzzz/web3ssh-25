@@ -36,9 +36,9 @@ export default function LeaderboardControls({
       }}
       className="p-6 shadow-2xl mb-8"
     >
-      <div className="flex flex-col lg:flex-row gap-6 items-center">
+      <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:gap-6 lg:items-center">
         {/* Search Bar */}
-        <div className="relative flex-1 w-full max-w-md">
+        <div className="relative flex-1 w-full max-w-md mx-auto lg:mx-0">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
@@ -54,7 +54,7 @@ export default function LeaderboardControls({
         </div>
 
         {/* Control Buttons */}
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-center lg:justify-start">
           {/* Filter Button - Hidden since we always show active ambassadors */}
           <motion.div
             style={{
@@ -62,23 +62,24 @@ export default function LeaderboardControls({
               backdropFilter: 'blur(10px)',
               borderRadius: '12px',
             }}
-            className="flex items-center px-4 py-3 border border-emerald-500/30"
+            className="flex items-center px-3 sm:px-4 py-2 sm:py-3 border border-emerald-500/30 w-full sm:w-auto justify-center sm:justify-start"
           >
             <Filter className="w-4 h-4 mr-2 text-emerald-400" />
-            <span className="text-emerald-400 font-medium text-sm">
+            <span className="text-emerald-400 font-medium text-xs sm:text-sm">
               Active Ambassadors Only
             </span>
           </motion.div>
 
-          {/* View Mode Toggle */}
-          <div
-            style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.2)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-            }}
-            className="flex p-1 border border-white/20"
-          >
+          <div className="flex gap-3 w-full sm:w-auto justify-center">
+            {/* View Mode Toggle */}
+            <div
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '12px',
+              }}
+              className="flex p-1 border border-white/20"
+            >
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setViewMode('table')}
@@ -103,19 +104,21 @@ export default function LeaderboardControls({
             </motion.button>
           </div>
 
-          {/* Refresh Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onRefresh}
-            disabled={refreshing}
-            className="flex items-center px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-xl transition-all shadow-lg font-medium disabled:opacity-50"
-          >
-            <RefreshCw
-              className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`}
-            />
-            {refreshing ? 'Refreshing...' : 'Refresh'}
-          </motion.button>
+            {/* Refresh Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onRefresh}
+              disabled={refreshing}
+              className="flex items-center px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-xl transition-all shadow-lg font-medium disabled:opacity-50 text-xs sm:text-sm"
+            >
+              <RefreshCw
+                className={`w-4 h-4 mr-1 sm:mr-2 ${refreshing ? 'animate-spin' : ''}`}
+              />
+              <span className="hidden sm:inline">{refreshing ? 'Refreshing...' : 'Refresh'}</span>
+              <span className="sm:hidden">{refreshing ? '...' : 'Refresh'}</span>
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.div>

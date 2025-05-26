@@ -76,12 +76,12 @@ const StatsCard = ({
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: delay + 0.1 }}
-          className="text-4xl md:text-5xl font-bold text-white mb-3"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3"
         >
           {value}
         </motion.div>
 
-        <div className="text-gray-300 text-lg font-medium mb-2">{label}</div>
+        <div className="text-gray-300 text-base sm:text-lg font-medium mb-2">{label}</div>
         <div className="text-gray-400 text-sm">{description}</div>
       </div>
     </div>
@@ -124,7 +124,7 @@ export default function LeaderboardStats({ data }: LeaderboardStatsProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
-      className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto"
+      className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-12 max-w-4xl mx-auto px-4"
     >
       {statsData.map((stat, index) => (
         <StatsCard key={index} {...stat} />
