@@ -11,6 +11,7 @@ import Partners from '@components/components2025/Partners';
 import { Schedule } from '@components/components2025/Schedule';
 import Navbar from '@components/components2025/Navbar2025'; // Direct import
 import Footer from '@components/components2025/Footer2025'; // Direct import
+import TestimonialsAppleCards from "@components/components2025/testimonials-apple-cards";
 
 // const Outcomes = dynamic(() => import('@components/Outcomes'), { ssr: false });
 
@@ -29,6 +30,7 @@ export default function Page() {
         {/* <Outcomes /> */}
         {/* <AnalyticsSection /> */}
         <JoinUs />
+        <TestimonialsAppleCards/>
         <CommonQuestions />
       </main>
       <Footer />
