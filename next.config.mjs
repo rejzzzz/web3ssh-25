@@ -51,6 +51,17 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+    staticPageGenerationTimeout: 120, // Increase timeout to 2 minutes
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/ambassadors/stream',
+        destination: '/api/ambassadors/leaderboard', // Fallback to regular API during build
+      },
+    ];
+  },
 };
 
 export default nextConfig;

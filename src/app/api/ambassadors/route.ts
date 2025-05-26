@@ -4,45 +4,32 @@ import { NextResponse } from 'next/server';
 // Set revalidation period to 1 hour (3600 seconds)
 export const revalidate = 3600;
 
-// In-memory cache for the leaderboard data
+// In-memory cache for the data
 let cachedData: any = null;
 let cacheTimestamp: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
 
-// Build-time cache - persist during build
-let buildTimeCache: any = null;
-
 /**
- * GET handler for the ambassadors leaderboard API route
- * Fetches data from Google Sheets and returns the processed leaderboard data
+ * GET handler for the ambassadors API route
+ * Fetches data from Google Sheets and returns the processed data
  */
 export async function GET() {
   try {
     const now = Date.now();
     
-    // During build, use build-time cache if available
-    if (process.env.NODE_ENV === 'production' && buildTimeCache) {
-      console.log('Returning build-time cached data');
-      return NextResponse.json(buildTimeCache);
-    }
-    
     // Check if we have valid cached data
     if (cachedData && (now - cacheTimestamp) < CACHE_DURATION) {
-      console.log('Returning cached leaderboard data');
+      console.log('Returning cached ambassador data');
       return NextResponse.json(cachedData);
     }
     
-    console.log('Fetching fresh leaderboard data...');
+    console.log('Fetching ambassadors data...');
     const startTime = Date.now();
     
-    // Remove timeout race condition - direct call
     const { ambassadorsData, totalParticipantsInSheet } = await fetchAmbassadorsData();
     
     const fetchTime = Date.now() - startTime;
     console.log(`Total fetch time: ${fetchTime}ms`);
-    
-    // Add timing for response data processing
-    const processingStart = Date.now();
     
     // Calculate participants statistics efficiently in one pass
     const totalParticipantsWithReferrals = ambassadorsData.reduce((sum: number, ambassador: any) => sum + ambassador.participants, 0);
@@ -58,33 +45,21 @@ export async function GET() {
       fetchTimeMs: fetchTime
     };
     
-    const processingTime = Date.now() - processingStart;
-    console.log(`Response processing time: ${processingTime}ms`);
-    
     // Cache the response
-    const cacheStart = Date.now();
     cachedData = responseData;
     cacheTimestamp = now;
-    
-    // Also cache for build time
-    if (process.env.NODE_ENV === 'production') {
-      buildTimeCache = responseData;
-    }
-    
-    const cacheTime = Date.now() - cacheStart;
-    console.log(`Cache storage time: ${cacheTime}ms`);
     
     const totalTime = Date.now() - startTime;
     console.log(`Total API route time: ${totalTime}ms`);
     
     return NextResponse.json(responseData);
   } catch (error) {
-    console.error('Error in leaderboard API route:', error);
+    console.error('Error in ambassadors API route:', error);
     
     return NextResponse.json(
       { 
         success: false, 
-        error: error instanceof Error ? error.message : 'Failed to fetch leaderboard data' 
+        error: error instanceof Error ? error.message : 'Failed to fetch ambassador data' 
       },
       { status: 500 }
     );
