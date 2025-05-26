@@ -38,14 +38,19 @@ export default function LeaderboardPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [viewMode, setViewMode] = useState<'card' | 'table'>('table');
 
-  const fetchLeaderboard = async (isInitial = false) => {
+  const fetchLeaderboard = async (isInitial = false, forceRefresh = false) => {
     try {
       if (!isInitial) setRefreshing(true);
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      const response = await fetch('/api/ambassadors/leaderboard', {
+      // Add force refresh parameter when explicitly requested
+      const url = forceRefresh
+        ? '/api/ambassadors/leaderboard?refresh=true'
+        : '/api/ambassadors/leaderboard';
+
+      const response = await fetch(url, {
         signal: controller.signal,
         cache: 'no-store',
       });
@@ -85,7 +90,7 @@ export default function LeaderboardPage() {
   };
 
   const handleRefresh = () => {
-    fetchLeaderboard(false);
+    fetchLeaderboard(false, true); // Force refresh when user clicks refresh
   };
 
   const handleRetry = () => {
@@ -149,7 +154,7 @@ export default function LeaderboardPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[size:24px_24px]"></div>
       </div>
 
-      <div className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <LeaderboardHeader />
 
@@ -177,7 +182,7 @@ export default function LeaderboardPage() {
 
           {/* Footer matching your theme */}
           <motion.div
-            className="text-center mt-12"
+            className="text-center mt-8 sm:mt-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.5 }}
@@ -188,9 +193,9 @@ export default function LeaderboardPage() {
                 backdropFilter: 'blur(10px)',
                 borderRadius: '20px',
               }}
-              className="p-6 shadow-lg inline-block"
+              className="p-4 sm:p-6 shadow-lg inline-block"
             >
-              <div className="flex items-center justify-center space-x-6 text-gray-300 text-sm flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 text-gray-300 text-xs sm:text-sm">
                 <span>
                   <strong className="text-white">{filteredData.length}</strong>{' '}
                   active ambassadors shown
@@ -208,7 +213,7 @@ export default function LeaderboardPage() {
                   total referrals
                 </span>
                 {leaderboardData?.fetchTimeMs && (
-                  <span>
+                  <span className="hidden sm:inline">
                     Fetched in{' '}
                     <strong className="text-white">
                       {leaderboardData.fetchTimeMs}ms

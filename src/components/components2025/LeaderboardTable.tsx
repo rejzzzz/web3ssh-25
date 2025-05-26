@@ -190,7 +190,7 @@ const AmbassadorCard = ({
           backdropFilter: 'blur(10px)',
           borderRadius: '20px',
         }}
-        className="relative p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden"
+        className="relative p-4 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden"
       >
         {/* Background Pattern */}
         <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
@@ -216,11 +216,25 @@ const AmbassadorCard = ({
 
           {/* Ambassador Info */}
           <div className="mb-4">
-            <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
               {ambassador.name}
             </h3>
 
-            
+
+            <div className="flex items-center text-gray-300 mb-2">
+              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+              <span className="text-xs sm:text-sm truncate">
+                {ambassador.college || 'No college specified'}
+              </span>
+            </div>
+
+            <div className="flex items-center text-purple-300 mb-3">
+              <Code className="w-4 h-4 mr-2" />
+              <span className="text-xs sm:text-sm font-mono bg-purple-400/20 px-2 py-1 rounded border border-purple-400/30">
+                {ambassador.referralCode}
+              </span>
+            </div>
+
 
             <PerformanceBadge participants={ambassador.participants} />
           </div>
@@ -229,12 +243,12 @@ const AmbassadorCard = ({
           <div className="text-center">
             <motion.div
               animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
-              className="text-4xl font-bold text-white mb-2"
+              className="text-3xl sm:text-4xl font-bold text-white mb-2"
             >
               {ambassador.participants}
             </motion.div>
 
-            <div className="text-sm text-gray-300 flex items-center justify-center">
+            <div className="text-xs sm:text-sm text-gray-300 flex items-center justify-center">
               <Users className="w-4 h-4 mr-1" />
               participant{ambassador.participants !== 1 ? 's' : ''}
             </div>
@@ -326,7 +340,7 @@ export default function LeaderboardTable({
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
       >
         <AnimatePresence>
           {data.map((ambassador, index) => {
@@ -362,27 +376,27 @@ export default function LeaderboardTable({
           background:
             'linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2))',
         }}
-        className="p-8 border-b border-white/10"
+        className="p-4 sm:p-6 lg:p-8 border-b border-white/10"
       >
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center text-center sm:text-left">
             <motion.div
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
             >
-              <Trophy className="w-8 h-8 mr-4 text-yellow-400" />
+              <Trophy className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-4 text-yellow-400" />
             </motion.div>
             <div>
-              <h2 className="text-3xl font-bold text-white">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
                 Active Ambassador Rankings
               </h2>
-              <p className="text-gray-300 text-sm">
+              <p className="text-gray-300 text-xs sm:text-sm">
                 Top performing ambassadors with successful referrals
               </p>
             </div>
           </div>
 
-          <div className="text-gray-300 text-sm">
+          <div className="text-gray-300 text-xs sm:text-sm">
             <strong className="text-white">{data.length}</strong> active
             ambassador
             {data.length !== 1 ? 's' : ''} shown
@@ -406,7 +420,7 @@ export default function LeaderboardTable({
                 transition={{ duration: 0.4, delay: index * 0.03 }}
                 onHoverStart={() => setHoveredRow(index)}
                 onHoverEnd={() => setHoveredRow(null)}
-                className={`p-8 transition-all duration-300 group cursor-pointer relative overflow-hidden ${
+                className={`p-4 sm:p-6 lg:p-8 transition-all duration-300 group cursor-pointer relative overflow-hidden ${
                   isTopThree
                     ? `bg-gradient-to-r ${getRankGradient(rank)} border-l-4 hover:shadow-2xl`
                     : 'hover:bg-white/5'
@@ -421,18 +435,20 @@ export default function LeaderboardTable({
                   />
                 )}
 
-                <div className="relative z-10 flex items-center justify-between">
-                  <div className="flex items-center space-x-6 flex-1">
+                <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
+                  <div className="flex items-center space-x-4 sm:space-x-6 flex-1 min-w-0">
                     {/* Achievement Badge */}
-                    <AchievementBadge
-                      rank={rank}
-                      participants={ambassador.participants}
-                    />
+                    <div className="flex-shrink-0">
+                      <AchievementBadge
+                        rank={rank}
+                        participants={ambassador.participants}
+                      />
+                    </div>
 
                     {/* Ambassador Info */}
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-3">
+                        <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
                           {ambassador.name}
                         </h3>
 
@@ -440,39 +456,60 @@ export default function LeaderboardTable({
                           <motion.div
                             animate={{ scale: [1, 1.1, 1] }}
                             transition={{ duration: 2, repeat: Infinity }}
+                            className="mt-1 sm:mt-0"
                           >
-                            <Flame className="w-5 h-5 text-orange-400" />
+                            <Flame className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />
                           </motion.div>
                         )}
 
-                        <PerformanceBadge
-                          participants={ambassador.participants}
-                        />
+                        <div className="mt-2 sm:mt-0">
+                          <PerformanceBadge
+                            participants={ambassador.participants}
+                          />
+                        </div>
+                      </div>
+
+
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-gray-300 mb-2">
+                        <div className="flex items-center mb-1 sm:mb-0">
+                          <MapPin className="w-4 h-4 mr-1" />
+                          <span className="truncate text-xs sm:text-sm">
+                            {ambassador.college || 'No college specified'}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center">
+                        <Code className="w-4 h-4 mr-2 text-purple-400" />
+                        <span className="text-xs sm:text-sm font-mono bg-purple-400/20 text-purple-300 px-2 sm:px-3 py-1 rounded-full border border-purple-400/30">
+                          {ambassador.referralCode}
+                        </span>
                       </div>
 
                       
+
                     </div>
                   </div>
 
                   {/* Score & Stats */}
-                  <div className="text-right flex-shrink-0">
+                  <div className="text-center sm:text-right flex-shrink-0 w-full sm:w-auto">
                     <motion.div
                       animate={
                         hoveredRow === index ? { scale: 1.1 } : { scale: 1 }
                       }
-                      className="text-4xl font-bold text-white mb-2"
+                      className="text-3xl sm:text-4xl font-bold text-white mb-2"
                     >
                       {ambassador.participants}
                     </motion.div>
 
-                    <div className="text-sm text-gray-300 flex items-center justify-end mb-2">
+                    <div className="text-xs sm:text-sm text-gray-300 flex items-center justify-center sm:justify-end mb-2">
                       <Users className="w-4 h-4 mr-1" />
                       participant{ambassador.participants !== 1 ? 's' : ''}
                     </div>
 
                     {/* Sparkle indicators */}
                     {ambassador.participants > 0 && (
-                      <div className="flex items-center justify-end space-x-1">
+                      <div className="flex items-center justify-center sm:justify-end space-x-1">
                         {[...Array(Math.min(ambassador.participants, 5))].map(
                           (_, i) => (
                             <motion.div
