@@ -25,12 +25,7 @@ interface LeaderboardTableProps {
 }
 
 // Achievement Badge Component (Updated to match your theme)
-const AchievementBadge = ({
-  rank,
-}: {
-  rank: number;
-  participants: number;
-}) => {
+const AchievementBadge = ({ rank }: { rank: number; participants: number }) => {
   const getBadgeInfo = (rank: number) => {
     switch (rank) {
       case 1:
@@ -291,7 +286,6 @@ export default function LeaderboardTable({
   data,
   viewMode,
   searchTerm,
-  showOnlyWithParticipants,
 }: LeaderboardTableProps) {
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
 
@@ -328,11 +322,13 @@ export default function LeaderboardTable({
           <Search className="w-12 h-12 text-gray-400" />
         </motion.div>
 
-        <h3 className="text-2xl font-bold text-white mb-4">No Results Found</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">
+          No Active Ambassadors Found
+        </h3>
         <p className="text-gray-300 max-w-md mx-auto">
-          {searchTerm || showOnlyWithParticipants
-            ? "Try adjusting your search criteria or filters to find what you're looking for."
-            : 'No ambassadors found in the system.'}
+          {searchTerm
+            ? 'Try adjusting your search criteria to find active ambassadors.'
+            : 'No active ambassadors with successful referrals found in the system.'}
         </p>
       </motion.div>
     );
@@ -392,16 +388,17 @@ export default function LeaderboardTable({
             </motion.div>
             <div>
               <h2 className="text-3xl font-bold text-white">
-                Ambassador Rankings
+                Active Ambassador Rankings
               </h2>
               <p className="text-gray-300 text-sm">
-                Performance tracking dashboard
+                Top performing ambassadors with successful referrals
               </p>
             </div>
           </div>
 
           <div className="text-gray-300 text-sm">
-            <strong className="text-white">{data.length}</strong> ambassador
+            <strong className="text-white">{data.length}</strong> active
+            ambassador
             {data.length !== 1 ? 's' : ''} shown
           </div>
         </div>

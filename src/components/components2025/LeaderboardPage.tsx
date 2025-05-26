@@ -27,19 +27,21 @@ export interface LeaderboardData {
 }
 
 export default function LeaderboardPage() {
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardData | null>(null);
+  const [leaderboardData, setLeaderboardData] =
+    useState<LeaderboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showOnlyWithParticipants, setShowOnlyWithParticipants] = useState(false);
+  const [showOnlyWithParticipants, setShowOnlyWithParticipants] =
+    useState(true); // Default to true
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [viewMode, setViewMode] = useState<'card' | 'table'>('table');
 
   const fetchLeaderboard = async (isInitial = false) => {
     try {
       if (!isInitial) setRefreshing(true);
-      
+
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -49,11 +51,11 @@ export default function LeaderboardPage() {
       });
 
       clearTimeout(timeoutId);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
 
       if (data.success) {
@@ -92,21 +94,38 @@ export default function LeaderboardPage() {
     fetchLeaderboard(true);
   };
 
-  // Filter and sort logic
-  const filteredData = leaderboardData?.data.filter((ambassador) => {
-    const matchesSearch =
-      ambassador.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ambassador.college.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ambassador.referralCode.toLowerCase().includes(searchTerm.toLowerCase());
+  // Filter and sort logic - Filter to show only active ambassadors by default
+  const filteredData =
+    leaderboardData?.data
+      .filter((ambassador) => {
+        // First filter: only show ambassadors with participants > 0 (active ambassadors)
+        const isActive = ambassador.participants > 0;
 
-    const matchesFilter = showOnlyWithParticipants ? ambassador.participants > 0 : true;
+        // Search filter
+        const matchesSearch =
+          ambassador.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          ambassador.college.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          ambassador.referralCode
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
 
-    return matchesSearch && matchesFilter;
-  })?.sort((a, b) => {
-    return sortOrder === 'desc' 
-      ? b.participants - a.participants 
-      : a.participants - b.participants;
-  }) || [];
+        // Additional filter toggle (in case user wants to see all active ambassadors or just some)
+        const matchesFilter = showOnlyWithParticipants
+          ? ambassador.participants > 0
+          : isActive;
+
+        return isActive && matchesSearch && matchesFilter;
+      })
+      ?.sort((a, b) => {
+        return sortOrder === 'desc'
+          ? b.participants - a.participants
+          : a.participants - b.participants;
+      }) || [];
+
+  // Calculate active ambassadors count for footer
+  const activeAmbassadorsCount =
+    leaderboardData?.data.filter((ambassador) => ambassador.participants > 0)
+      .length || 0;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -133,9 +152,9 @@ export default function LeaderboardPage() {
       <div className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <LeaderboardHeader />
-          
+
           <LeaderboardStats data={leaderboardData} />
-          
+
           <LeaderboardControls
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -149,8 +168,8 @@ export default function LeaderboardPage() {
             onRefresh={handleRefresh}
           />
 
-          <LeaderboardTable 
-            data={filteredData} 
+          <LeaderboardTable
+            data={filteredData}
             viewMode={viewMode}
             searchTerm={searchTerm}
             showOnlyWithParticipants={showOnlyWithParticipants}
@@ -163,27 +182,44 @@ export default function LeaderboardPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.5 }}
           >
-            <div style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.3)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '20px'
-            }} className="p-6 shadow-lg inline-block">
+            <div
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '20px',
+              }}
+              className="p-6 shadow-lg inline-block"
+            >
               <div className="flex items-center justify-center space-x-6 text-gray-300 text-sm flex-wrap gap-4">
                 <span>
-                  <strong className="text-white">{filteredData.length}</strong> ambassadors shown
+                  <strong className="text-white">{filteredData.length}</strong>{' '}
+                  active ambassadors shown
                 </span>
                 <span>
-                  <strong className="text-white">{leaderboardData?.totalParticipantsWithReferrals || 0}</strong> successful referrals
+                  <strong className="text-white">
+                    {activeAmbassadorsCount}
+                  </strong>{' '}
+                  total active ambassadors
+                </span>
+                <span>
+                  <strong className="text-white">
+                    {leaderboardData?.totalParticipantsWithReferrals || 0}
+                  </strong>{' '}
+                  total referrals
                 </span>
                 {leaderboardData?.fetchTimeMs && (
                   <span>
-                    Fetched in <strong className="text-white">{leaderboardData.fetchTimeMs}ms</strong>
+                    Fetched in{' '}
+                    <strong className="text-white">
+                      {leaderboardData.fetchTimeMs}ms
+                    </strong>
                   </span>
                 )}
               </div>
               {leaderboardData?.lastUpdated && (
                 <div className="mt-2 text-xs text-gray-400">
-                  Last updated: {new Date(leaderboardData.lastUpdated).toLocaleString()}
+                  Last updated:{' '}
+                  {new Date(leaderboardData.lastUpdated).toLocaleString()}
                 </div>
               )}
             </div>

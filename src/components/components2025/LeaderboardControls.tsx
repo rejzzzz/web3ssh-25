@@ -19,8 +19,6 @@ interface LeaderboardControlsProps {
 export default function LeaderboardControls({
   searchTerm,
   setSearchTerm,
-  showOnlyWithParticipants,
-  setShowOnlyWithParticipants,
   viewMode,
   setViewMode,
   refreshing,
@@ -44,7 +42,7 @@ export default function LeaderboardControls({
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
-            placeholder="Search ambassadors, colleges, or codes..."
+            placeholder="Search active ambassadors..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
@@ -57,30 +55,20 @@ export default function LeaderboardControls({
 
         {/* Control Buttons */}
         <div className="flex gap-3 flex-wrap">
-          {/* Filter Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() =>
-              setShowOnlyWithParticipants(!showOnlyWithParticipants)
-            }
-            className={`flex items-center px-4 py-3 rounded-xl transition-all shadow-lg font-medium ${
-              showOnlyWithParticipants
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white'
-                : 'text-gray-300 hover:text-white border border-white/20'
-            }`}
-            style={
-              !showOnlyWithParticipants
-                ? {
-                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                    backdropFilter: 'blur(10px)',
-                  }
-                : {}
-            }
+          {/* Filter Button - Hidden since we always show active ambassadors */}
+          <motion.div
+            style={{
+              backgroundColor: 'rgba(34, 197, 94, 0.2)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+            }}
+            className="flex items-center px-4 py-3 border border-emerald-500/30"
           >
-            <Filter className="w-4 h-4 mr-2" />
-            {showOnlyWithParticipants ? 'Show All' : 'Active Only'}
-          </motion.button>
+            <Filter className="w-4 h-4 mr-2 text-emerald-400" />
+            <span className="text-emerald-400 font-medium text-sm">
+              Active Ambassadors Only
+            </span>
+          </motion.div>
 
           {/* View Mode Toggle */}
           <div
