@@ -8,6 +8,7 @@ import {
   Award,
   Sparkles,
   Users,
+  Code, // ← ADD THIS IMPORT
   Search,
   TrendingUp,
   Star,
@@ -222,7 +223,7 @@ const AmbassadorCard = ({
 
 
             <div className="flex items-center text-gray-300 mb-2">
-              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+             
               <span className="text-xs sm:text-sm truncate">
                 {ambassador.college || 'No college specified'}
               </span>
@@ -472,7 +473,7 @@ export default function LeaderboardTable({
 
                       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-gray-300 mb-2">
                         <div className="flex items-center mb-1 sm:mb-0">
-                          <MapPin className="w-4 h-4 mr-1" />
+                         
                           <span className="truncate text-xs sm:text-sm">
                             {ambassador.college || 'No college specified'}
                           </span>
@@ -480,7 +481,7 @@ export default function LeaderboardTable({
                       </div>
 
                       <div className="flex items-center">
-                        <Code className="w-4 h-4 mr-2 text-purple-400" />
+                     
                         <span className="text-xs sm:text-sm font-mono bg-purple-400/20 text-purple-300 px-2 sm:px-3 py-1 rounded-full border border-purple-400/30">
                           {ambassador.referralCode}
                         </span>

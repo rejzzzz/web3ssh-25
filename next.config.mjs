@@ -37,12 +37,6 @@ const nextConfig = {
           'https://drive.google.com/file/d/1wmr05QY9ebaUiBqkTeSoYrb9qdzvIUGy/view?usp=sharing',
         permanent: false,
       },
-      // {
-      //   source: '/register',
-      //   destination:
-      //     'https://docs.google.com/forms/d/e/1FAIpQLSd5Di8MKfGigs0tGXBXriaJmZqWgvu0FmbXOUwwGC4ypBAB2g/viewform?usp=sf_link',
-      //   permanent: false,
-      // },
       {
         source: '/hackathon',
         destination:
@@ -51,14 +45,12 @@ const nextConfig = {
       },
     ];
   },
-  experimental: {
-    staticPageGenerationTimeout: 120, // Increase timeout to 2 minutes
-  },
+  experimental: {},
   async rewrites() {
     return [
       {
         source: '/api/ambassadors/stream',
-        destination: '/api/ambassadors/leaderboard', // Fallback to regular API during build
+        destination: '/api/ambassadors/leaderboard',
       },
     ];
   },
