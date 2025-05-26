@@ -8,8 +8,6 @@ import {
   Award,
   Sparkles,
   Users,
-  MapPin,
-  Code,
   Search,
   TrendingUp,
   Star,
