@@ -37,8 +37,6 @@ const getAuthClient = () => {
       ['https://www.googleapis.com/auth/spreadsheets.readonly']
     );
     
-    // Set timeouts for faster responses
-    auth.timeout = 10000; // 10 second timeout
     
     // Cache the client
     cachedAuthClient = auth;

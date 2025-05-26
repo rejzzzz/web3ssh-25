@@ -30,89 +30,66 @@ const updateData = async () => {
 export async function GET(request: Request) {
   const encoder = new TextEncoder();
 
+  // Return immediately during build to prevent timeouts
+  if (process.env.NODE_ENV === 'production' && !cachedData) {
+    return new Response('SSE not available during build', { status: 503 });
+  }
+
   const stream = new ReadableStream({
     start(controller) {
       console.log('🔗 SSE Connection opened');
 
-      // Fetch initial data if needed
-      if (!cachedData || Date.now() - lastFetch > FETCH_INTERVAL) {
-        updateData().then(() => {
-          // Send initial data after fetch
-          if (cachedData && !controller.desiredSize === null) {
-            try {
-              controller.enqueue(
-                encoder.encode(`data: ${JSON.stringify(cachedData)}\n\n`),
-              );
-            } catch (err) {
-              console.log('Initial send failed - controller closed');
-            }
-          }
-        });
-      } else if (cachedData) {
-        // Send cached data immediately
+      // Send initial data if available
+      if (cachedData) {
         try {
           controller.enqueue(
             encoder.encode(`data: ${JSON.stringify(cachedData)}\n\n`),
           );
         } catch (err) {
-          console.log('Initial cached send failed - controller closed');
+          console.log('Initial send failed - controller closed');
         }
       }
 
-      // Setup interval for updates
-      const interval = setInterval(async () => {
-        // Check if controller is still open
-        if (controller.desiredSize === null) {
-          console.log('🔒 Controller closed, stopping interval');
-          clearInterval(interval);
-          return;
-        }
+      // Setup interval for updates (only in runtime, not build)
+      let interval: NodeJS.Timeout;
 
-        // Check if we need fresh data
-        if (Date.now() - lastFetch > FETCH_INTERVAL) {
-          await updateData();
+      if (process.env.NODE_ENV !== 'production' || typeof window !== 'undefined') {
+        interval = setInterval(async () => {
+          // Check if controller is still open
+          if (controller.desiredSize === null) {
+            console.log('🔒 Controller closed, stopping interval');
+            clearInterval(interval);
+            return;
+          }
 
-          // Send data only if controller is still open
-          if (cachedData && controller.desiredSize !== null) {
-            try {
-              controller.enqueue(
-                encoder.encode(`data: ${JSON.stringify(cachedData)}\n\n`),
-              );
-            } catch (err) {
-              console.log(
-                '📡 Send failed - controller closed, stopping interval',
-              );
-              clearInterval(interval);
+          // Check if we need fresh data
+          if (Date.now() - lastFetch > FETCH_INTERVAL) {
+            await updateData();
+
+            // Send data only if controller is still open
+            if (cachedData && controller.desiredSize !== null) {
+              try {
+                controller.enqueue(
+                  encoder.encode(`data: ${JSON.stringify(cachedData)}\n\n`),
+                );
+              } catch (err) {
+                console.log('Send failed - controller closed, stopping interval');
+                clearInterval(interval);
+              }
             }
           }
-        }
-      }, 1000);
+        }, 1000);
+      }
 
-      // Cleanup on abort signal (when client disconnects)
+      // Cleanup on abort signal
       request.signal.addEventListener('abort', () => {
         console.log('🚪 Client disconnected, cleaning up');
-        clearInterval(interval);
+        if (interval) clearInterval(interval);
         try {
           controller.close();
         } catch (err) {
-          // Controller might already be closed
+          // Controller already closed
         }
-      });
-
-      // Auto-cleanup after 5 minutes
-      const cleanup = setTimeout(() => {
-        console.log('⏰ 5-minute timeout, closing connection');
-        clearInterval(interval);
-        try {
-          controller.close();
-        } catch (err) {
-          // Controller might already be closed
-        }
-      }, 300000);
-
-      // Clear timeout if connection ends early
-      request.signal.addEventListener('abort', () => {
-        clearTimeout(cleanup);
       });
     },
   });
