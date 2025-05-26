@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Shyam Modi",
+    "ug": "UG2",
+    "team": "Tech Team",
+    "image": "../../../../public/team2025/shyam_modi.webp"
+  },
+    {
+    "name": "PATEL AADI RAKESHKUMAR",
+    "ug": "UG2",
+    "team": "Tech Team",
+    "image": "../../../../public/team2025/aadi_patel.webp"
+  },
+  {
+    "name": "Gautam Chouhan",
+    "ug": "UG2",
+    "team": "Tech Team",
+    "image": "../../../../public/team2025/gautam_chauhan.webp"
+  },
+  {
+    "name": "Arun",
+    "ug": "UG2",
+    "team": "Tech Team",
+    "image": "../../../../public/team2025/arun.webp"
+  },
+  {
+    "name": "Sudhan P",
+    "ug": "UG2",
+    "team": "Tech Team",
+    "image": "../../../../public/team2025/sudhan_p.webp"
+  }
+]

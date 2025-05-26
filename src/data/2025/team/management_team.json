@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Sai Vyshnavi",
+    "ug": "UG2",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/sai_vyshnavi.webp"
+  },
+  {
+    "name": "Arham Kansal",
+    "ug": "UG1",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/arham_kansal.webp"
+  },
+  {
+    "name": "E JAYANTH",
+    "ug": "UG2",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/jayanth_e.webp"
+  },
+  {
+    "name": "Harshini Reddy G",
+    "ug": "UG1",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/harshini_reddy.webp"
+  },
+  {
+    "name": "Jatin Nayyar",
+    "ug": "UG1",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/jatin_nayyar.webp"
+  },
+  {
+    "name": "Aditya Gupta",
+    "ug": "UG1",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/aditya_gupta.webp"
+  },
+  {
+    "name": "Karthik",
+    "ug": "UG2",
+    "team": "Management Team",
+    "image": "../../../../public/team2025/karthik_surya.webp"
+  }
+]
