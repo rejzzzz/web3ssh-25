@@ -20,6 +20,10 @@
     "url": "/"
   },
   {
+    "title": "Leaderboard",
+    "url": "/ambassadors/leaderboard"
+  },
+  {
     "title": "FAQ",
     "url": "/#faq"
   }
