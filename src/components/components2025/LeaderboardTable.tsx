@@ -8,8 +8,6 @@ import {
   Award,
   Sparkles,
   Users,
-  MapPin,
-  Code,
   Search,
   TrendingUp,
   Star,
@@ -222,6 +220,7 @@ const AmbassadorCard = ({
               {ambassador.name}
             </h3>
 
+
             <div className="flex items-center text-gray-300 mb-2">
               <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="text-xs sm:text-sm truncate">
@@ -235,6 +234,7 @@ const AmbassadorCard = ({
                 {ambassador.referralCode}
               </span>
             </div>
+
 
             <PerformanceBadge participants={ambassador.participants} />
           </div>
@@ -469,6 +469,7 @@ export default function LeaderboardTable({
                         </div>
                       </div>
 
+
                       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-gray-300 mb-2">
                         <div className="flex items-center mb-1 sm:mb-0">
                           <MapPin className="w-4 h-4 mr-1" />
@@ -484,6 +485,9 @@ export default function LeaderboardTable({
                           {ambassador.referralCode}
                         </span>
                       </div>
+
+                      
+
                     </div>
                   </div>
 
