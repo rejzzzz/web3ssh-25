@@ -1,92 +1,106 @@
 import { fetchAmbassadorsData } from '@utils/googleSheetsApi';
 import { NextResponse } from 'next/server';
 
-// Set revalidation period to 1 hour (3600 seconds)
-export const revalidate = 3600;
+// Reduce revalidation to match cache duration
+export const revalidate = 300; // 5 minutes instead of 1 hour
 
 // In-memory cache for the leaderboard data
 let cachedData: any = null;
 let cacheTimestamp: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
 
-// Build-time cache - persist during build
-let buildTimeCache: any = null;
-
 /**
  * GET handler for the ambassadors leaderboard API route
  * Fetches data from Google Sheets and returns the processed leaderboard data
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const now = Date.now();
-    
-    // During build, use build-time cache if available
-    if (process.env.NODE_ENV === 'production' && buildTimeCache) {
-      console.log('Returning build-time cached data');
-      return NextResponse.json(buildTimeCache);
+
+    // Check for force refresh parameter
+    const url = new URL(request.url);
+    const forceRefresh = url.searchParams.get('refresh') === 'true';
+
+    // Skip cache if force refresh is requested
+    if (!forceRefresh) {
+      // Check if we have valid cached data
+      if (cachedData && now - cacheTimestamp < CACHE_DURATION) {
+        console.log(
+          `Returning cached leaderboard data (${Math.round((now - cacheTimestamp) / 1000)}s old)`,
+        );
+        return NextResponse.json(cachedData);
+      }
     }
-    
-    // Check if we have valid cached data
-    if (cachedData && (now - cacheTimestamp) < CACHE_DURATION) {
-      console.log('Returning cached leaderboard data');
-      return NextResponse.json(cachedData);
-    }
-    
-    console.log('Fetching fresh leaderboard data...');
+
+    console.log(
+      forceRefresh
+        ? 'Force refreshing leaderboard data...'
+        : 'Fetching fresh leaderboard data...',
+    );
     const startTime = Date.now();
-    
-    // Remove timeout race condition - direct call
-    const { ambassadorsData, totalParticipantsInSheet } = await fetchAmbassadorsData();
-    
+
+    const { ambassadorsData, totalParticipantsInSheet } =
+      await fetchAmbassadorsData();
+
     const fetchTime = Date.now() - startTime;
     console.log(`Total fetch time: ${fetchTime}ms`);
-    
-    // Add timing for response data processing
+
     const processingStart = Date.now();
-    
+
     // Calculate participants statistics efficiently in one pass
-    const totalParticipantsWithReferrals = ambassadorsData.reduce((sum: number, ambassador: any) => sum + ambassador.participants, 0);
-    
-    const responseData = { 
-      success: true, 
+    const totalParticipantsWithReferrals = ambassadorsData.reduce(
+      (sum: number, ambassador: any) => sum + ambassador.participants,
+      0,
+    );
+
+    const responseData = {
+      success: true,
       data: ambassadorsData,
       lastUpdated: new Date().toISOString(),
       totalAmbassadors: ambassadorsData.length,
       totalParticipantsInSheet: totalParticipantsInSheet,
       totalParticipantsWithReferrals,
-      totalParticipantsWithoutReferrals: totalParticipantsInSheet - totalParticipantsWithReferrals,
-      fetchTimeMs: fetchTime
+      totalParticipantsWithoutReferrals:
+        totalParticipantsInSheet - totalParticipantsWithReferrals,
+      fetchTimeMs: fetchTime,
     };
-    
+
     const processingTime = Date.now() - processingStart;
     console.log(`Response processing time: ${processingTime}ms`);
-    
+
     // Cache the response
     const cacheStart = Date.now();
     cachedData = responseData;
     cacheTimestamp = now;
-    
-    // Also cache for build time
-    if (process.env.NODE_ENV === 'production') {
-      buildTimeCache = responseData;
-    }
-    
+
     const cacheTime = Date.now() - cacheStart;
     console.log(`Cache storage time: ${cacheTime}ms`);
-    
+
     const totalTime = Date.now() - startTime;
     console.log(`Total API route time: ${totalTime}ms`);
-    
-    return NextResponse.json(responseData);
+
+    // Add cache control headers to prevent browser caching
+    const response = NextResponse.json(responseData);
+    response.headers.set(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate',
+    );
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+
+    return response;
   } catch (error) {
     console.error('Error in leaderboard API route:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Failed to fetch leaderboard data' 
+      {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Failed to fetch leaderboard data',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

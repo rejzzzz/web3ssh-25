@@ -38,14 +38,19 @@ export default function LeaderboardPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [viewMode, setViewMode] = useState<'card' | 'table'>('table');
 
-  const fetchLeaderboard = async (isInitial = false) => {
+  const fetchLeaderboard = async (isInitial = false, forceRefresh = false) => {
     try {
       if (!isInitial) setRefreshing(true);
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      const response = await fetch('/api/ambassadors/leaderboard', {
+      // Add force refresh parameter when explicitly requested
+      const url = forceRefresh
+        ? '/api/ambassadors/leaderboard?refresh=true'
+        : '/api/ambassadors/leaderboard';
+
+      const response = await fetch(url, {
         signal: controller.signal,
         cache: 'no-store',
       });
@@ -85,7 +90,7 @@ export default function LeaderboardPage() {
   };
 
   const handleRefresh = () => {
-    fetchLeaderboard(false);
+    fetchLeaderboard(false, true); // Force refresh when user clicks refresh
   };
 
   const handleRetry = () => {
