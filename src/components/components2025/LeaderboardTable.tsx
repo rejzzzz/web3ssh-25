@@ -222,19 +222,7 @@ const AmbassadorCard = ({
               {ambassador.name}
             </h3>
 
-            <div className="flex items-center text-gray-300 mb-2">
-              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="text-sm truncate">
-                {ambassador.college || 'No college specified'}
-              </span>
-            </div>
-
-            <div className="flex items-center text-purple-300 mb-3">
-              <Code className="w-4 h-4 mr-2" />
-              <span className="text-sm font-mono bg-purple-400/20 px-2 py-1 rounded border border-purple-400/30">
-                {ambassador.referralCode}
-              </span>
-            </div>
+            
 
             <PerformanceBadge participants={ambassador.participants} />
           </div>
@@ -464,21 +452,7 @@ export default function LeaderboardTable({
                         />
                       </div>
 
-                      <div className="flex items-center space-x-4 text-gray-300 mb-2">
-                        <div className="flex items-center">
-                          <MapPin className="w-4 h-4 mr-1" />
-                          <span className="truncate text-sm">
-                            {ambassador.college || 'No college specified'}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center">
-                        <Code className="w-4 h-4 mr-2 text-purple-400" />
-                        <span className="text-sm font-mono bg-purple-400/20 text-purple-300 px-3 py-1 rounded-full border border-purple-400/30">
-                          {ambassador.referralCode}
-                        </span>
-                      </div>
+                      
                     </div>
                   </div>
 
