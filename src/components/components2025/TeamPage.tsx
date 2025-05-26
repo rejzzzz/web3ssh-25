@@ -1,6 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { 
   Users, 
   Code, 
@@ -35,9 +35,18 @@ interface TeamSection {
   description: string;
 }
 
-const TeamMemberCard = ({ member, color }: { member: TeamMember; color: string }) => {
+const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: string; delay: number }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+
+  // Track animation state
+  React.useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
 
   // Clean image path
   const imagePath = member.image.replace('../../../../public', '');
@@ -45,12 +54,11 @@ const TeamMemberCard = ({ member, color }: { member: TeamMember; color: string }
   return (
     <>
       <motion.div
+        ref={ref}
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        whileHover={{ y: -8, scale: 1.02 }}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
+        animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6, delay: hasAnimated ? delay : 0 }}
+        whileHover={{ y: -5 }}
         onClick={() => setIsModalOpen(true)}
         className="relative group cursor-pointer"
       >
@@ -75,18 +83,16 @@ const TeamMemberCard = ({ member, color }: { member: TeamMember; color: string }
           {/* Profile Image */}
           <div className="relative z-10 mb-4">
             <div className="relative w-24 h-24 mx-auto mb-4">
-              <motion.div
-                animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
-                className={`absolute inset-0 bg-gradient-to-r ${color} rounded-full opacity-20 blur-md`}
-              />
+              <div className={`absolute inset-0 bg-gradient-to-r ${color} rounded-full opacity-20 blur-md`} />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20">
                 <img
                   src={imagePath}
                   alt={member.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
+                  style={{ objectPosition: 'center top' }}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = '/team/default.jpg'; // Fallback image
+                    target.src = '/team/default.jpg';
                   }}
                 />
               </div>
@@ -109,9 +115,8 @@ const TeamMemberCard = ({ member, color }: { member: TeamMember; color: string }
           </div>
 
           {/* Hover Effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-            style={{ pointerEvents: 'none' }}
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"
           />
         </div>
       </motion.div>
@@ -154,7 +159,8 @@ const TeamMemberCard = ({ member, color }: { member: TeamMember; color: string }
                     <img
                       src={imagePath}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-top"
+                      style={{ objectPosition: 'center top' }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = '/team/default.jpg';
@@ -181,47 +187,66 @@ const TeamMemberCard = ({ member, color }: { member: TeamMember; color: string }
   );
 };
 
-const TeamSection = ({ section, index }: { section: TeamSection; index: number }) => {
+const TeamSection = ({ section }: { section: TeamSection }) => {
   const Icon = section.icon;
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, margin: "-150px" });
+
+  // Track animation state
+  React.useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index * 0.2 }}
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={hasAnimated ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.3 }}
       className="mb-20"
     >
       {/* Section Header */}
       <div className="text-center mb-12">
         <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: index * 0.2 + 0.3, type: 'spring', stiffness: 100 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={hasAnimated ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+          transition={{ delay: hasAnimated ? 0.2 : 0, type: 'spring', stiffness: 200, damping: 20 }}
           className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${section.color} shadow-lg mb-6`}
         >
           <Icon className="w-8 h-8 text-white" />
         </motion.div>
 
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: hasAnimated ? 0.3 : 0, duration: 0.6 }}
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200"
+        >
           {section.title}
-        </h2>
+        </motion.h2>
         
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+        <motion.p 
+          initial={{ opacity: 0, y: 15 }}
+          animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ delay: hasAnimated ? 0.4 : 0, duration: 0.6 }}
+          className="text-gray-300 text-lg max-w-2xl mx-auto"
+        >
           {section.description}
-        </p>
+        </motion.p>
       </div>
 
       {/* Team Members Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {section.data.map((member, memberIndex) => (
-          <motion.div
-            key={`${member.name}-${memberIndex}`}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + memberIndex * 0.1 }}
-          >
-            <TeamMemberCard member={member} color={section.color} />
-          </motion.div>
+          <TeamMemberCard 
+            key={`${member.name}-${memberIndex}`} 
+            member={member} 
+            color={section.color}
+            delay={hasAnimated ? memberIndex * 0.1 : 0}
+          />
         ))}
       </div>
     </motion.section>
@@ -282,13 +307,13 @@ export default function TeamPage() {
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <motion.div
-            initial={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
             <motion.h1
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-cyan-200"
@@ -339,15 +364,15 @@ export default function TeamPage() {
           </motion.div>
 
           {/* Team Sections */}
-          {teamSections.map((section, index) => (
-            <TeamSection key={section.title} section={section} index={index} />
+          {teamSections.map((section) => (
+            <TeamSection key={section.title} section={section} />
           ))}
 
           {/* Call to Action */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.5 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
             className="text-center mt-20"
           >
             <div
