@@ -22,5 +22,11 @@
     "ug": "UG1",
     "team": "Research Team",
     "image": "../../../../public/team2025/gargi_diware.webp"
+  },
+  {
+    "name": "Anchal Tandekar",
+    "ug": "UG2",
+    "team": "Research Team",
+    "image": "../../../../public/team2025/anchal_tandekar.webp"
   }
 ]

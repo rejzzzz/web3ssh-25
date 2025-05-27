@@ -39,16 +39,8 @@ interface TeamSection {
 
 const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: string; delay: number }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [hasAnimated, setHasAnimated] = useState(false);
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: false, margin: "-100px" });
-
-    // Track animation state
-    React.useEffect(() => {
-        if (isInView && !hasAnimated) {
-            setHasAnimated(true);
-        }
-    }, [isInView, hasAnimated]);
+    const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     // Clean image path
     const imagePath = member.image.replace('../../../../public', '');
@@ -58,8 +50,8 @@ const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: s
             <motion.div
                 ref={ref}
                 initial={{ opacity: 0, y: 30 }}
-                animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: hasAnimated ? delay : 0 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: isInView ? delay : 0 }}
                 whileHover={{ y: -5 }}
                 onClick={() => setIsModalOpen(true)}
                 className="relative group cursor-pointer"
@@ -191,22 +183,14 @@ const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: s
 
 const TeamSection = ({ section }: { section: TeamSection }) => {
     const Icon = section.icon;
-    const [hasAnimated, setHasAnimated] = useState(false);
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: false, margin: "-150px" });
-
-    // Track animation state
-    React.useEffect(() => {
-        if (isInView && !hasAnimated) {
-            setHasAnimated(true);
-        }
-    }, [isInView, hasAnimated]);
+    const isInView = useInView(ref, { once: true, margin: "-150px" });
 
     return (
         <motion.section
             ref={ref}
             initial={{ opacity: 0 }}
-            animate={hasAnimated ? { opacity: 1 } : { opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="mb-20"
         >
@@ -214,8 +198,8 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
             <div className="text-center mb-12">
                 <motion.div
                     initial={{ scale: 0, opacity: 0 }}
-                    animate={hasAnimated ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                    transition={{ delay: hasAnimated ? 0.2 : 0, type: 'spring', stiffness: 200, damping: 20 }}
+                    animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                    transition={{ delay: isInView ? 0.2 : 0, type: 'spring', stiffness: 200, damping: 20 }}
                     className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${section.color} shadow-lg mb-6`}
                 >
                     <Icon className="w-8 h-8 text-white" />
@@ -223,8 +207,8 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
 
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
-                    animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ delay: hasAnimated ? 0.3 : 0, duration: 0.6 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ delay: isInView ? 0.3 : 0, duration: 0.6 }}
                     className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200"
                 >
                     {section.title}
@@ -232,8 +216,8 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
 
                 <motion.p
                     initial={{ opacity: 0, y: 15 }}
-                    animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                    transition={{ delay: hasAnimated ? 0.4 : 0, duration: 0.6 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                    transition={{ delay: isInView ? 0.4 : 0, duration: 0.6 }}
                     className="text-gray-300 text-lg max-w-2xl mx-auto"
                 >
                     {section.description}
@@ -249,7 +233,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                             key={`${section.data[0].name}-0`}
                             member={section.data[0]}
                             color={section.color}
-                            delay={hasAnimated ? 0 : 0}
+                            delay={isInView ? 0 : 0}
                         />
                     </div>
                     <div className="w-full max-w-sm">
@@ -257,7 +241,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                             key={`${section.data[1].name}-1`}
                             member={section.data[1]}
                             color={section.color}
-                            delay={hasAnimated ? 0.1 : 0}
+                            delay={isInView ? 0.1 : 0}
                         />
                     </div>
                 </div>
@@ -269,7 +253,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                             <TeamMemberCard
                                 member={member}
                                 color={section.color}
-                                delay={hasAnimated ? memberIndex * 0.1 : 0}
+                                delay={isInView ? memberIndex * 0.1 : 0}
                             />
                         </div>
                     ))}
@@ -284,7 +268,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${member.name}-${memberIndex}`}
                                 member={member}
                                 color={section.color}
-                                delay={hasAnimated ? memberIndex * 0.1 : 0}
+                                delay={isInView ? memberIndex * 0.1 : 0}
                             />
                         ))}
                     </div>
@@ -295,7 +279,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${section.data[4].name}-4`}
                                 member={section.data[4]}
                                 color={section.color}
-                                delay={hasAnimated ? 0.4 : 0}
+                                delay={isInView ? 0.4 : 0}
                             />
                         </div>
                         {/* Mobile and tablet view - full width centered */}
@@ -304,7 +288,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${section.data[4].name}-4-mobile`}
                                 member={section.data[4]}
                                 color={section.color}
-                                delay={hasAnimated ? 0.4 : 0}
+                                delay={isInView ? 0.4 : 0}
                             />
                         </div>
                     </div>
@@ -319,7 +303,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${member.name}-${memberIndex}`}
                                 member={member}
                                 color={section.color}
-                                delay={hasAnimated ? memberIndex * 0.1 : 0}
+                                delay={isInView ? memberIndex * 0.1 : 0}
                             />
                         ))}
                     </div>
@@ -330,7 +314,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${member.name}-${memberIndex + 4}`}
                                 member={member}
                                 color={section.color}
-                                delay={hasAnimated ? (memberIndex + 4) * 0.1 : 0}
+                                delay={isInView ? (memberIndex + 4) * 0.1 : 0}
                             />
                         ))}
                     </div>
@@ -345,7 +329,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${member.name}-${memberIndex}`}
                                 member={member}
                                 color={section.color}
-                                delay={hasAnimated ? memberIndex * 0.1 : 0}
+                                delay={isInView ? memberIndex * 0.1 : 0}
                             />
                         ))}
                     </div>
@@ -356,7 +340,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${member.name}-${memberIndex + 4}`}
                                 member={member}
                                 color={section.color}
-                                delay={hasAnimated ? (memberIndex + 4) * 0.1 : 0}
+                                delay={isInView ? (memberIndex + 4) * 0.1 : 0}
                             />
                         ))}
                     </div>
@@ -367,7 +351,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${section.data[8].name}-8`}
                                 member={section.data[8]}
                                 color={section.color}
-                                delay={hasAnimated ? 0.8 : 0}
+                                delay={isInView ? 0.8 : 0}
                             />
                         </div>
                         {/* Mobile and tablet view - full width centered */}
@@ -376,7 +360,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 key={`${section.data[8].name}-8-mobile`}
                                 member={section.data[8]}
                                 color={section.color}
-                                delay={hasAnimated ? 0.8 : 0}
+                                delay={isInView ? 0.8 : 0}
                             />
                         </div>
                     </div>
@@ -389,7 +373,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                             key={`${member.name}-${memberIndex}`}
                             member={member}
                             color={section.color}
-                            delay={hasAnimated ? memberIndex * 0.1 : 0}
+                            delay={isInView ? memberIndex * 0.1 : 0}
                         />
                     ))}
                 </div>
