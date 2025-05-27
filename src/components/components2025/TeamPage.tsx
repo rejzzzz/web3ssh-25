@@ -9,10 +9,11 @@ import {
     Search,
     Palette,
     X,
-    User
+    GraduationCap
 } from 'lucide-react';
 
 // Import team data
+import facultyData from '../../data/2025/team/faculty_organizer.json';
 import organizersData from '../../data/2025/team/event_organizer.json';
 import techTeamData from '../../data/2025/team/tech_team.json';
 import managementTeamData from '../../data/2025/team/management_team.json';
@@ -22,8 +23,9 @@ import designTeamData from '../../data/2025/team/design_team.json';
 
 interface TeamMember {
     name: string;
-    ug: string;
-    team: string;
+    ug?: string;
+    team?: string;
+    role?: string;
     image: string;
 }
 
@@ -105,11 +107,11 @@ const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: s
                             </h3>
 
                             <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${color} text-white border border-current/20 mb-2`}>
-                                {member.team}
+                                {member.team || member.role}
                             </div>
 
                             <p className="text-gray-300 text-sm font-mono">
-                                {member.ug}
+                                {member.ug || 'Faculty'}
                             </p>
                         </div>
                     </div>
@@ -171,9 +173,9 @@ const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: s
 
                                 <h2 className="text-2xl font-bold text-white mb-2">{member.name}</h2>
                                 <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r ${color} text-white mb-4`}>
-                                    {member.team}
+                                    {member.team || member.role}
                                 </div>
-                                <p className="text-gray-300 font-mono mb-6">{member.ug}</p>
+                                <p className="text-gray-300 font-mono mb-6">{member.ug || 'Faculty'}</p>
 
                                 <div className="text-gray-400 text-sm">
                                     Passionate contributor to Web3SSH 2025
@@ -258,6 +260,19 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                             delay={hasAnimated ? 0.1 : 0}
                         />
                     </div>
+                </div>
+            ) : section.data.length === 3 ? (
+                // Special layout for 3-member teams (Faculty Coordinators) - Centered layout
+                <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
+                    {section.data.map((member, memberIndex) => (
+                        <div key={`${member.name}-${memberIndex}`} className="w-full max-w-sm">
+                            <TeamMemberCard
+                                member={member}
+                                color={section.color}
+                                delay={hasAnimated ? memberIndex * 0.1 : 0}
+                            />
+                        </div>
+                    ))}
                 </div>
             ) : section.data.length === 5 ? (
                 // Special layout for 5-member teams (Tech Team)
@@ -360,11 +375,18 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
 export default function TeamPage() {
     const teamSections: TeamSection[] = [
         {
-            title: "Organizers",
+            title: "Faculty Coordinators",
+            icon: GraduationCap,
+            data: facultyData,
+            color: "from-yellow-600 to-orange-700",
+            description: "Distinguished faculty members providing academic guidance and leadership for Web3SSH 2025."
+        },
+        {
+            title: "Student Coordinators",
             icon: Users,
             data: organizersData,
             color: "from-purple-600 to-indigo-700",
-            description: "The visionary leaders orchestrating Web3SSH 2025, bringing together innovation and education."
+            description: "The visionary student leaders orchestrating Web3SSH 2025, bringing together innovation and education."
         },
         {
             title: "Tech Team",
@@ -403,8 +425,6 @@ export default function TeamPage() {
         }
     ];
 
-    const totalMembers = teamSections.reduce((acc, section) => acc + section.data.length, 0);
-
     return (
         <div className="min-h-screen relative overflow-hidden">
             <div className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
@@ -435,36 +455,7 @@ export default function TeamPage() {
                             creators, and visionaries working together to bring you an extraordinary Web3 experience.
                         </motion.p>
 
-                        {/* Stats */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6, duration: 0.8 }}
-                            className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8"
-                        >
-                            <div
-                                style={{
-                                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                                    backdropFilter: 'blur(10px)',
-                                    borderRadius: '20px',
-                                }}
-                                className="px-6 py-3 border border-white/20"
-                            >
-                                <span className="text-3xl font-bold text-white">{totalMembers}</span>
-                                <span className="text-gray-300 ml-2">Team Members</span>
-                            </div>
-                            <div
-                                style={{
-                                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                                    backdropFilter: 'blur(10px)',
-                                    borderRadius: '20px',
-                                }}
-                                className="px-6 py-3 border border-white/20"
-                            >
-                                <span className="text-3xl font-bold text-white">{teamSections.length}</span>
-                                <span className="text-gray-300 ml-2">Specialized Teams</span>
-                            </div>
-                        </motion.div>
+
                     </motion.div>
 
                     {/* Team Sections */}
@@ -473,36 +464,7 @@ export default function TeamPage() {
                     ))}
 
                     {/* Call to Action */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 1.2 }}
-                        className="text-center mt-20"
-                    >
-                        <div
-                            style={{
-                                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                                backdropFilter: 'blur(10px)',
-                                borderRadius: '20px',
-                            }}
-                            className="p-8 border border-white/20 max-w-2xl mx-auto"
-                        >
-                            <h3 className="text-2xl font-bold text-white mb-4">
-                                Want to Join Our Team?
-                            </h3>
-                            <p className="text-gray-300 mb-6">
-                                We're always looking for passionate individuals to contribute to the Web3 community.
-                                Stay tuned for opportunities to be part of future events!
-                            </p>
-                            <a
-                                href="/contact"
-                                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105"
-                            >
-                                <User className="w-5 h-5 mr-2" />
-                                Get In Touch
-                            </a>
-                        </div>
-                    </motion.div>
+
                 </div>
             </div>
         </div>
