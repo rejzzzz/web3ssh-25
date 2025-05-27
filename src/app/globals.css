@@ -1,4 +1,6 @@
 
+@import './reduced-motion.css';
+
 @keyframes gradient {
   0% {
     transform: rotate(0deg);
