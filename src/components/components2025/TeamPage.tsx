@@ -262,8 +262,8 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                     </div>
                 </div>
             ) : section.data.length === 3 ? (
-                // Special layout for 3-member teams (Faculty Coordinators) - Centered layout
-                <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
+                // Special layout for 3-member teams (Faculty Coordinators) - Centered layout with same card size as 2-member teams
+                <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 max-w-6xl mx-auto">
                     {section.data.map((member, memberIndex) => (
                         <div key={`${member.name}-${memberIndex}`} className="w-full max-w-sm">
                             <TeamMemberCard
@@ -307,6 +307,32 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                                 delay={hasAnimated ? 0.4 : 0}
                             />
                         </div>
+                    </div>
+                </div>
+            ) : section.data.length === 7 ? (
+                // Special layout for 7-member teams (Management Team) - 4 in first row, 3 centered in second row
+                <div className="max-w-6xl mx-auto">
+                    {/* First row - 4 members */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        {section.data.slice(0, 4).map((member, memberIndex) => (
+                            <TeamMemberCard
+                                key={`${member.name}-${memberIndex}`}
+                                member={member}
+                                color={section.color}
+                                delay={hasAnimated ? memberIndex * 0.1 : 0}
+                            />
+                        ))}
+                    </div>
+                    {/* Second row - 3 members centered with same card size */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                        {section.data.slice(4, 7).map((member, memberIndex) => (
+                            <TeamMemberCard
+                                key={`${member.name}-${memberIndex + 4}`}
+                                member={member}
+                                color={section.color}
+                                delay={hasAnimated ? (memberIndex + 4) * 0.1 : 0}
+                            />
+                        ))}
                     </div>
                 </div>
             ) : section.data.length === 9 ? (
