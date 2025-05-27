@@ -1,0 +1,17 @@
+[
+    {  
+        "name": "Dr. Mallikarjun Reddy Dorsala",
+        "image": "../../../../public/speakers/dr_mallikarjun_reddy_dorsala.webp",
+        "role": "Assistant Professor IIIT Sri City"
+    },
+    {
+        "name": "Dr. Bheemappa Halavar",
+        "image": "../../../../public/speakers/dr_himangshu_sarma.webp",
+        "role": "Assistant Professor IIIT Sri City"
+    },
+    {
+        "name": "Dr. Himangsu Sarma",
+        "image": "../../../../public/speakers/dr_bheemappa_halavar-1.webp",
+        "role": "Assistant Professor IIIT Sri City"
+    }
+]

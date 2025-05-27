@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Jaynil D Panjwani",
+    "ug": "UG1",
+    "team": "Research Team",
+    "image": "../../../../public/team2025/jaynil_panjwani.webp"
+  },
+  {
+    "name": "Naseeb",
+    "ug": "UG1",
+    "team": "Research Team",
+    "image": "../../../../public/team2025/naseeb_rajendar.webp"
+  },
+  {
+    "name": "Shrinivas Mukund Bhong",
+    "ug": "UG1",
+    "team": "Research Team",
+    "image": "../../../../public/team2025/srinivas_bhong.webp"
+  },
+  {
+    "name": "Gargi Diware",
+    "ug": "UG1",
+    "team": "Research Team",
+    "image": "../../../../public/team2025/gargi_diware.webp"
+  },
+  {
+    "name": "Anchal Tandekar",
+    "ug": "UG2",
+    "team": "Research Team",
+    "image": "../../../../public/team2025/anchal_tandekar.webp"
+  }
+]
