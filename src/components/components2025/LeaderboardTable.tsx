@@ -8,7 +8,6 @@ import {
   Award,
   Sparkles,
   Users,
-  Code, // ← ADD THIS IMPORT
   Search,
   TrendingUp,
   Star,
@@ -229,12 +228,7 @@ const AmbassadorCard = ({
               </span>
             </div>
 
-            <div className="flex items-center text-purple-300 mb-3">
-              <Code className="w-4 h-4 mr-2" />
-              <span className="text-xs sm:text-sm font-mono bg-purple-400/20 px-2 py-1 rounded border border-purple-400/30">
-                {ambassador.referralCode}
-              </span>
-            </div>
+            
 
 
             <PerformanceBadge participants={ambassador.participants} />
@@ -482,9 +476,7 @@ export default function LeaderboardTable({
 
                       <div className="flex items-center">
                      
-                        <span className="text-xs sm:text-sm font-mono bg-purple-400/20 text-purple-300 px-2 sm:px-3 py-1 rounded-full border border-purple-400/30">
-                          {ambassador.referralCode}
-                        </span>
+                        
                       </div>
 
                       
