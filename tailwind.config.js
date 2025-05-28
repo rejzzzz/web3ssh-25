@@ -23,8 +23,17 @@ export default {
         third: 'moveInCircle 40s linear infinite',
         fourth: 'moveHorizontal 40s ease infinite',
         fifth: 'moveInCircle 20s ease infinite',
+        'slow-spin': 'spin 8s linear infinite',
       },
       keyframes: {
+        spin: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
         moveHorizontal: {
           '0%': {
             transform: 'translateX(-50%) translateY(-10%)',

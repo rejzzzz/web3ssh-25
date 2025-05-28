@@ -8,12 +8,16 @@
     "url": "/#speakers"
   },
   {
+    "title": "Testimonials",
+    "url": "/#testimonial"
+  },
+  {
     "title": "Schedule",
     "url": "/#schedule"
   },
   {
     "title": "Hackathon",
-    "url": "https://unstop.com/hackathons/web3ssh-web3-summer-school-hackathon-2025-indian-institute-of-information-technology-iiit-sri-city-1481478?lb=C1wBStpr"
+    "url": "/"
   },
   {
     "title": "Leaderboard",
@@ -22,5 +26,9 @@
   {
     "title": "Team",
     "url": "/team/2025"
+  },
+  {
+    "title": "FAQ",
+    "url": "/#faq"
   }
 ]
