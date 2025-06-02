@@ -195,7 +195,7 @@ export default function Page() {
                       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg mb-4 lg:mb-0 [text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]">Become an Ambassador</h2>
                       <div className="flex items-center px-4 py-2 bg-white/15 rounded-full backdrop-blur-md border border-white/20 shadow-lg transform hover:scale-105 transition-transform duration-300">
                         <div className="px-3 py-1 bg-gradient-to-r from-purple-600/70 to-blue-600/70 rounded-full text-white font-semibold mr-3">
-                          Register by May 15, 2025
+                          Register by June 5, 2025
                         </div>
                       </div>
                     </div>
@@ -293,7 +293,7 @@ export default function Page() {
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          Deadline: May 20, 2025 (Limited slots)
+                          Deadline: June 5, 2025 (Limited slots)
                         </span>
                       </div>
                     </div>
