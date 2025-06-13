@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GeistSans } from 'geist/font/sans';
 import defaultLinkPreview from '@public/link_preview.png';
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: 'web3ssh',
@@ -71,6 +72,7 @@ export default function RootLayout({
         </div>
         <div className="relative z-10">
           {children}
+          <Analytics />
         </div>
       </body>
     </html>
