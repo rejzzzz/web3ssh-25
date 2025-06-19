@@ -50,8 +50,8 @@ export const Schedule = () => {
 
   const scheduleData = {
     '29 June 2025': [
-      { time: '09:30-09:45', title: 'Inauguration', first: true },
-      { time: '09:45-11:45', title: 'Coding session 1', topic: 'Solidity Session' },
+      { time: '10:00-10:30', title: 'Inauguration', first: true },
+      { time: '10:30-11:45', title: 'Coding session 1', topic: 'Solidity Session' },
       { time: '12:00-12:45', title: 'Key note 1', speaker: 'Ravikant Agarwal' },
       { time: '14:00-15:30', title: 'Coding session 2', topic: 'Solidity Session' },
       { time: '15:45-16:30', title: 'Team Building Activity 1', last: true },
