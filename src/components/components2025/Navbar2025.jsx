@@ -168,6 +168,13 @@ export default function Navbar() {
               </a>
             ))}
             <a
+              href="/dashboard"
+              className="block px-3 py-2 text-base text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Hackathon Dashboard
+            </a>
+            <a
               href="/archives/2024"
               className="block px-3 py-2 text-base text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -200,6 +207,14 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href="/dashboard"
+                className="text-sm lg:text-lg px-2 py-1 rounded-md cursor-pointer hover:font-semibold hover:scale-125 hover:-translate-y-1 transition-all duration-300 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30"
+              >
+                Dashboard
+              </a>
+            </li>
           </ul>
 
           {/* Dropdown Button */}
