@@ -28,5 +28,11 @@
     "experience": "Blockchain Engineer at Amberdata | Creator @SarahBensonCodes",
     "imageUrl": "/speakers2025/sarah-benson.webp",
     "details": "Specializes in robust blockchain systems | Shares practical insights and career inspiration through @SarahBensonCodes"
+  },
+  {
+    "name": "Lauri Peltonen",
+    "experience": "ZK & Solidity Freelancer",
+    "imageUrl": "/speakers2025/Lauri Peltonen-Photoroom.webp",
+    "details": "Expert in Zero-Knowledge proofs and Solidity development | Freelance blockchain developer specializing in advanced cryptographic solutions and smart contract architecture | Passionate about privacy-preserving technologies and decentralized systems"
   }
 ]
