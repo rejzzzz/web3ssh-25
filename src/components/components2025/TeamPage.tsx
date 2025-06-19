@@ -9,7 +9,8 @@ import {
     Search,
     Palette,
     X,
-    GraduationCap
+    GraduationCap,
+    UserCheck
 } from 'lucide-react';
 
 // Import team data
@@ -20,6 +21,7 @@ import managementTeamData from '../../data/2025/team/management_team.json';
 import marketingTeamData from '../../data/2025/team/marketing_team.json';
 import researchTeamData from '../../data/2025/team/research_team.json';
 import designTeamData from '../../data/2025/team/design_team.json';
+import taTeamData from '../../data/2025/team/ta_team.json';
 
 interface TeamMember {
     name: string;
@@ -76,7 +78,7 @@ const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: s
 
                     {/* Profile Image */}
                     <div className="relative z-10 mb-4">
-                        <div className="relative w-24 h-24 mx-auto mb-4">
+                        <div className="relative w-32 h-32 mx-auto mb-4">
                             <div className={`absolute inset-0 bg-gradient-to-r ${color} rounded-full opacity-20 blur-md`} />
                             <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20">
                                 <img
@@ -147,7 +149,7 @@ const TeamMemberCard = ({ member, color, delay }: { member: TeamMember; color: s
 
                             {/* Modal Content */}
                             <div className="text-center">
-                                <div className="relative w-32 h-32 mx-auto mb-6">
+                                <div className="relative w-40 h-40 mx-auto mb-6">
                                     <div className={`absolute inset-0 bg-gradient-to-r ${color} rounded-full opacity-30 blur-lg`} />
                                     <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/30">
                                         <img
@@ -294,7 +296,7 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                     </div>
                 </div>
             ) : section.data.length === 7 ? (
-                // Special layout for 7-member teams (Management Team) - 4 in first row, 3 centered in second row
+                // Special layout for 7-member teams - 4 in first row, 3 centered in second row
                 <div className="max-w-6xl mx-auto">
                     {/* First row - 4 members */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -310,6 +312,32 @@ const TeamSection = ({ section }: { section: TeamSection }) => {
                     {/* Second row - 3 members centered with same card size */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-3xl mx-auto">
                         {section.data.slice(4, 7).map((member, memberIndex) => (
+                            <TeamMemberCard
+                                key={`${member.name}-${memberIndex + 4}`}
+                                member={member}
+                                color={section.color}
+                                delay={isInView ? (memberIndex + 4) * 0.1 : 0}
+                            />
+                        ))}
+                    </div>
+                </div>
+            ) : section.data.length === 8 ? (
+                // Special layout for 8-member teams (Management Team) - 4 in first row, 4 in second row
+                <div className="max-w-6xl mx-auto">
+                    {/* First row - 4 members */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        {section.data.slice(0, 4).map((member, memberIndex) => (
+                            <TeamMemberCard
+                                key={`${member.name}-${memberIndex}`}
+                                member={member}
+                                color={section.color}
+                                delay={isInView ? memberIndex * 0.1 : 0}
+                            />
+                        ))}
+                    </div>
+                    {/* Second row - 4 members */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {section.data.slice(4, 8).map((member, memberIndex) => (
                             <TeamMemberCard
                                 key={`${member.name}-${memberIndex + 4}`}
                                 member={member}
@@ -397,6 +425,13 @@ export default function TeamPage() {
             data: organizersData,
             color: "from-purple-600 to-indigo-700",
             description: "The visionary student leaders orchestrating Web3SSH 2025, bringing together innovation and education."
+        },
+        {
+            title: "TA Team",
+            icon: UserCheck,
+            data: taTeamData,
+            color: "from-indigo-500 to-blue-600",
+            description: "Teaching assistants providing guidance and support to participants throughout the hackathon."
         },
         {
             title: "Tech Team",
