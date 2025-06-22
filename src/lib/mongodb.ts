@@ -1,10 +1,11 @@
 import { MongoClient, Db } from 'mongodb';
 
-if (!process.env.MONGODB_URI) {
+// Skip MongoDB connection if using mock data
+if (process.env.USE_MOCK_DATA !== 'true' && !process.env.MONGODB_URI) {
   throw new Error('Please add your MongoDB URI to .env.local');
 }
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/web3ssh_test';
 const options = {};
 
 let client: MongoClient;
@@ -14,7 +15,11 @@ declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (process.env.NODE_ENV === 'development') {
+// Don't initialize MongoDB if using mock data
+if (process.env.USE_MOCK_DATA === 'true') {
+  // Create a dummy promise for mock mode
+  clientPromise = Promise.reject(new Error('MongoDB disabled - using mock data'));
+} else if (process.env.NODE_ENV === 'development') {
   // In development mode, use a global variable so that the value
   // is preserved across module reloads caused by HMR (Hot Module Replacement).
   if (!global._mongoClientPromise) {

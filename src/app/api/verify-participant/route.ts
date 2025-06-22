@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase, COLLECTIONS } from 'lib/mongodb';
 import { verificationSchema } from 'lib/validation';
 import { VerificationResponse } from 'types/dashboard';
+import { mockParticipants } from 'lib/mock-data';
 
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -55,6 +56,39 @@ export async function POST(request: NextRequest) {
     }
 
     const { email, uid } = validationResult.data;
+
+    // Check if we should use mock data
+    if (process.env.USE_MOCK_DATA === 'true') {
+      console.log('Using mock data for testing...');
+      
+      // Find participant in mock data
+      const participant = mockParticipants.find(
+        p => p.email.toLowerCase() === email.toLowerCase() && p.uid === uid
+      );
+      
+      if (!participant) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            message: 'Invalid email or UID. Please check your credentials or contact support.' 
+          },
+          { status: 401 }
+        );
+      }
+      
+      // Return success with participant info
+      const response: VerificationResponse = {
+        success: true,
+        message: 'Participant verified successfully.',
+        participantInfo: {
+          name: participant.name,
+          teamId: participant.teamId,
+          teamName: participant.teamName,
+        },
+      };
+      
+      return NextResponse.json(response, { status: 200 });
+    }
 
     // Connect to database
     const db = await getDatabase();

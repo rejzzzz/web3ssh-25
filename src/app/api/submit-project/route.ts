@@ -3,6 +3,7 @@ import { getDatabase, COLLECTIONS } from 'lib/mongodb';
 import { submissionSchema } from 'lib/validation';
 import { generateSubmissionId, isSubmissionWindowOpen } from 'lib/dashboard-utils';
 import { SubmissionResponse, Submission } from 'types/dashboard';
+import { mockParticipants, mockSubmissions } from 'lib/mock-data';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,6 +23,68 @@ export async function POST(request: NextRequest) {
     }
 
     const submissionData = validationResult.data;
+
+    // Check if we should use mock data
+    if (process.env.USE_MOCK_DATA === 'true') {
+      console.log('Using mock data for testing...');
+      
+      // Verify participant exists in mock data
+      const participant = mockParticipants.find(
+        p => p.email.toLowerCase() === submissionData.email.toLowerCase() && p.uid === submissionData.uid
+      );
+      
+      if (!participant) {
+        return NextResponse.json(
+          { success: false, message: 'Participant not found. Please verify your credentials first.' },
+          { status: 403 }
+        );
+      }
+      
+      // Check if participant has already submitted (in mock data)
+      const existingSubmission = mockSubmissions.find(
+        s => s.participantEmail === submissionData.email.toLowerCase() && s.participantUID === submissionData.uid
+      );
+      
+      if (existingSubmission) {
+        return NextResponse.json(
+          { success: false, message: 'You have already submitted a project. Multiple submissions are not allowed.' },
+          { status: 409 }
+        );
+      }
+      
+      // Create submission
+      const submissionId = generateSubmissionId();
+      const submission: Submission = {
+        participantEmail: submissionData.email.toLowerCase(),
+        participantUID: submissionData.uid,
+        projectName: submissionData.projectName,
+        teamName: submissionData.teamName,
+        participantNames: submissionData.participantNames,
+        description: submissionData.description,
+        problemStatement: submissionData.problemStatement,
+        solutionOverview: submissionData.solutionOverview,
+        technologiesUsed: submissionData.technologiesUsed,
+        demoVideoLink: submissionData.demoVideoLink,
+        githubRepoLink: submissionData.githubRepoLink,
+        liveDemoLink: submissionData.liveDemoLink,
+        supportingFiles: submissionData.supportingFiles || [],
+        submissionTimestamp: new Date(),
+        termsAccepted: submissionData.termsAccepted,
+        submissionId,
+      };
+      
+      // Add to mock submissions (for testing)
+      mockSubmissions.push(submission);
+      
+      // Return success response
+      const response: SubmissionResponse = {
+        success: true,
+        message: 'Project submitted successfully! You should receive a confirmation email shortly.',
+        submissionId,
+      };
+      
+      return NextResponse.json(response, { status: 201 });
+    }
 
     // Connect to database
     const db = await getDatabase();
