@@ -410,7 +410,7 @@ class EmailService {
             
             <div class="footer">
               <div class="social-links">
-                <a href="https://web3ssh.com" target="_blank">🌐 Website</a>
+                <a href="https://web3ssh.dev" target="_blank">🌐 Website</a>
                 <a href="https://x.com/web3ssh" target="_blank">🐦 Twitter</a>
                 <a href="https://linkedin.com/company/web3ssh" target="_blank">💼 LinkedIn</a>
                 <a href="https://instagram.com/web3ssh" target="_blank">📸 Instagram</a>
@@ -464,8 +464,8 @@ class EmailService {
         Web3SSH 2025 Organizing Team
         IIIT Sri City
 
-        Website: https://web3ssh.com
-        Contact: team@web3ssh.com
+        Website: https://web3ssh.dev
+        Contact:web3ssh@iiits.in
       `;
 
       const mailOptions = {
@@ -527,3 +527,4 @@ class EmailService {
 }
 
 export default EmailService;
+ 

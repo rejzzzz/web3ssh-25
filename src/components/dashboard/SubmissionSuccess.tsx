@@ -129,51 +129,7 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
           </p>
         </motion.div>
 
-        {/* Submission Details */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="bg-white/10 rounded-xl p-6 mb-8"
-        >
-          <h2 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Trophy className="w-6 h-6 text-yellow-400" />
-            Submission Details
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-lg font-medium text-white mb-2">Submission ID</h3>
-              <div className="flex items-center gap-2 p-3 bg-white/10 rounded-lg">
-                <code className="text-green-400 font-mono flex-1">{submissionId}</code>
-                <button
-                  onClick={copySubmissionId}
-                  className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors flex items-center gap-1"
-                >
-                  {copied ? (
-                    <>
-                      <CheckCircle2 className="w-4 h-4" />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4" />
-                      Copy
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-medium text-white mb-2">Submitted On</h3>
-              <div className="flex items-center gap-2 p-3 bg-white/10 rounded-lg">
-                <Calendar className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">{new Date().toLocaleString()}</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+      
 
         {/* What's Next Section */}
         <motion.div
@@ -298,25 +254,7 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
         </motion.div>
 
         {/* Important Note */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
-          className="mt-8 p-4 bg-yellow-600/20 border border-yellow-500/30 rounded-lg"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="text-black text-sm font-bold">!</span>
-            </div>
-            <div>
-              <h4 className="font-semibold text-yellow-300 mb-1">Important Note</h4>
-              <p className="text-yellow-200 text-sm">
-                Please save your submission ID ({submissionId}) for future reference. 
-                You may need it for updates or queries regarding your submission.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+      
       </motion.div>
 
       {/* Additional Resources */}
