@@ -1,4 +1,4 @@
-import { HackathonInfo, ScheduleEvent, JudgingCriterion, Resource, FAQ } from 'types/dashboard';
+import { HackathonInfo } from 'types/dashboard';
 
 // Generate unique submission ID
 export function generateSubmissionId(): string {
@@ -8,7 +8,10 @@ export function generateSubmissionId(): string {
 }
 
 // Check if submission window is open
-export function isSubmissionWindowOpen(startTime: Date, endTime: Date): boolean {
+export function isSubmissionWindowOpen(
+  startTime: Date,
+  endTime: Date,
+): boolean {
   const now = new Date();
   return now >= startTime && now <= endTime;
 }
@@ -207,31 +210,36 @@ export const HACKATHON_INFO: HackathonInfo = {
     {
       id: '1',
       question: 'Can I participate alone?',
-      answer: 'Yes, you can participate as a solo developer or form a team of up to 4 members.',
+      answer:
+        'Yes, you can participate as a solo developer or form a team of up to 4 members.',
       category: 'participation',
     },
     {
       id: '2',
       question: 'What technologies should I use?',
-      answer: 'You must incorporate Web3 technologies like Ethereum, Polygon, IPFS, or other blockchain platforms. Frontend and backend technologies are your choice.',
+      answer:
+        'You must incorporate Web3 technologies like Ethereum, Polygon, IPFS, or other blockchain platforms. Frontend and backend technologies are your choice.',
       category: 'technical',
     },
     {
       id: '3',
       question: 'Can I use existing code?',
-      answer: 'Yes, but you must clearly document any pre-existing code or libraries used. The majority of the project should be built during the hackathon.',
+      answer:
+        'Yes, but you must clearly document any pre-existing code or libraries used. The majority of the project should be built during the hackathon.',
       category: 'technical',
     },
     {
       id: '4',
       question: 'How do I submit my project?',
-      answer: 'Use the submission form on this dashboard. You\'ll need your registration email and UID to verify your participation.',
+      answer:
+        "Use the submission form on this dashboard. You'll need your registration email and UID to verify your participation.",
       category: 'submission',
     },
     {
       id: '5',
       question: 'What should I include in my submission?',
-      answer: 'Your submission should include project name, description, demo video, GitHub repository, and optionally a live demo link.',
+      answer:
+        'Your submission should include project name, description, demo video, GitHub repository, and optionally a live demo link.',
       category: 'submission',
     },
   ],

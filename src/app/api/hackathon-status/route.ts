@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getTimeRemaining, isSubmissionWindowOpen } from 'lib/dashboard-utils';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // For testing purposes, return a submission window that's always open
     // In production, this would fetch from a configuration collection
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     const timeRemaining = getTimeRemaining(endTime);
 
     return NextResponse.json({
-      isOpen: true, // Force open for testing
+      isOpen: windowOpen, // Use the actual calculation
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
       timeRemaining,

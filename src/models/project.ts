@@ -65,6 +65,15 @@ const projectSchema = new Schema<IProject>(
     supportingFiles: [
       {
         type: String,
+        validate: {
+          validator: function (v: string) {
+            // Validate Google Docs/Drive URLs
+            const googleDocsRegex = /^https:\/\/(docs|drive)\.google\.com\/.+/;
+            return !v || googleDocsRegex.test(v);
+          },
+          message:
+            'Supporting files must be valid Google Docs or Google Drive links',
+        },
       },
     ],
     termsAccepted: {

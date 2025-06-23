@@ -10,13 +10,17 @@ interface DashboardHeaderProps {
   onStepChange: (step: DashboardState['currentStep']) => void;
 }
 
-export default function DashboardHeader({ 
-  submissionWindow, 
-  currentStep, 
-  onStepChange 
+export default function DashboardHeader({
+  submissionWindow,
+  currentStep,
+  onStepChange,
 }: DashboardHeaderProps) {
-  const [timeRemaining, setTimeRemaining] = useState({ 
-    days: 0, hours: 0, minutes: 0, seconds: 0, total: 0 
+  const [timeRemaining, setTimeRemaining] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    total: 0,
   });
 
   useEffect(() => {
@@ -34,11 +38,11 @@ export default function DashboardHeader({
 
   const getStepStatus = (step: DashboardState['currentStep']) => {
     if (step === currentStep) return 'current';
-    
+
     const stepOrder = ['info', 'verify', 'submit', 'success'];
     const currentIndex = stepOrder.indexOf(currentStep);
     const stepIndex = stepOrder.indexOf(step);
-    
+
     return stepIndex < currentIndex ? 'completed' : 'upcoming';
   };
 
@@ -59,7 +63,9 @@ export default function DashboardHeader({
           {/* Countdown Timer */}
           {submissionWindow.isOpen && timeRemaining.total > 0 && (
             <div className="text-center">
-              <p className="text-sm text-gray-300 mb-3">Submission closes in:</p>
+              <p className="text-sm text-gray-300 mb-3">
+                Submission closes in:
+              </p>
               <div className="flex items-center gap-3 text-white">
                 <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm px-4 py-3 rounded-xl border border-purple-500/30 shadow-lg">
                   <div className="text-xl font-bold">{timeRemaining.days}</div>
@@ -70,11 +76,15 @@ export default function DashboardHeader({
                   <div className="text-xs text-gray-300">Hours</div>
                 </div>
                 <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm px-4 py-3 rounded-xl border border-purple-500/30 shadow-lg">
-                  <div className="text-xl font-bold">{timeRemaining.minutes}</div>
+                  <div className="text-xl font-bold">
+                    {timeRemaining.minutes}
+                  </div>
                   <div className="text-xs text-gray-300">Min</div>
                 </div>
                 <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm px-4 py-3 rounded-xl border border-purple-500/30 shadow-lg">
-                  <div className="text-xl font-bold">{timeRemaining.seconds}</div>
+                  <div className="text-xl font-bold">
+                    {timeRemaining.seconds}
+                  </div>
                   <div className="text-xs text-gray-300">Sec</div>
                 </div>
               </div>
@@ -83,16 +93,18 @@ export default function DashboardHeader({
 
           {/* Status Badge */}
           <div className="flex items-center gap-2">
-            <div className={`px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm shadow-lg ${
-              submissionWindow.isOpen 
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                : timeRemaining.total <= 0 
-                  ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                  : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-            }`}>
-              {submissionWindow.isOpen 
-                ? '🟢 Submissions Open' 
-                : timeRemaining.total <= 0 
+            <div
+              className={`px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm shadow-lg ${
+                submissionWindow.isOpen
+                  ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                  : timeRemaining.total <= 0
+                    ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                    : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+              }`}
+            >
+              {submissionWindow.isOpen
+                ? '🟢 Submissions Open'
+                : timeRemaining.total <= 0
                   ? '🔴 Submissions Closed'
                   : '🟡 Starting Soon'}
             </div>
@@ -103,14 +115,12 @@ export default function DashboardHeader({
         <div className="mt-8">
           <div className="flex items-center justify-center gap-3 overflow-x-auto pb-2">
             <StepButton
-              step="info"
               label="Hackathon Info"
               status={getStepStatus('info')}
               onClick={() => onStepChange('info')}
             />
             <StepSeparator />
             <StepButton
-              step="verify"
               label="Verify Participation"
               status={getStepStatus('verify')}
               onClick={() => onStepChange('verify')}
@@ -118,7 +128,6 @@ export default function DashboardHeader({
             />
             <StepSeparator />
             <StepButton
-              step="submit"
               label="Submit Project"
               status={getStepStatus('submit')}
               onClick={() => onStepChange('submit')}
@@ -126,7 +135,6 @@ export default function DashboardHeader({
             />
             <StepSeparator />
             <StepButton
-              step="success"
               label="Confirmation"
               status={getStepStatus('success')}
               onClick={() => onStepChange('success')}
@@ -147,10 +155,16 @@ interface StepButtonProps {
   disabled?: boolean;
 }
 
-function StepButton({ step, label, status, onClick, disabled }: StepButtonProps) {
+function StepButton({
+  label,
+  status,
+  onClick,
+  disabled,
+}: Omit<StepButtonProps, 'step'>) {
   const getButtonStyles = () => {
-    if (disabled) return 'bg-gray-500/20 text-gray-500 cursor-not-allowed border border-gray-500/20';
-    
+    if (disabled)
+      return 'bg-gray-500/20 text-gray-500 cursor-not-allowed border border-gray-500/20';
+
     switch (status) {
       case 'completed':
         return 'bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30 hover:border-green-500/50 shadow-lg shadow-green-500/10';
@@ -175,5 +189,7 @@ function StepButton({ step, label, status, onClick, disabled }: StepButtonProps)
 }
 
 function StepSeparator() {
-  return <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-500/30 to-transparent" />;
+  return (
+    <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-500/30 to-transparent" />
+  );
 }

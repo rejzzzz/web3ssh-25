@@ -12,9 +12,7 @@ export default function EventOverview() {
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               {HACKATHON_INFO.name}
             </h2>
-            <p className="text-lg text-gray-300 mb-4">
-              {HACKATHON_INFO.theme}
-            </p>
+            <p className="text-lg text-gray-300 mb-4">{HACKATHON_INFO.theme}</p>
             <div className="inline-flex items-center px-4 py-2 bg-white/15 rounded-full backdrop-blur-md border border-white/20">
               <span className="text-white font-medium">
                 {HACKATHON_INFO.duration} Challenge • July 3-6, 2025
@@ -26,8 +24,18 @@ export default function EventOverview() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white/10 p-6 rounded-xl border border-white/20">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-                <svg className="w-6 h-6 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg
+                  className="w-6 h-6 mr-2 text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
                 Key Objectives
               </h3>
@@ -43,31 +51,51 @@ export default function EventOverview() {
 
             <div className="bg-white/10 p-6 rounded-xl border border-white/20">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-                <svg className="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                  className="w-6 h-6 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
-                What You'll Gain
+                What You&apos;ll Gain
               </h3>
               <div className="space-y-3">
                 <div className="flex items-start">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-gray-300">Hands-on experience with cutting-edge Web3 technologies</span>
+                  <span className="text-gray-300">
+                    Hands-on experience with cutting-edge Web3 technologies
+                  </span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-gray-300">Mentorship from industry experts and thought leaders</span>
+                  <span className="text-gray-300">
+                    Mentorship from industry experts and thought leaders
+                  </span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-gray-300">Recognition and prizes for outstanding projects</span>
+                  <span className="text-gray-300">
+                    Recognition and prizes for outstanding projects
+                  </span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-gray-300">Certificate from IIIT Sri City</span>
+                  <span className="text-gray-300">
+                    Certificate from IIIT Sri City
+                  </span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-gray-300">Networking opportunities with like-minded developers</span>
+                  <span className="text-gray-300">
+                    Networking opportunities with like-minded developers
+                  </span>
                 </div>
               </div>
             </div>

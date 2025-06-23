@@ -209,7 +209,7 @@ export default function VerificationForm({
             <div className="text-sm text-gray-300 space-y-1">
               <p>• Check your email for registration confirmation</p>
               <p>• Your UID should be in the format: participant_xxx_xxx</p>
-              <p>• Contact support if you can't find your credentials</p>
+              <p>• Contact support if you can&apos;t find your credentials</p>
             </div>
           </div>
         </div>

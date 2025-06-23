@@ -1,23 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   User,
   Users,
   Code,
   FileText,
-  Target,
   Lightbulb,
   Link,
-  Video,
-  Upload,
   AlertCircle,
   Check,
   ChevronLeft,
   ChevronRight,
   Clock,
   AlertTriangle,
+  Plus,
+  ExternalLink,
 } from 'lucide-react';
 import { SubmissionRequest } from 'types/dashboard';
 import { submissionSchema } from 'lib/validation';
@@ -85,9 +84,7 @@ export default function SubmissionForm({
   const [existingProject, setExistingProject] = useState<any>(null);
   const [newTech, setNewTech] = useState('');
   const [newParticipant, setNewParticipant] = useState('');
-  const [fileUploadStatus, setFileUploadStatus] = useState<
-    'idle' | 'uploading' | 'success' | 'error'
-  >('idle');
+  const [newGoogleDocsLink, setNewGoogleDocsLink] = useState('');
 
   // Format time remaining
   const formatTimeRemaining = (milliseconds: number) => {
@@ -139,7 +136,7 @@ export default function SubmissionForm({
     }
   };
 
-  const removeParticipant = (name: string, index: number) => {
+  const removeParticipant = (index: number) => {
     // Don't allow removing the first participant (verified user)
     if (index === 0) return;
     updateFormData(
@@ -248,37 +245,35 @@ export default function SubmissionForm({
     }
   };
 
-  // File upload handler
-  const handleFileUpload = async (file: File) => {
-    setFileUploadStatus('uploading');
-    try {
-      const formData = new FormData();
-      formData.append('files', file);
+  // Add Google Docs link handler
+  const addGoogleDocsLink = () => {
+    if (!newGoogleDocsLink.trim()) return;
 
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setFileUploadStatus('success');
-        updateFormData('supportingFiles', [
-          ...formData.supportingFiles,
-          ...result.files,
-        ]);
-      } else {
-        setFileUploadStatus('error');
-        setErrors((prev) => ({ ...prev, fileUpload: result.message }));
-      }
-    } catch (error) {
-      setFileUploadStatus('error');
+    // Validate Google Docs/Drive URL
+    const googleDocsRegex = /^https:\/\/(docs|drive)\.google\.com\/.+/;
+    if (!googleDocsRegex.test(newGoogleDocsLink)) {
       setErrors((prev) => ({
         ...prev,
-        fileUpload: 'Failed to upload file. Please try again.',
+        googleDocsLink: 'Please enter a valid Google Docs or Google Drive link',
       }));
+      return;
     }
+
+    // Check for duplicates
+    if (formData.supportingFiles.includes(newGoogleDocsLink)) {
+      setErrors((prev) => ({
+        ...prev,
+        googleDocsLink: 'This link has already been added',
+      }));
+      return;
+    }
+
+    updateFormData('supportingFiles', [
+      ...formData.supportingFiles,
+      newGoogleDocsLink,
+    ]);
+    setNewGoogleDocsLink('');
+    setErrors((prev) => ({ ...prev, googleDocsLink: '' }));
   };
 
   // Check if submission window is open
@@ -498,7 +493,7 @@ export default function SubmissionForm({
                       </div>
                       {index > 0 && (
                         <button
-                          onClick={() => removeParticipant(name, index)}
+                          onClick={() => removeParticipant(index)}
                           className="px-3 py-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors"
                         >
                           Remove
@@ -760,55 +755,83 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Supporting Files (Optional)
+                  Supporting Materials (Google Docs/Drive Links - Optional)
                 </label>
-                <div className="border-2 border-dashed border-white/30 rounded-lg p-6 text-center">
-                  <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-400 mb-2">
-                    Drag and drop files here or click to upload
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Max file size: 10MB per file
-                  </p>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={(e) => {
-                      const files = Array.from(e.target.files || []);
-                      files.forEach(handleFileUpload);
-                    }}
-                    className="hidden"
-                    id="file-upload"
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg cursor-pointer hover:bg-purple-700 transition-colors mt-2"
-                  >
-                    Choose Files
-                  </label>
+                <p className="text-sm text-gray-400 mb-4">
+                  Add Google Docs or Google Drive links containing project
+                  images, files, or any supporting materials
+                </p>
+
+                <div className="space-y-3">
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      value={newGoogleDocsLink}
+                      onChange={(e) => {
+                        setNewGoogleDocsLink(e.target.value);
+                        setErrors((prev) => ({ ...prev, googleDocsLink: '' }));
+                      }}
+                      className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="https://docs.google.com/... or https://drive.google.com/..."
+                    />
+                    <button
+                      type="button"
+                      onClick={addGoogleDocsLink}
+                      disabled={!newGoogleDocsLink.trim()}
+                      className="px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add
+                    </button>
+                  </div>
+
+                  {errors.googleDocsLink && (
+                    <p className="text-red-400 text-sm flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.googleDocsLink}
+                    </p>
+                  )}
                 </div>
 
                 {formData.supportingFiles.length > 0 && (
                   <div className="mt-4 space-y-2">
-                    {formData.supportingFiles.map((file, index) => (
+                    <h4 className="text-sm font-medium text-white">
+                      Added Links:
+                    </h4>
+                    {formData.supportingFiles.map((link, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between px-4 py-2 bg-white/10 rounded-lg"
+                        className="flex items-center justify-between px-4 py-3 bg-white/10 rounded-lg border border-white/20"
                       >
-                        <span className="text-white">{file}</span>
-                        <button
-                          onClick={() =>
-                            updateFormData(
-                              'supportingFiles',
-                              formData.supportingFiles.filter(
-                                (_, i) => i !== index,
-                              ),
-                            )
-                          }
-                          className="text-red-400 hover:text-red-300 transition-colors"
-                        >
-                          Remove
-                        </button>
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                          <ExternalLink className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                          <span className="text-white text-sm truncate">
+                            {link}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <a
+                            href={link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-purple-400 hover:text-purple-300 transition-colors text-sm"
+                          >
+                            View
+                          </a>
+                          <button
+                            onClick={() =>
+                              updateFormData(
+                                'supportingFiles',
+                                formData.supportingFiles.filter(
+                                  (_, i) => i !== index,
+                                ),
+                              )
+                            }
+                            className="text-red-400 hover:text-red-300 transition-colors text-sm"
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -892,6 +915,29 @@ export default function SubmissionForm({
                     )}
                   </div>
                 </div>
+
+                {formData.supportingFiles.length > 0 && (
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <h4 className="font-semibold text-white mb-2">
+                      Supporting Materials ({formData.supportingFiles.length})
+                    </h4>
+                    <div className="space-y-2">
+                      {formData.supportingFiles.map((link, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                          <ExternalLink className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                          <a
+                            href={link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-purple-300 hover:text-purple-200 text-sm truncate"
+                          >
+                            {link}
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Terms and Conditions */}

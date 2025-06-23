@@ -34,8 +34,8 @@ export default function DashboardPage() {
       try {
         const response = await fetch('/api/hackathon-status');
         const data = await response.json();
-        
-        setDashboardState(prev => ({
+
+        setDashboardState((prev) => ({
           ...prev,
           submissionWindow: {
             isOpen: data.isOpen,
@@ -60,8 +60,10 @@ export default function DashboardPage() {
     if (!dashboardState.submissionWindow.endTime) return;
 
     const updateCountdown = () => {
-      const timeRemaining = getTimeRemaining(dashboardState.submissionWindow.endTime!);
-      setDashboardState(prev => ({
+      const timeRemaining = getTimeRemaining(
+        dashboardState.submissionWindow.endTime!,
+      );
+      setDashboardState((prev) => ({
         ...prev,
         submissionWindow: {
           ...prev.submissionWindow,
@@ -76,7 +78,7 @@ export default function DashboardPage() {
   }, [dashboardState.submissionWindow.endTime]);
 
   const handleVerificationSuccess = (participantInfo: any) => {
-    setDashboardState(prev => ({
+    setDashboardState((prev) => ({
       ...prev,
       isVerified: true,
       participantInfo,
@@ -84,8 +86,8 @@ export default function DashboardPage() {
     }));
   };
 
-  const handleSubmissionSuccess = (submissionId: string) => {
-    setDashboardState(prev => ({
+  const handleSubmissionSuccess = (_submissionId: string) => {
+    setDashboardState((prev) => ({
       ...prev,
       submissionStatus: 'success',
       currentStep: 'success',
@@ -93,14 +95,14 @@ export default function DashboardPage() {
   };
 
   const handleSubmissionError = () => {
-    setDashboardState(prev => ({
+    setDashboardState((prev) => ({
       ...prev,
       submissionStatus: 'error',
     }));
   };
 
   const handleStepChange = (step: DashboardState['currentStep']) => {
-    setDashboardState(prev => ({
+    setDashboardState((prev) => ({
       ...prev,
       currentStep: step,
     }));
@@ -118,7 +120,7 @@ export default function DashboardPage() {
 
       <div className="relative z-10">
         {/* Header */}
-        <DashboardHeader 
+        <DashboardHeader
           submissionWindow={dashboardState.submissionWindow}
           currentStep={dashboardState.currentStep}
           onStepChange={handleStepChange}
@@ -139,24 +141,25 @@ export default function DashboardPage() {
 
           {dashboardState.currentStep === 'verify' && (
             <div className="max-w-2xl mx-auto">
-              <VerificationForm 
+              <VerificationForm
                 onSuccess={handleVerificationSuccess}
                 isLoading={dashboardState.submissionStatus === 'loading'}
               />
             </div>
           )}
 
-          {dashboardState.currentStep === 'submit' && dashboardState.isVerified && (
-            <div className="max-w-4xl mx-auto">
-              <SubmissionForm
-                participantInfo={dashboardState.participantInfo}
-                submissionWindow={dashboardState.submissionWindow}
-                onSuccess={handleSubmissionSuccess}
-                onError={handleSubmissionError}
-                isLoading={dashboardState.submissionStatus === 'loading'}
-              />
-            </div>
-          )}
+          {dashboardState.currentStep === 'submit' &&
+            dashboardState.isVerified && (
+              <div className="max-w-4xl mx-auto">
+                <SubmissionForm
+                  participantInfo={dashboardState.participantInfo}
+                  submissionWindow={dashboardState.submissionWindow}
+                  onSuccess={handleSubmissionSuccess}
+                  onError={handleSubmissionError}
+                  isLoading={dashboardState.submissionStatus === 'loading'}
+                />
+              </div>
+            )}
 
           {dashboardState.currentStep === 'success' && (
             <div className="max-w-2xl mx-auto">

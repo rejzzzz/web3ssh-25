@@ -4,25 +4,23 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   CheckCircle2,
-  Copy,
   ExternalLink,
-  Download,
   Share2,
   Mail,
   MessageCircle,
   Trophy,
-  Calendar,
   Users,
   Sparkles,
-  ArrowRight
+  ArrowRight,
 } from 'lucide-react';
 
 interface SubmissionSuccessProps {
   submissionId?: string;
 }
 
-export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }: SubmissionSuccessProps) {
-  const [copied, setCopied] = useState(false);
+export default function SubmissionSuccess({
+  submissionId: _ = 'SUB-' + Date.now(),
+}: SubmissionSuccessProps) {
   const [showConfetti, setShowConfetti] = useState(true);
 
   // Hide confetti after animation
@@ -31,26 +29,16 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
     return () => clearTimeout(timer);
   }, []);
 
-  const copySubmissionId = async () => {
-    try {
-      await navigator.clipboard.writeText(submissionId);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
-  };
-
   const shareOnSocial = (platform: string) => {
     const text = `🎉 Just submitted my project to Web3 Summer School & Hackathon 2025! Excited to be part of this amazing event. #Web3SSH2025 #Hackathon #Web3`;
     const url = 'https://web3ssh.dev';
-    
+
     const shareUrls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`,
-      whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`,
     };
-    
+
     window.open(shareUrls[platform as keyof typeof shareUrls], '_blank');
   };
 
@@ -63,7 +51,13 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
             <motion.div
               key={i}
               className={`absolute w-2 h-2 ${
-                ['bg-purple-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-pink-500'][i % 5]
+                [
+                  'bg-purple-500',
+                  'bg-blue-500',
+                  'bg-green-500',
+                  'bg-yellow-500',
+                  'bg-pink-500',
+                ][i % 5]
               }`}
               initial={{
                 x: Math.random() * window.innerWidth,
@@ -122,14 +116,14 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
             🎉 Submission Successful!
           </h1>
           <p className="text-xl text-gray-300 mb-6">
-            Congratulations! Your project has been successfully submitted to the Web3 Summer School & Hackathon 2025.
+            Congratulations! Your project has been successfully submitted to the
+            Web3 Summer School & Hackathon 2025.
           </p>
           <p className="text-gray-400">
-            Your innovative solution is now part of our exciting hackathon. Good luck with the judging process!
+            Your innovative solution is now part of our exciting hackathon. Good
+            luck with the judging process!
           </p>
         </motion.div>
-
-      
 
         {/* What's Next Section */}
         <motion.div
@@ -140,9 +134,9 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
         >
           <h2 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
             <ArrowRight className="w-6 h-6 text-purple-400" />
-            What's Next?
+            What&apos;s Next?
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -150,27 +144,30 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
               </div>
               <h3 className="font-semibold text-white mb-2">Judging Phase</h3>
               <p className="text-sm text-gray-400">
-                Our expert panel will review all submissions based on innovation, technical implementation, and impact.
+                Our expert panel will review all submissions based on
+                innovation, technical implementation, and impact.
               </p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Mail className="w-6 h-6 text-blue-400" />
               </div>
               <h3 className="font-semibold text-white mb-2">Stay Updated</h3>
               <p className="text-sm text-gray-400">
-                We'll send you email updates about the judging process and results announcement.
+                We&apos;ll send you email updates about the judging process and
+                results announcement.
               </p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-12 h-12 bg-green-600/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Trophy className="w-6 h-6 text-green-400" />
               </div>
               <h3 className="font-semibold text-white mb-2">Results</h3>
               <p className="text-sm text-gray-400">
-                Winners will be announced on July 6, 2025. Prizes include cash rewards and recognition.
+                Winners will be announced on July 6, 2025. Prizes include cash
+                rewards and recognition.
               </p>
             </div>
           </div>
@@ -197,22 +194,30 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
                 onClick={() => shareOnSocial('twitter')}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                 </svg>
                 Twitter
               </button>
-              
+
               <button
                 onClick={() => shareOnSocial('linkedin')}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition-colors"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
                 LinkedIn
               </button>
-              
+
               <button
                 onClick={() => shareOnSocial('whatsapp')}
                 className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
@@ -232,7 +237,7 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
               <ArrowRight className="w-4 h-4" />
               Back to Dashboard
             </a>
-            
+
             <a
               href="mailto:support@web3ssh.dev"
               className="flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
@@ -240,7 +245,7 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
               <Mail className="w-4 h-4" />
               Contact Support
             </a>
-            
+
             <a
               href="https://web3ssh.dev/whatsapp"
               target="_blank"
@@ -254,7 +259,6 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
         </motion.div>
 
         {/* Important Note */}
-      
       </motion.div>
 
       {/* Additional Resources */}
@@ -264,10 +268,14 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
         transition={{ delay: 0.8, duration: 0.5 }}
         className="mt-8 bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10"
       >
-        <h2 className="text-2xl font-semibold text-white mb-4">While You Wait...</h2>
+        <h2 className="text-2xl font-semibold text-white mb-4">
+          While You Wait...
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Stay Connected</h3>
+            <h3 className="text-lg font-medium text-white mb-3">
+              Stay Connected
+            </h3>
             <ul className="space-y-2 text-gray-300">
               <li className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
@@ -283,9 +291,11 @@ export default function SubmissionSuccess({ submissionId = 'SUB-' + Date.now() }
               </li>
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Continue Learning</h3>
+            <h3 className="text-lg font-medium text-white mb-3">
+              Continue Learning
+            </h3>
             <ul className="space-y-2 text-gray-300">
               <li className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
