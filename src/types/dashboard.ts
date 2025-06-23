@@ -1,5 +1,37 @@
 // Types for Web3 Hackathon Dashboard
 
+export interface User {
+  _id?: string;
+  name: string;
+  email: string;
+  uid: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface Project {
+  _id?: string;
+  email: string;
+  uid: string;
+  projectName: string;
+  teamName?: string;
+  participantNames: string[];
+  description: string;
+  problemStatement: string;
+  solutionOverview: string;
+  technologiesUsed: string[];
+  demoVideoLink?: string;
+  githubRepoLink: string;
+  liveDemoLink?: string;
+  supportingFiles: string[];
+  termsAccepted: boolean;
+  submissionId: string;
+  submissionTimestamp?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// Legacy interfaces for compatibility
 export interface Participant {
   _id?: string;
   email: string;
@@ -47,10 +79,13 @@ export interface VerificationRequest {
 export interface VerificationResponse {
   success: boolean;
   message: string;
-  participantInfo?: {
+  user?: {
+    _id: string;
     name: string;
-    teamId?: string;
-    teamName?: string;
+    email: string;
+    uid: string;
+    registeredAt: Date;
+    isVerified: boolean;
   };
 }
 
@@ -75,6 +110,11 @@ export interface SubmissionResponse {
   success: boolean;
   message: string;
   submissionId?: string;
+  existingProject?: {
+    submissionId: string;
+    projectName: string;
+    submissionTimestamp: Date;
+  };
 }
 
 export interface DashboardState {

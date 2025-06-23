@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, 
-  Users, 
-  Code, 
-  FileText, 
-  Target, 
+import {
+  User,
+  Users,
+  Code,
+  FileText,
+  Target,
   Lightbulb,
   Link,
   Video,
@@ -17,7 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 import { SubmissionRequest } from 'types/dashboard';
 import { submissionSchema } from 'lib/validation';
@@ -56,7 +56,7 @@ const FORM_STEPS = [
   { id: 'description', title: 'Description', icon: FileText },
   { id: 'solution', title: 'Solution', icon: Lightbulb },
   { id: 'links', title: 'Links & Files', icon: Link },
-  { id: 'review', title: 'Review', icon: Check }
+  { id: 'review', title: 'Review', icon: Check },
 ];
 
 export default function SubmissionForm({
@@ -64,7 +64,7 @@ export default function SubmissionForm({
   submissionWindow,
   onSuccess,
   onError,
-  isLoading
+  isLoading,
 }: SubmissionFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
@@ -79,12 +79,15 @@ export default function SubmissionForm({
     githubRepoLink: '',
     liveDemoLink: '',
     supportingFiles: [],
-    termsAccepted: false
+    termsAccepted: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [existingProject, setExistingProject] = useState<any>(null);
   const [newTech, setNewTech] = useState('');
   const [newParticipant, setNewParticipant] = useState('');
-  const [fileUploadStatus, setFileUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [fileUploadStatus, setFileUploadStatus] = useState<
+    'idle' | 'uploading' | 'success' | 'error'
+  >('idle');
 
   // Format time remaining
   const formatTimeRemaining = (milliseconds: number) => {
@@ -95,10 +98,10 @@ export default function SubmissionForm({
   };
 
   const updateFormData = (field: keyof FormData, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error for this field
     if (errors[field]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[field];
         return newErrors;
@@ -108,18 +111,30 @@ export default function SubmissionForm({
 
   const addTechnology = () => {
     if (newTech.trim() && !formData.technologiesUsed.includes(newTech.trim())) {
-      updateFormData('technologiesUsed', [...formData.technologiesUsed, newTech.trim()]);
+      updateFormData('technologiesUsed', [
+        ...formData.technologiesUsed,
+        newTech.trim(),
+      ]);
       setNewTech('');
     }
   };
 
   const removeTechnology = (tech: string) => {
-    updateFormData('technologiesUsed', formData.technologiesUsed.filter(t => t !== tech));
+    updateFormData(
+      'technologiesUsed',
+      formData.technologiesUsed.filter((t) => t !== tech),
+    );
   };
 
   const addParticipant = () => {
-    if (newParticipant.trim() && !formData.participantNames.includes(newParticipant.trim())) {
-      updateFormData('participantNames', [...formData.participantNames, newParticipant.trim()]);
+    if (
+      newParticipant.trim() &&
+      !formData.participantNames.includes(newParticipant.trim())
+    ) {
+      updateFormData('participantNames', [
+        ...formData.participantNames,
+        newParticipant.trim(),
+      ]);
       setNewParticipant('');
     }
   };
@@ -127,12 +142,15 @@ export default function SubmissionForm({
   const removeParticipant = (name: string, index: number) => {
     // Don't allow removing the first participant (verified user)
     if (index === 0) return;
-    updateFormData('participantNames', formData.participantNames.filter((_, i) => i !== index));
+    updateFormData(
+      'participantNames',
+      formData.participantNames.filter((_, i) => i !== index),
+    );
   };
 
   const validateCurrentStep = () => {
     const newErrors: Record<string, string> = {};
-    
+
     switch (currentStep) {
       case 0: // Project Info
         if (!formData.projectName.trim()) {
@@ -149,12 +167,14 @@ export default function SubmissionForm({
           newErrors.description = 'Description must be at least 50 characters';
         }
         if (formData.problemStatement.length < 20) {
-          newErrors.problemStatement = 'Problem statement must be at least 20 characters';
+          newErrors.problemStatement =
+            'Problem statement must be at least 20 characters';
         }
         break;
       case 3: // Solution
         if (formData.solutionOverview.length < 20) {
-          newErrors.solutionOverview = 'Solution overview must be at least 20 characters';
+          newErrors.solutionOverview =
+            'Solution overview must be at least 20 characters';
         }
         if (formData.technologiesUsed.length === 0) {
           newErrors.technologiesUsed = 'At least one technology is required';
@@ -171,7 +191,7 @@ export default function SubmissionForm({
         }
         break;
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -196,7 +216,7 @@ export default function SubmissionForm({
       const submissionData: SubmissionRequest = {
         email: participantInfo.email,
         uid: participantInfo.uid,
-        ...formData
+        ...formData,
       };
 
       const validated = submissionSchema.parse(submissionData);
@@ -214,6 +234,10 @@ export default function SubmissionForm({
       if (result.success) {
         onSuccess(result.submissionId);
       } else {
+        // Check if it's an existing project error
+        if (result.existingProject) {
+          setExistingProject(result.existingProject);
+        }
         setErrors({ submit: result.message });
         onError();
       }
@@ -240,14 +264,20 @@ export default function SubmissionForm({
 
       if (result.success) {
         setFileUploadStatus('success');
-        updateFormData('supportingFiles', [...formData.supportingFiles, ...result.files]);
+        updateFormData('supportingFiles', [
+          ...formData.supportingFiles,
+          ...result.files,
+        ]);
       } else {
         setFileUploadStatus('error');
-        setErrors(prev => ({ ...prev, fileUpload: result.message }));
+        setErrors((prev) => ({ ...prev, fileUpload: result.message }));
       }
     } catch (error) {
       setFileUploadStatus('error');
-      setErrors(prev => ({ ...prev, fileUpload: 'Failed to upload file. Please try again.' }));
+      setErrors((prev) => ({
+        ...prev,
+        fileUpload: 'Failed to upload file. Please try again.',
+      }));
     }
   };
 
@@ -257,9 +287,12 @@ export default function SubmissionForm({
       <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
         <div className="text-center">
           <AlertTriangle className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-4">Submission Window Closed</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Submission Window Closed
+          </h2>
           <p className="text-gray-300 mb-6">
-            The hackathon submission window is currently closed. Please check back during the submission period.
+            The hackathon submission window is currently closed. Please check
+            back during the submission period.
           </p>
           {submissionWindow.startTime && (
             <p className="text-sm text-gray-400">
@@ -273,12 +306,66 @@ export default function SubmissionForm({
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Existing Project Warning */}
+      {existingProject && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 bg-gradient-to-r from-yellow-600/20 to-orange-600/20 backdrop-blur-md rounded-2xl p-6 border border-yellow-500/30"
+        >
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-white mb-2">
+                Project Already Submitted
+              </h3>
+              <p className="text-gray-300 mb-4">
+                You have already submitted a project for this hackathon.
+                Multiple submissions are not allowed.
+              </p>
+              <div className="bg-white/10 rounded-lg p-4 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-gray-400">Project Name:</span>
+                    <p className="text-white font-semibold">
+                      {existingProject.projectName}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-gray-400">Submission ID:</span>
+                    <p className="text-blue-400 font-mono">
+                      {existingProject.submissionId}
+                    </p>
+                  </div>
+                  <div className="md:col-span-2">
+                    <span className="text-gray-400">Submitted On:</span>
+                    <p className="text-white">
+                      {new Date(
+                        existingProject.submissionTimestamp,
+                      ).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-blue-500/20 rounded-lg p-4 border border-blue-500/30">
+                <p className="text-blue-300 text-sm">
+                  <strong>Need help?</strong> If you have any queries about your
+                  submission or need to make changes, please contact the
+                  organizers immediately.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Submission Timer */}
       <div className="bg-gradient-to-r from-red-600/20 to-orange-600/20 backdrop-blur-md rounded-2xl p-4 mb-8 border border-red-500/30">
         <div className="flex items-center justify-center gap-3">
           <Clock className="w-5 h-5 text-red-400" />
           <span className="text-white font-semibold">
-            Time Remaining: {formatTimeRemaining(submissionWindow.timeRemaining)}
+            Time Remaining:{' '}
+            {formatTimeRemaining(submissionWindow.timeRemaining)}
           </span>
         </div>
       </div>
@@ -290,23 +377,31 @@ export default function SubmissionForm({
             const Icon = step.icon;
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
-            
+
             return (
               <div key={step.id} className="flex items-center">
-                <div className={`
+                <div
+                  className={`
                   flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300
-                  ${isActive ? 'bg-purple-600 text-white' : 
-                    isCompleted ? 'bg-green-600 text-white' : 
-                    'bg-white/10 text-gray-400'}
-                `}>
+                  ${
+                    isActive
+                      ? 'bg-purple-600 text-white'
+                      : isCompleted
+                        ? 'bg-green-600 text-white'
+                        : 'bg-white/10 text-gray-400'
+                  }
+                `}
+                >
                   <Icon className="w-4 h-4" />
                   <span className="text-sm font-medium">{step.title}</span>
                 </div>
                 {index < FORM_STEPS.length - 1 && (
-                  <div className={`
+                  <div
+                    className={`
                     w-8 h-0.5 mx-2
                     ${isCompleted ? 'bg-green-600' : 'bg-white/20'}
-                  `} />
+                  `}
+                  />
                 )}
               </div>
             );
@@ -340,7 +435,9 @@ export default function SubmissionForm({
                 <input
                   type="text"
                   value={formData.projectName}
-                  onChange={(e) => updateFormData('projectName', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('projectName', e.target.value)
+                  }
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Enter your project name"
                 />
@@ -456,11 +553,16 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Project Description * <span className="text-gray-400">({formData.description.length}/5000)</span>
+                  Project Description *{' '}
+                  <span className="text-gray-400">
+                    ({formData.description.length}/5000)
+                  </span>
                 </label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => updateFormData('description', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('description', e.target.value)
+                  }
                   rows={6}
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                   placeholder="Provide a detailed description of your project (minimum 50 characters)"
@@ -475,11 +577,16 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Problem Statement * <span className="text-gray-400">({formData.problemStatement.length}/2000)</span>
+                  Problem Statement *{' '}
+                  <span className="text-gray-400">
+                    ({formData.problemStatement.length}/2000)
+                  </span>
                 </label>
                 <textarea
                   value={formData.problemStatement}
-                  onChange={(e) => updateFormData('problemStatement', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('problemStatement', e.target.value)
+                  }
                   rows={4}
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                   placeholder="What problem does your project solve? (minimum 20 characters)"
@@ -512,11 +619,16 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Solution Overview * <span className="text-gray-400">({formData.solutionOverview.length}/2000)</span>
+                  Solution Overview *{' '}
+                  <span className="text-gray-400">
+                    ({formData.solutionOverview.length}/2000)
+                  </span>
                 </label>
                 <textarea
                   value={formData.solutionOverview}
-                  onChange={(e) => updateFormData('solutionOverview', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('solutionOverview', e.target.value)
+                  }
                   rows={5}
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                   placeholder="How does your solution work? What makes it unique? (minimum 20 characters)"
@@ -536,7 +648,10 @@ export default function SubmissionForm({
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
                     {formData.technologiesUsed.map((tech, index) => (
-                      <div key={index} className="flex items-center gap-2 px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm border border-purple-500/30">
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm border border-purple-500/30"
+                      >
                         <span>{tech}</span>
                         <button
                           onClick={() => removeTechnology(tech)}
@@ -599,7 +714,9 @@ export default function SubmissionForm({
                 <input
                   type="url"
                   value={formData.githubRepoLink}
-                  onChange={(e) => updateFormData('githubRepoLink', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('githubRepoLink', e.target.value)
+                  }
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="https://github.com/username/project"
                 />
@@ -618,7 +735,9 @@ export default function SubmissionForm({
                 <input
                   type="url"
                   value={formData.demoVideoLink}
-                  onChange={(e) => updateFormData('demoVideoLink', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('demoVideoLink', e.target.value)
+                  }
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="https://youtube.com/watch?v=..."
                 />
@@ -631,7 +750,9 @@ export default function SubmissionForm({
                 <input
                   type="url"
                   value={formData.liveDemoLink}
-                  onChange={(e) => updateFormData('liveDemoLink', e.target.value)}
+                  onChange={(e) =>
+                    updateFormData('liveDemoLink', e.target.value)
+                  }
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="https://your-project-demo.com"
                 />
@@ -666,14 +787,24 @@ export default function SubmissionForm({
                     Choose Files
                   </label>
                 </div>
-                
+
                 {formData.supportingFiles.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {formData.supportingFiles.map((file, index) => (
-                      <div key={index} className="flex items-center justify-between px-4 py-2 bg-white/10 rounded-lg">
+                      <div
+                        key={index}
+                        className="flex items-center justify-between px-4 py-2 bg-white/10 rounded-lg"
+                      >
                         <span className="text-white">{file}</span>
                         <button
-                          onClick={() => updateFormData('supportingFiles', formData.supportingFiles.filter((_, i) => i !== index))}
+                          onClick={() =>
+                            updateFormData(
+                              'supportingFiles',
+                              formData.supportingFiles.filter(
+                                (_, i) => i !== index,
+                              ),
+                            )
+                          }
                           className="text-red-400 hover:text-red-300 transition-colors"
                         >
                           Remove
@@ -705,13 +836,19 @@ export default function SubmissionForm({
               {/* Review Summary */}
               <div className="space-y-4">
                 <div className="bg-white/5 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-2">Project Information</h4>
+                  <h4 className="font-semibold text-white mb-2">
+                    Project Information
+                  </h4>
                   <p className="text-gray-300">Name: {formData.projectName}</p>
-                  {formData.teamName && <p className="text-gray-300">Team: {formData.teamName}</p>}
+                  {formData.teamName && (
+                    <p className="text-gray-300">Team: {formData.teamName}</p>
+                  )}
                 </div>
 
                 <div className="bg-white/5 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-2">Team Members ({formData.participantNames.length})</h4>
+                  <h4 className="font-semibold text-white mb-2">
+                    Team Members ({formData.participantNames.length})
+                  </h4>
                   <div className="space-y-1">
                     {formData.participantNames.map((name, index) => (
                       <p key={index} className="text-gray-300">
@@ -722,10 +859,15 @@ export default function SubmissionForm({
                 </div>
 
                 <div className="bg-white/5 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-2">Technologies ({formData.technologiesUsed.length})</h4>
+                  <h4 className="font-semibold text-white mb-2">
+                    Technologies ({formData.technologiesUsed.length})
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {formData.technologiesUsed.map((tech, index) => (
-                      <span key={index} className="px-2 py-1 bg-purple-600/20 text-purple-300 rounded text-sm">
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-purple-600/20 text-purple-300 rounded text-sm"
+                      >
                         {tech}
                       </span>
                     ))}
@@ -735,9 +877,19 @@ export default function SubmissionForm({
                 <div className="bg-white/5 rounded-lg p-4">
                   <h4 className="font-semibold text-white mb-2">Links</h4>
                   <div className="space-y-1">
-                    <p className="text-gray-300">GitHub: {formData.githubRepoLink}</p>
-                    {formData.demoVideoLink && <p className="text-gray-300">Demo Video: {formData.demoVideoLink}</p>}
-                    {formData.liveDemoLink && <p className="text-gray-300">Live Demo: {formData.liveDemoLink}</p>}
+                    <p className="text-gray-300">
+                      GitHub: {formData.githubRepoLink}
+                    </p>
+                    {formData.demoVideoLink && (
+                      <p className="text-gray-300">
+                        Demo Video: {formData.demoVideoLink}
+                      </p>
+                    )}
+                    {formData.liveDemoLink && (
+                      <p className="text-gray-300">
+                        Live Demo: {formData.liveDemoLink}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -749,16 +901,22 @@ export default function SubmissionForm({
                     type="checkbox"
                     id="terms"
                     checked={formData.termsAccepted}
-                    onChange={(e) => updateFormData('termsAccepted', e.target.checked)}
+                    onChange={(e) =>
+                      updateFormData('termsAccepted', e.target.checked)
+                    }
                     className="mt-1 w-4 h-4 text-purple-600 bg-transparent border-white/30 rounded focus:ring-purple-500 focus:ring-2"
                   />
                   <div>
                     <label htmlFor="terms" className="text-white text-sm">
                       I accept the{' '}
-                      <a href="#" className="text-purple-400 hover:text-purple-300 underline">
+                      <a
+                        href="#"
+                        className="text-purple-400 hover:text-purple-300 underline"
+                      >
                         Terms and Conditions
                       </a>{' '}
-                      and confirm that all information provided is accurate and that this project is our original work.
+                      and confirm that all information provided is accurate and
+                      that this project is our original work.
                     </label>
                     {errors.termsAccepted && (
                       <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
@@ -789,9 +947,10 @@ export default function SubmissionForm({
             disabled={currentStep === 0}
             className={`
               flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300
-              ${currentStep === 0 
-                ? 'bg-gray-600/50 text-gray-400 cursor-not-allowed' 
-                : 'bg-white/10 text-white hover:bg-white/20'
+              ${
+                currentStep === 0
+                  ? 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
+                  : 'bg-white/10 text-white hover:bg-white/20'
               }
             `}
           >
@@ -809,9 +968,10 @@ export default function SubmissionForm({
               disabled={isLoading}
               className={`
                 flex items-center gap-2 px-8 py-3 rounded-lg transition-all duration-300
-                ${isLoading 
-                  ? 'bg-purple-600/50 text-white cursor-not-allowed' 
-                  : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 transform hover:scale-105'
+                ${
+                  isLoading
+                    ? 'bg-purple-600/50 text-white cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 transform hover:scale-105'
                 }
               `}
             >

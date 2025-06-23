@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase, COLLECTIONS } from 'lib/mongodb';
+import { connectToDatabase } from 'lib/mongodb';
 import { verificationSchema } from 'lib/validation';
 import { VerificationResponse } from 'types/dashboard';
-import { mockParticipants } from 'lib/mock-data';
+import User from 'models/user';
+import type { IUserModel } from 'types/models';
 
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -13,7 +14,7 @@ function isRateLimited(ip: string): boolean {
   const limit = 5; // 5 attempts per minute
 
   const record = rateLimitStore.get(ip);
-  
+
   if (!record || now > record.resetTime) {
     rateLimitStore.set(ip, { count: 1, resetTime: now + minute });
     return false;
@@ -30,13 +31,17 @@ function isRateLimited(ip: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     // Get client IP for rate limiting
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
-    
+    const ip =
+      request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+
     // Check rate limit
     if (isRateLimited(ip)) {
       return NextResponse.json(
-        { success: false, message: 'Too many verification attempts. Please try again later.' },
-        { status: 429 }
+        {
+          success: false,
+          message: 'Too many verification attempts. Please try again later.',
+        },
+        { status: 429 },
       );
     }
 
@@ -46,96 +51,76 @@ export async function POST(request: NextRequest) {
 
     if (!validationResult.success) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           message: 'Invalid input data',
-          errors: validationResult.error.errors 
+          errors: validationResult.error.errors,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const { email, uid } = validationResult.data;
 
-    // Check if we should use mock data
-    if (process.env.USE_MOCK_DATA === 'true') {
-      console.log('Using mock data for testing...');
-      
-      // Find participant in mock data
-      const participant = mockParticipants.find(
-        p => p.email.toLowerCase() === email.toLowerCase() && p.uid === uid
-      );
-      
-      if (!participant) {
-        return NextResponse.json(
-          { 
-            success: false, 
-            message: 'Invalid email or UID. Please check your credentials or contact support.' 
-          },
-          { status: 401 }
-        );
-      }
-      
-      // Return success with participant info
-      const response: VerificationResponse = {
-        success: true,
-        message: 'Participant verified successfully.',
-        participantInfo: {
-          name: participant.name,
-          teamId: participant.teamId,
-          teamName: participant.teamName,
-        },
-      };
-      
-      return NextResponse.json(response, { status: 200 });
-    }
-
     // Connect to database
-    const db = await getDatabase();
-    const participantsCollection = db.collection(COLLECTIONS.PARTICIPANTS);
+    await connectToDatabase();
 
-    // Find participant by email and UID
-    const participant = await participantsCollection.findOne({
-      email: email.toLowerCase(),
-      uid: uid,
-    });
+    // Find user by email and UID
+    const user = await (User as IUserModel).findByEmailAndUID(email, uid);
 
-    if (!participant) {
+    if (!user) {
+      // Provide more specific error message based on email format
+      const emailDomain = email.split('@')[1];
+      let errorMessage = 'Invalid email or UID. Please check your credentials.';
+
+      if (emailDomain && !emailDomain.includes('iiits.in')) {
+        errorMessage =
+          'Please use your IIIT Sri City email address (ending with @iiits.in).';
+      } else if (!uid.startsWith('SSH25')) {
+        errorMessage =
+          'Invalid UID format. Your UID should start with "SSH25" followed by numbers.';
+      } else {
+        errorMessage =
+          'Email or UID not found in our records. Please check your registration confirmation email or contact support at web3ssh@iiits.in';
+      }
+
       return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Invalid email or UID. Please check your credentials or contact support.' 
+        {
+          success: false,
+          message: errorMessage,
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
-    // Return success with participant info
+    // Return success with user info
     const response: VerificationResponse = {
       success: true,
-      message: 'Participant verified successfully.',
-      participantInfo: {
-        name: participant.name,
-        teamId: participant.teamId,
-        teamName: participant.teamName,
+      message: 'User verified successfully.',
+      user: {
+        _id: user._id?.toString() || '',
+        name: user.name,
+        email: user.email,
+        uid: user.uid,
+        registeredAt: user.createdAt || new Date(),
+        isVerified: true,
       },
     };
 
     return NextResponse.json(response, { status: 200 });
-
   } catch (error) {
     console.error('Verification API error:', error);
     return NextResponse.json(
-      { success: false, message: 'Internal server error. Please try again later.' },
-      { status: 500 }
+      {
+        success: false,
+        message: 'Internal server error. Please try again later.',
+      },
+      { status: 500 },
     );
   }
 }
 
 // Handle other HTTP methods
 export async function GET() {
-  return NextResponse.json(
-    { message: 'Method not allowed' },
-    { status: 405 }
-  );
+  return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
 }

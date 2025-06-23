@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase, COLLECTIONS } from 'lib/mongodb';
+import { connectToDatabase } from 'lib/mongodb';
 import { submissionSchema } from 'lib/validation';
-import { generateSubmissionId, isSubmissionWindowOpen } from 'lib/dashboard-utils';
-import { SubmissionResponse, Submission } from 'types/dashboard';
-import { mockParticipants, mockSubmissions } from 'lib/mock-data';
+import { SubmissionResponse } from 'types/dashboard';
+import User from 'models/user';
+import Project from 'models/project';
+import type { IUserModel, IProjectModel } from 'types/models';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,147 +14,69 @@ export async function POST(request: NextRequest) {
 
     if (!validationResult.success) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           message: 'Invalid submission data',
-          errors: validationResult.error.errors 
+          errors: validationResult.error.errors,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const submissionData = validationResult.data;
 
-    // Check if we should use mock data
-    if (process.env.USE_MOCK_DATA === 'true') {
-      console.log('Using mock data for testing...');
-      
-      // Verify participant exists in mock data
-      const participant = mockParticipants.find(
-        p => p.email.toLowerCase() === submissionData.email.toLowerCase() && p.uid === submissionData.uid
-      );
-      
-      if (!participant) {
-        return NextResponse.json(
-          { success: false, message: 'Participant not found. Please verify your credentials first.' },
-          { status: 403 }
-        );
-      }
-      
-      // Check if participant has already submitted (in mock data)
-      const existingSubmission = mockSubmissions.find(
-        s => s.participantEmail === submissionData.email.toLowerCase() && s.participantUID === submissionData.uid
-      );
-      
-      if (existingSubmission) {
-        return NextResponse.json(
-          { success: false, message: 'You have already submitted a project. Multiple submissions are not allowed.' },
-          { status: 409 }
-        );
-      }
-      
-      // Create submission
-      const submissionId = generateSubmissionId();
-      const submission: Submission = {
-        participantEmail: submissionData.email.toLowerCase(),
-        participantUID: submissionData.uid,
-        projectName: submissionData.projectName,
-        teamName: submissionData.teamName,
-        participantNames: submissionData.participantNames,
-        description: submissionData.description,
-        problemStatement: submissionData.problemStatement,
-        solutionOverview: submissionData.solutionOverview,
-        technologiesUsed: submissionData.technologiesUsed,
-        demoVideoLink: submissionData.demoVideoLink,
-        githubRepoLink: submissionData.githubRepoLink,
-        liveDemoLink: submissionData.liveDemoLink,
-        supportingFiles: submissionData.supportingFiles || [],
-        submissionTimestamp: new Date(),
-        termsAccepted: submissionData.termsAccepted,
-        submissionId,
-      };
-      
-      // Add to mock submissions (for testing)
-      mockSubmissions.push(submission);
-      
-      // Return success response
-      const response: SubmissionResponse = {
-        success: true,
-        message: 'Project submitted successfully! You should receive a confirmation email shortly.',
-        submissionId,
-      };
-      
-      return NextResponse.json(response, { status: 201 });
-    }
-
     // Connect to database
-    const db = await getDatabase();
-    const participantsCollection = db.collection(COLLECTIONS.PARTICIPANTS);
-    const submissionsCollection = db.collection(COLLECTIONS.SUBMISSIONS);
-    const configCollection = db.collection(COLLECTIONS.HACKATHON_CONFIG);
+    await connectToDatabase();
 
-    // Verify participant exists and is registered
-    const participant = await participantsCollection.findOne({
-      email: submissionData.email.toLowerCase(),
-      uid: submissionData.uid,
-    });
-
-    if (!participant) {
-      return NextResponse.json(
-        { success: false, message: 'Participant not found. Please verify your credentials first.' },
-        { status: 403 }
-      );
-    }
-
-    // For testing purposes, skip submission window validation
-    // In production, this would check MongoDB configuration
-    
-    // Original submission window validation commented out for testing
-    /*
-    // Check submission window
-    const submissionConfig = await configCollection.findOne({
-      configKey: 'submission_window',
-      isActive: true,
-    });
-
-    if (!submissionConfig) {
-      return NextResponse.json(
-        { success: false, message: 'Submission window configuration not found.' },
-        { status: 500 }
-      );
-    }
-
-    const windowOpen = isSubmissionWindowOpen(
-      new Date(submissionConfig.startTime), 
-      new Date(submissionConfig.endTime)
+    // Verify user exists
+    const user = await (User as IUserModel).findByEmailAndUID(
+      submissionData.email,
+      submissionData.uid,
     );
 
-    if (!windowOpen) {
+    if (!user) {
       return NextResponse.json(
-        { success: false, message: 'Submission window is closed. Submissions are no longer accepted.' },
-        { status: 403 }
+        {
+          success: false,
+          message: 'User not found. Please verify your credentials first.',
+        },
+        { status: 403 },
       );
     }
-    */
 
-    // Check if participant has already submitted
-    const existingSubmission = await submissionsCollection.findOne({
-      participantEmail: submissionData.email.toLowerCase(),
-      participantUID: submissionData.uid,
+    // Check if user has already submitted a project
+    const existingProject = await (Project as IProjectModel).findByUser(
+      submissionData.email,
+      submissionData.uid,
+    );
+
+    if (existingProject) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            'You have already submitted a project. Multiple submissions are not allowed. If you have any queries, please contact the organizers.',
+          existingProject: {
+            submissionId: existingProject.submissionId,
+            projectName: existingProject.projectName,
+            submissionTimestamp: existingProject.submissionTimestamp,
+          },
+        },
+        { status: 409 },
+      );
+    }
+
+    // Create new project submission
+    console.log('Creating project with data:', {
+      email: submissionData.email,
+      uid: submissionData.uid,
+      projectName: submissionData.projectName,
+      // ... other fields
     });
 
-    if (existingSubmission) {
-      return NextResponse.json(
-        { success: false, message: 'You have already submitted a project. Multiple submissions are not allowed.' },
-        { status: 409 }
-      );
-    }
-
-    // Create submission document
-    const submissionId = generateSubmissionId();
-    const submission: Submission = {
-      participantEmail: submissionData.email.toLowerCase(),
-      participantUID: submissionData.uid,
+    const project = new Project({
+      email: submissionData.email,
+      uid: submissionData.uid,
       projectName: submissionData.projectName,
       teamName: submissionData.teamName,
       participantNames: submissionData.participantNames,
@@ -165,43 +88,88 @@ export async function POST(request: NextRequest) {
       githubRepoLink: submissionData.githubRepoLink,
       liveDemoLink: submissionData.liveDemoLink,
       supportingFiles: submissionData.supportingFiles || [],
-      submissionTimestamp: new Date(),
       termsAccepted: submissionData.termsAccepted,
-      submissionId,
-    };
+    });
 
-    // Insert submission into database
-    const result = await submissionsCollection.insertOne(submission);
+    console.log('Project object before save:', project);
 
-    if (!result.insertedId) {
-      return NextResponse.json(
-        { success: false, message: 'Failed to save submission. Please try again.' },
-        { status: 500 }
-      );
-    }
+    // Save project (submissionId will be auto-generated)
+    await project.save();
+
+    console.log('Project saved successfully:', project.submissionId);
 
     // Return success response
     const response: SubmissionResponse = {
       success: true,
-      message: 'Project submitted successfully! You should receive a confirmation email shortly.',
-      submissionId,
+      message: 'Project submitted successfully!',
+      submissionId: project.submissionId,
     };
 
     return NextResponse.json(response, { status: 201 });
-
   } catch (error) {
-    console.error('Submission API error:', error);
+    console.error('Project submission error:', error);
+    console.error('Error name:', error?.name);
+    console.error('Error message:', error?.message);
+    console.error('Error stack:', error?.stack);
+
+    // Check if it's a validation error
+    if (error?.name === 'ValidationError') {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Validation error: ' + error.message,
+          details: error.errors,
+        },
+        { status: 400 },
+      );
+    }
+
+    // Check if it's a duplicate key error (MongoDB)
+    if (error?.code === 11000) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            'A project with this information already exists. Please check your submission or contact support.',
+        },
+        { status: 409 },
+      );
+    }
+
+    // Check if it's a network/connection error
+    if (
+      error?.message?.includes('ECONNREFUSED') ||
+      error?.message?.includes('timeout')
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database connection error. Please try again in a moment.',
+        },
+        { status: 503 },
+      );
+    }
+
     return NextResponse.json(
-      { success: false, message: 'Internal server error. Please try again later.' },
-      { status: 500 }
+      {
+        success: false,
+        message:
+          'Internal server error. Please try again later. If the problem persists, contact support.',
+      },
+      { status: 500 },
     );
   }
 }
 
 // Handle other HTTP methods
 export async function GET() {
-  return NextResponse.json(
-    { message: 'Method not allowed' },
-    { status: 405 }
-  );
+  return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
+}
+
+export async function PUT() {
+  return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
+}
+
+export async function DELETE() {
+  return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
 }
