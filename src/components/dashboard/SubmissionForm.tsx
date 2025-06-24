@@ -757,7 +757,7 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Demo Video Link (Optional)
+                  Demo Video Link *
                 </label>
                 <input
                   type="url"
@@ -772,7 +772,7 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Live Demo Link (Optional)
+                  Website Link (Optional)
                 </label>
                 <input
                   type="url"
