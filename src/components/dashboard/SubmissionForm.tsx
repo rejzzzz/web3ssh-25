@@ -126,7 +126,8 @@ export default function SubmissionForm({
   const addParticipant = () => {
     if (
       newParticipant.trim() &&
-      !formData.participantNames.includes(newParticipant.trim())
+      !formData.participantNames.includes(newParticipant.trim()) &&
+      formData.participantNames.length < 4 // Maximum 4 total members (1 verified + 3 additional)
     ) {
       updateFormData('participantNames', [
         ...formData.participantNames,
@@ -469,16 +470,33 @@ export default function SubmissionForm({
               className="space-y-6"
             >
               <div>
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
                   <Users className="w-6 h-6 text-purple-400" />
                   Team Members
                 </h3>
+                <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex-shrink-0 w-6 h-6 bg-blue-500/30 rounded-full flex items-center justify-center">
+                      <Users className="w-4 h-4 text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-300">
+                        <strong className="text-blue-400">Maximum 4 team members allowed.</strong> You're already included as the verified participant.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
-                  Participants *
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-medium text-white">
+                    Participants *
+                  </label>
+                  <span className="text-sm text-gray-400">
+                    {formData.participantNames.length}/4 members
+                  </span>
+                </div>
                 <div className="space-y-3">
                   {formData.participantNames.map((name, index) => (
                     <div key={index} className="flex items-center gap-3">
@@ -503,21 +521,35 @@ export default function SubmissionForm({
                   ))}
                 </div>
 
-                <div className="mt-4 flex gap-3">
-                  <input
-                    type="text"
-                    value={newParticipant}
-                    onChange={(e) => setNewParticipant(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
-                    className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Add team member name"
-                  />
-                  <button
-                    onClick={addParticipant}
-                    className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-                  >
-                    Add
-                  </button>
+                <div className="mt-4">
+                  {formData.participantNames.length < 4 ? (
+                    <div className="flex gap-3">
+                      <input
+                        type="text"
+                        value={newParticipant}
+                        onChange={(e) => setNewParticipant(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
+                        className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        placeholder="Add team member name"
+                      />
+                      <button
+                        onClick={addParticipant}
+                        className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="p-4 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
+                      <div className="flex items-center space-x-2">
+                        <Users className="w-5 h-5 text-yellow-400" />
+                        <p className="text-yellow-400 font-medium">Team limit reached</p>
+                      </div>
+                      <p className="text-sm text-gray-300 mt-1">
+                        Maximum 4 team members allowed (including the verified participant)
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {errors.participantNames && (

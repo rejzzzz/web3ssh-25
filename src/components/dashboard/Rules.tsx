@@ -27,7 +27,11 @@ export default function Rules({ rules }: RulesProps) {
                         {rules.map((rule, index) => (
                             <div
                                 key={index}
-                                className="bg-white/10 p-6 rounded-xl border border-white/20 hover:bg-white/15 transition-all duration-200 hover:scale-105"
+                                className="bg-white/10 p-6 rounded-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg transform-gpu"
+                                style={{ 
+                                    animationDelay: `${index * 0.1}s`,
+                                    animation: 'fadeIn 0.6s ease-out forwards'
+                                }}
                             >
                                 <div className="flex items-start">
                                     <div className="flex-shrink-0 w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center mr-4 border border-red-500/30">
