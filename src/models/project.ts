@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { IProject, IProjectModel } from '../types/models';
+import Counter from './counter';
 
 const projectSchema = new Schema<IProject>(
   {
@@ -85,6 +86,10 @@ const projectSchema = new Schema<IProject>(
       type: String,
       unique: true,
     },
+    submissionNumber: {
+      type: Number,
+      unique: true,
+    },
     submissionTimestamp: {
       type: Date,
       default: Date.now,
@@ -97,8 +102,6 @@ const projectSchema = new Schema<IProject>(
 );
 
 // Indexes for better performance
-projectSchema.index({ email: 1, uid: 1 });
-projectSchema.index({ submissionTimestamp: -1 });
 
 // Static methods
 projectSchema.statics.findByUser = function (email: string, uid: string) {
@@ -112,11 +115,24 @@ projectSchema.statics.findBySubmissionId = function (submissionId: string) {
   return this.findOne({ submissionId });
 };
 
-// Generate submission ID before saving
-projectSchema.pre('save', function (next) {
+// Generate submission ID and number before saving
+projectSchema.pre('save', async function (next) {
   if (!this.submissionId) {
     this.submissionId = `WEB3SSH_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
+
+  if (!this.submissionNumber) {
+    try {
+      // Use atomic counter to generate submission number
+      // This prevents race conditions during concurrent submissions
+      this.submissionNumber = await Counter.getNextSequence('submissionNumber');
+    } catch (error) {
+      console.error('Error generating submission number:', error);
+      // Fallback: use timestamp-based number to ensure uniqueness
+      this.submissionNumber = Date.now() % 1000000; // Last 6 digits of timestamp
+    }
+  }
+
   next();
 });
 

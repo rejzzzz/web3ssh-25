@@ -5,9 +5,9 @@ export async function GET() {
   try {
     // For testing purposes, return a submission window that's always open
     // In production, this would fetch from a configuration collection
-    const startTime = new Date('2024-01-01T00:00:00Z'); // Past date to ensure window is open
-    const endTime = new Date('2030-12-31T23:59:59Z'); // Future date to keep window open
-
+    const startTime = new Date('2025-06-01T00:00:00Z'); // Past date to ensure window is open
+    const endTime = new Date('2025-07-05T23:59:59Z'); // Future date to keep window open
+   
     const windowOpen = isSubmissionWindowOpen(startTime, endTime);
     const timeRemaining = getTimeRemaining(endTime);
 

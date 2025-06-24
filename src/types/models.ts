@@ -28,6 +28,7 @@ export interface IProject extends Document {
   supportingFiles: string[];
   termsAccepted: boolean;
   submissionId?: string;
+  submissionNumber?: number;
   submissionTimestamp: Date;
   createdAt: Date;
   updatedAt: Date;
