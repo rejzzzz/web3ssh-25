@@ -35,9 +35,8 @@ export const submissionSchema = z.object({
     .min(1, 'At least one technology required'),
   demoVideoLink: z
     .string()
-    .url('Invalid demo video URL')
-    .optional()
-    .or(z.literal('')),
+    .min(1, 'Demo video link is required')
+    .url('Invalid demo video URL'),
   githubRepoLink: z.string().url('Invalid GitHub repository URL'),
   liveDemoLink: z
     .string()
@@ -52,8 +51,7 @@ export const submissionSchema = z.object({
           "Invalid Google Docs URL. Please ensure it's a valid Google Docs/Drive link",
         ),
     )
-    .optional()
-    .default([]),
+    .min(1, 'At least one Google Docs/Drive link is required'),
   termsAccepted: z
     .boolean()
     .refine((val) => val === true, 'You must accept the terms and conditions'),

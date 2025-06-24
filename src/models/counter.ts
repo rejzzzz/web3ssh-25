@@ -26,8 +26,8 @@ counterSchema.statics.getNextSequence = async function (
   return counter.sequence_value;
 };
 
-const Counter =
-  (mongoose.models.Counter as ICounterModel) ||
+const Counter: ICounterModel =
+  (mongoose.models.Counter as unknown as ICounterModel) ||
   mongoose.model<ICounter, ICounterModel>('Counter', counterSchema);
 
 export default Counter;

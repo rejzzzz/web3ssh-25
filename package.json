@@ -9,8 +9,8 @@
     "start": "next start",
     "fmt": "prettier --write .",
     "lint": "next lint",
-    "test:load": "node src/tests/load-test-submissions.js"
-   
+    "test:load": "node src/tests/load-test-submissions.js",
+    "test:realistic": "node src/tests/realistic-load-test.js"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.33.0",

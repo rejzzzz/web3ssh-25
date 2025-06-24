@@ -124,19 +124,19 @@ export async function POST(request: NextRequest) {
         participantName: participantName,
       };
 
-      // const emailSent =
-      //   await emailService.sendSubmissionConfirmation(emailData);
+      const emailSent =
+        await emailService.sendSubmissionConfirmation(emailData);
 
-      // if (emailSent) {
-      //   console.log(
-      //     'Confirmation email sent successfully to:',
-      //     submissionData.email,
-      //   );
-      // } else {
-      //   console.warn(
-      //     'Failed to send confirmation email, but submission was successful',
-      //   );
-      // }
+      if (emailSent) {
+        console.log(
+          'Confirmation email sent successfully to:',
+          submissionData.email,
+        );
+      } else {
+        console.warn(
+          'Failed to send confirmation email, but submission was successful',
+        );
+      }
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
       // Continue with success response even if email fails

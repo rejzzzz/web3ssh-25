@@ -182,6 +182,12 @@ export default function SubmissionForm({
         if (!formData.githubRepoLink.trim()) {
           newErrors.githubRepoLink = 'GitHub repository link is required';
         }
+        if (!formData.demoVideoLink.trim()) {
+          newErrors.demoVideoLink = 'Demo video link is required';
+        }
+        if (formData.supportingFiles.length === 0) {
+          newErrors.supportingFiles = 'At least one Google Docs/Drive link is required';
+        }
         break;
       case 5: // Review
         if (!formData.termsAccepted) {
@@ -481,7 +487,7 @@ export default function SubmissionForm({
                     </div>
                     <div>
                       <p className="text-sm text-gray-300">
-                        <strong className="text-blue-400">Maximum 4 team members allowed.</strong> You're already included as the verified participant.
+                        <strong className="text-blue-400">Maximum 4 team members allowed.</strong> You&apos;re already included as the verified participant.
                       </p>
                     </div>
                   </div>
@@ -768,6 +774,12 @@ export default function SubmissionForm({
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="https://youtube.com/watch?v=..."
                 />
+                {errors.demoVideoLink && (
+                  <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.demoVideoLink}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -787,11 +799,11 @@ export default function SubmissionForm({
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
-                  Supporting Materials (Google Docs/Drive Links - Optional)
+                  Supporting Materials (Google Docs/Drive Links) *
                 </label>
                 <p className="text-sm text-gray-400 mb-4">
                   Add Google Docs or Google Drive links containing project
-                  images, files, or any supporting materials
+                  images, files, or any supporting materials. At least one link is required.
                 </p>
 
                 <div className="space-y-3">
@@ -867,6 +879,13 @@ export default function SubmissionForm({
                       </div>
                     ))}
                   </div>
+                )}
+
+                {errors.supportingFiles && (
+                  <p className="text-red-400 text-sm mt-3 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.supportingFiles}
+                  </p>
                 )}
               </div>
             </motion.div>
