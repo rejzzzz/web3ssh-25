@@ -3,36 +3,36 @@ import { getTimeRemaining, isSubmissionWindowOpen } from 'lib/dashboard-utils';
 
 export async function GET() {
   try {
-    // For testing purposes, return a submission window that's always open
-    // In production, this would fetch from a configuration collection
-    const startTime = new Date('2025-06-01T00:00:00Z'); // Past date to ensure window is open
-    const endTime = new Date('2025-07-05T23:59:59Z'); // Future date to keep window open
+    // Submission window: July 3-6, 2025 (Hackathon period)
+    // Submissions open at start of hackathon and close at the end
+    const startTime = new Date('2025-07-03T00:00:00Z'); // Hackathon starts July 3, 2025
+    const endTime = new Date('2025-07-06T23:59:59Z'); // Hackathon ends July 6, 2025
    
     const windowOpen = isSubmissionWindowOpen(startTime, endTime);
     const timeRemaining = getTimeRemaining(endTime);
 
     return NextResponse.json({
-      isOpen: windowOpen, // Use the actual calculation
+      isOpen: windowOpen,
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
       timeRemaining,
-      message: 'Submission window is open (TEST MODE)',
+      message: windowOpen ? 'Submission window is open' : 'Submissions open July 3-6, 2025',
     });
   } catch (error) {
     console.error('Hackathon status API error:', error);
     return NextResponse.json(
       {
-        isOpen: true, // Force open even on error for testing
-        startTime: new Date('2024-01-01T00:00:00Z').toISOString(),
-        endTime: new Date('2030-12-31T23:59:59Z').toISOString(),
+        isOpen: false, // Submissions closed by default on error
+        startTime: new Date('2025-07-03T00:00:00Z').toISOString(),
+        endTime: new Date('2025-07-06T23:59:59Z').toISOString(),
         timeRemaining: {
-          days: 2000,
+          days: 0,
           hours: 0,
           minutes: 0,
           seconds: 0,
-          total: 172800000000,
+          total: 0,
         },
-        message: 'Submission window is open (TEST MODE - ERROR FALLBACK)',
+        message: 'Submissions open July 3-6, 2025 (ERROR FALLBACK)',
       },
       { status: 500 },
     );

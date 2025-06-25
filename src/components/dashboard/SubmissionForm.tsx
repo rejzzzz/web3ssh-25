@@ -961,7 +961,7 @@ export default function SubmissionForm({
                     )}
                     {formData.liveDemoLink && (
                       <p className="text-gray-300">
-                        Live Demo: {formData.liveDemoLink}
+                        Website: {formData.liveDemoLink}
                       </p>
                     )}
                   </div>
