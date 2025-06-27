@@ -49,7 +49,7 @@ export default function EventOverview() {
               </div>
             </div>
 
-            <div className="bg-white/10 p-6 rounded-xl border border-white/20">
+            <div className="bg-white/10 p-6 rounded-xl border border-white/20 flex flex-col h-full">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
                 <svg
                   className="w-6 h-6 mr-2 text-green-400"
@@ -66,35 +66,149 @@ export default function EventOverview() {
                 </svg>
                 What You&apos;ll Gain
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-start">
-                  <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
+              <p className="text-gray-300 mb-3">
+                Unlock a world of opportunities and skills by participating in the
+                Web3SSH Hackathon:
+              </p>
+              <div className="space-y-3 flex-1">
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500/20 text-green-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </span>
                   <span className="text-gray-300">
                     Hands-on experience with cutting-edge Web3 technologies
                   </span>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 01-8 0"
+                      />
+                    </svg>
+                  </span>
                   <span className="text-gray-300">
                     Mentorship from industry experts and thought leaders
                   </span>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-yellow-500/20 text-yellow-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3"
+                      />
+                    </svg>
+                  </span>
                   <span className="text-gray-300">
                     Recognition and prizes for outstanding projects
                   </span>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 17l4 4 4-4m0-5V3"
+                      />
+                    </svg>
+                  </span>
                   <span className="text-gray-300">
                     Certificate from IIIT Sri City
                   </span>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 rounded-full bg-green-400 mt-2 mr-3 flex-shrink-0" />
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pink-500/20 text-pink-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a4 4 0 00-3-3.87"
+                      />
+                    </svg>
+                  </span>
                   <span className="text-gray-300">
                     Networking opportunities with like-minded developers
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 20h9"
+                      />
+                    </svg>
+                  </span>
+                  <span className="text-gray-300">
+                    Access to exclusive hackathon resources and tools
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 mr-2">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6"
+                      />
+                    </svg>
+                  </span>
+                  <span className="text-gray-300">
+                    Boost your portfolio and career prospects
                   </span>
                 </div>
               </div>
