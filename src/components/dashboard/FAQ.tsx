@@ -188,7 +188,7 @@ export default function FAQ({ faqs }: FAQProps) {
                 Email Support
               </a>
               <a
-                href="https://discord.gg/web3ssh"
+                href="https://discord.gg/SETmJRmb3s"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center px-4 py-2 bg-purple-600/30 hover:bg-purple-600/50 text-purple-300 rounded-lg transition-colors duration-200 border border-purple-500/30"

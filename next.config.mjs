@@ -40,7 +40,7 @@ const nextConfig = {
       {
         source: '/hackathon',
         destination:
-          'https://drive.google.com/file/d/1-ErCH16EsNWvVS0AeqMPO_bIjVjnAe58/view?usp=sharing',
+          'https://docs.google.com/document/d/10FFd2EFpc8zbkx7lNp_OVV-GbP4B6wEP2Jekwub_-Zk/edit?usp=sharing',
         permanent: false,
       },
     ];

@@ -73,10 +73,10 @@ export const HACKATHON_INFO: HackathonInfo = {
 schedule: [
   {
     id: '3',
-    title: 'Hackathon Kickoff',
+    title: 'Hackathon Starts',
     description: 'Hackathon begins',
-    startTime: new Date('2025-07-03T12:30:00Z'), // 6:00 PM IST
-    endTime: new Date('2025-07-03T13:30:00Z'),   // 7:00 PM IST
+    startTime: new Date('2025-07-03T13:30:00Z'), // 6:00 PM IST
+    endTime: new Date('2025-07-03T13:30:00Z'),   
     type: 'ceremony',
   },
   {
@@ -84,23 +84,23 @@ schedule: [
     title: 'Hackathon Ongoing',
     description: 'Teams work on their projects',
     startTime: new Date('2025-07-03T13:30:00Z'), // 7:00 PM IST on July 3
-    endTime: new Date('2025-07-06T13:30:00Z'),   // 7:00 PM IST on July 6
+    endTime: new Date('2025-07-05T13:30:00Z'),   // 7:00 PM IST on July 6
     type: 'workshop',
   },
   {
     id: '5',
     title: 'Project Submission Deadline',
     description: 'Final deadline for project submissions',
-    startTime: new Date('2025-07-06T13:30:00Z'), // 7:00 PM IST
-    endTime: new Date('2025-07-06T14:00:00Z'),   // 7:30 PM IST
+    startTime: new Date('2025-07-05T13:30:00Z'), // 7:00 PM IST
+    endTime: new Date('2025-07-05T13:30:00Z'),   
     type: 'deadline',
   },
   {
     id: '7',
     title: 'Closing Ceremony & Awards',
     description: 'Winner announcements and prize distribution',
-    startTime: new Date('2025-07-08T07:30:00Z'), // 1:00 PM IST on July 8
-    endTime: new Date('2025-07-08T08:30:00Z'),   // 2:00 PM IST on July 8
+    startTime: new Date('2025-07-06T13:30:00Z'), // 1:00 PM IST on July 6
+    endTime: new Date('2025-07-06T13:30:00Z'),   
     type: 'ceremony',
   },
 ],
