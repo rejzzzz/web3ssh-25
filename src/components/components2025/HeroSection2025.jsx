@@ -69,11 +69,33 @@ export default function HeroSection() {
 
         {/* Buttons */}
         <div className="mt-8 sm:mt-10 flex flex-col items-center space-y-3 sm:space-y-4">
-          <a href="/register" className="w-full max-w-[280px]">
-            <button className="w-full transform hover:-translate-y-1 transition duration-400 relative inline-flex h-10 sm:h-12 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-              <span className="absolute inset-0 w-[200%] h-[200%] top-[-50%] left-[-50%] will-change-transform animate-slow-spin bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold text-white backdrop-blur-3xl">
-                Register Now
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full max-w-[600px]">
+            <a href="/register" className="flex-1 w-full sm:w-auto">
+              <button className="w-full transform hover:-translate-y-1 transition duration-400 relative inline-flex h-10 sm:h-12 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                <span className="absolute inset-0 w-[200%] h-[200%] top-[-50%] left-[-50%] will-change-transform animate-slow-spin bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-6 sm:px-8 py-2 text-sm sm:text-base font-semibold text-white backdrop-blur-3xl whitespace-nowrap">
+                  Register Now
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                      d="M10.75 8.75L14.25 12L10.75 15.25"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </a>
+
+            <a href="/dashboard" className="flex-1 w-full sm:w-auto">
+              <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 flex items-center justify-center p-2 sm:p-3 text-sm sm:text-base rounded-full hover:-translate-y-1 transform transition duration-400">
+                � Submit Project
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -88,9 +110,9 @@ export default function HeroSection() {
                     d="M10.75 8.75L14.25 12L10.75 15.25"
                   />
                 </svg>
-              </span>
-            </button>
-          </a>
+              </button>
+            </a>
+          </div>
           
           <a href="/archives/2024" className="w-full max-w-[280px]">
             <button className="w-full bg-[#3770FF] flex items-center justify-center p-2 sm:p-3 text-sm sm:text-base rounded-full hover:-translate-y-1 transform transition duration-400">
