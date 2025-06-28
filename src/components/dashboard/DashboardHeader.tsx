@@ -71,7 +71,7 @@ export default function DashboardHeader({
               Web3 Hackathon Dashboard
             </h1>
             <p className="text-base text-gray-300 mt-2">
-              July 3-6, 2025 • 48 Hour Challenge
+              July 3-5, 2025 • 48 Hour Challenge
             </p>
           </div>
 
@@ -212,13 +212,13 @@ function StepButton({
         disabled={disabled || status === 'locked'}
         className={`relative px-5 py-3 rounded-xl text-sm font-medium whitespace-nowrap backdrop-blur-sm ${getButtonStyles()}`}
         title={
-          status === 'required' 
-            ? 'Verification required to proceed' 
-            : status === 'locked' 
-            ? 'Complete verification first' 
-            : requiresVerification 
-            ? 'Verification required' 
-            : undefined
+          status === 'required'
+            ? 'Verification required to proceed'
+            : status === 'locked'
+              ? 'Complete verification first'
+              : requiresVerification
+                ? 'Verification required'
+                : undefined
         }
       >
         {status === 'required' && (
@@ -227,16 +227,22 @@ function StepButton({
         {status === 'locked' && (
           <span className="absolute -top-1 -right-1 w-3 h-3 text-gray-500">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+              <path
+                fillRule="evenodd"
+                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                clipRule="evenodd"
+              />
             </svg>
           </span>
         )}
-        {requiresVerification && status !== 'required' && status !== 'locked' && (
-          <span className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></span>
-        )}
+        {requiresVerification &&
+          status !== 'required' &&
+          status !== 'locked' && (
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></span>
+          )}
         {label}
       </button>
-      
+
       {/* Custom tooltip for Submit button when verification is required */}
       {requiresVerification && label === 'Submit' && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-3 py-2 bg-gray-900/95 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50 shadow-xl border border-gray-600 backdrop-blur-sm">

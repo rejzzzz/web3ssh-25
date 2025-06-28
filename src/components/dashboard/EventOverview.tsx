@@ -15,7 +15,7 @@ export default function EventOverview() {
             <p className="text-lg text-gray-300 mb-4">{HACKATHON_INFO.theme}</p>
             <div className="inline-flex items-center px-4 py-2 bg-white/15 rounded-full backdrop-blur-md border border-white/20">
               <span className="text-white font-medium">
-                {HACKATHON_INFO.duration} Challenge • July 3-6, 2025
+                {HACKATHON_INFO.duration} Challenge • July 3-5, 2025
               </span>
             </div>
           </div>

@@ -60,7 +60,7 @@ export const HACKATHON_INFO: HackathonInfo = {
     start: new Date('2025-07-03T00:00:00Z'),
     end: new Date('2025-07-06T23:59:59Z'),
   },
-  duration: '3 July to 6 July, 2025',
+  duration: '3 July to 5 July, 2025',
   theme: "Web3SSH Hackathon: Important Information for Participants",
   objectives: [
     "Welcome to the Web3 Hackathon! We're thrilled to have you join us for an exciting journey into the decentralized future. This document outlines key details and rules to ensure a smooth and rewarding experience for all participants.",
@@ -70,67 +70,43 @@ export const HACKATHON_INFO: HackathonInfo = {
     "👥 Team Formation: Team Size: Each team must consist of 2 to 4 members. Invite-Only Event: This hackathon is an invite-only event. All registered participants have already received invitations and are encouraged to bring their teams. Please ensure all your team members are registered.",
     "🛠️ Tech Stack: For this hackathon, all projects must be developed on the Ethereum blockchain. We encourage you to innovate and utilize any Ethereum-compatible technologies you deem best suited for your project, such as Solidity, Web3.js, Ethers.js, and other related tools and frameworks within the Ethereum ecosystem."
   ],
-  schedule: [
-    {
-      id: '1',
-      title: 'Summer School: Inauguration',
-      description: 'Opening ceremony for the Summer School',
-      startTime: new Date('2025-06-29T10:00:00Z'),
-      endTime: new Date('2025-06-29T11:00:00Z'),
-      type: 'ceremony',
-    },
-    {
-      id: '2',
-      title: 'Workshops & Sessions',
-      description: 'Technical and non-technical workshops',
-      startTime: new Date('2025-06-29T11:00:00Z'),
-      endTime: new Date('2025-07-03T17:00:00Z'),
-      type: 'workshop',
-    },
-    {
-      id: '3',
-      title: 'Hackathon Kickoff',
-      description: 'Hackathon begins',
-      startTime: new Date('2025-07-03T18:00:00Z'),
-      endTime: new Date('2025-07-03T19:00:00Z'),
-      type: 'ceremony',
-    },
-    {
-      id: '4',
-      title: 'Hackathon Ongoing',
-      description: 'Teams work on their projects',
-      startTime: new Date('2025-07-03T19:00:00Z'),
-      endTime: new Date('2025-07-06T09:00:00Z'),
-      type: 'workshop',
-    },
-    {
-      id: '5',
-      title: 'Project Submission Deadline',
-      description: 'Final deadline for project submissions',
-      startTime: new Date('2025-07-06T09:00:00Z'),
-      endTime: new Date('2025-07-06T09:30:00Z'),
-      type: 'deadline',
-    },
-    {
-      id: '6',
-      title: 'Project Presentations & Judging',
-      description: 'Teams present their projects to judges',
-      startTime: new Date('2025-07-06T10:00:00Z'),
-      endTime: new Date('2025-07-06T16:00:00Z'),
-      type: 'judging',
-    },
-    {
-      id: '7',
-      title: 'Closing Ceremony & Awards',
-      description: 'Winner announcements and prize distribution',
-      startTime: new Date('2025-07-06T17:00:00Z'),
-      endTime: new Date('2025-07-06T18:00:00Z'),
-      type: 'ceremony',
-    },
-  ],
+schedule: [
+  {
+    id: '3',
+    title: 'Hackathon Kickoff',
+    description: 'Hackathon begins',
+    startTime: new Date('2025-07-03T12:30:00Z'), // 6:00 PM IST
+    endTime: new Date('2025-07-03T13:30:00Z'),   // 7:00 PM IST
+    type: 'ceremony',
+  },
+  {
+    id: '4',
+    title: 'Hackathon Ongoing',
+    description: 'Teams work on their projects',
+    startTime: new Date('2025-07-03T13:30:00Z'), // 7:00 PM IST on July 3
+    endTime: new Date('2025-07-06T13:30:00Z'),   // 7:00 PM IST on July 6
+    type: 'workshop',
+  },
+  {
+    id: '5',
+    title: 'Project Submission Deadline',
+    description: 'Final deadline for project submissions',
+    startTime: new Date('2025-07-06T13:30:00Z'), // 7:00 PM IST
+    endTime: new Date('2025-07-06T14:00:00Z'),   // 7:30 PM IST
+    type: 'deadline',
+  },
+  {
+    id: '7',
+    title: 'Closing Ceremony & Awards',
+    description: 'Winner announcements and prize distribution',
+    startTime: new Date('2025-07-08T07:30:00Z'), // 1:00 PM IST on July 8
+    endTime: new Date('2025-07-08T08:30:00Z'),   // 2:00 PM IST on July 8
+    type: 'ceremony',
+  },
+],
   rules: [
     "Originality: All projects must be original work created during the hackathon period. Pre-existing code or projects are not permitted, although using open-source libraries and frameworks is acceptable.",
-    "Boilerplate Code: Teams are permitted to use boilerplate code from other projects to kickstart their development.",
+   "Tech Stack:For this hackathon, all projects must be developed on the Ethereum blockchain. We encourage you to innovate and utilize any Ethereum-compatible technologies you deem best suited for your project.",
     "Code Submission: All project code must be submitted by the specified deadline. Details on the submission platform will be provided during the hackathon.",
     "GitHub Repository Monitoring: Teams will receive a Google Form to submit the link to an empty public GitHub repository before the start of the hackathon. This repository will be monitored throughout the evaluation period.",
     "Version Control: Frequent commits to your public GitHub repository are highly encouraged. This demonstrates your team's development process and progress over time.",
