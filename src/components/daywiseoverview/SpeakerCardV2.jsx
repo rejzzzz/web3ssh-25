@@ -41,7 +41,7 @@ const SpeakerCardV2 = ({ title, experience, imgSrc, data }) => {
                 alt={title} 
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                 style={{
-                  objectPosition: "50% 15%",
+                  objectPosition: "50% 35%",
                   objectFit: "cover"
                 }}
               />
@@ -133,7 +133,7 @@ const SpeakerCardV2 = ({ title, experience, imgSrc, data }) => {
                       src={imgSrc} 
                       alt={title} 
                       className="w-full h-80 md:h-full object-cover shadow-lg" 
-                      style={{objectPosition: "50% 15%"}}
+                      style={{objectPosition: "50% 35%"}}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/50 to-transparent" />
                   </div>
