@@ -222,7 +222,7 @@ export default function EventOverview() {
               <div className="text-sm text-gray-300">Hours</div>
             </div>
             <div className="text-center p-4 bg-white/10 rounded-lg border border-white/20">
-              <div className="text-2xl font-bold text-green-400">1-4</div>
+              <div className="text-2xl font-bold text-green-400">2-4</div>
               <div className="text-sm text-gray-300">Team Size</div>
             </div>
             <div className="text-center p-4 bg-white/10 rounded-lg border border-white/20">
