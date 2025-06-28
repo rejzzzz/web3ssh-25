@@ -3,10 +3,10 @@ import { getTimeRemaining, isSubmissionWindowOpen } from 'lib/dashboard-utils';
 
 export async function GET() {
   try {
-    // Submission window: July 3-6, 2025 (Hackathon period)
+    // Submission window: July 3-5, 2025 (Hackathon period)
     // Submissions open at start of hackathon and close at the end
     const startTime = new Date('2025-07-03T19:00:00Z'); // Hackathon starts July 3, 2025
-    const endTime = new Date('2025-07-05T19:00:00Z'); // Hackathon ends July 6, 2025
+    const endTime = new Date('2025-07-05T19:30:00Z'); // Hackathon ends July 5, 2025
    
     const windowOpen = isSubmissionWindowOpen(startTime, endTime);
     const timeRemaining = getTimeRemaining(endTime);
