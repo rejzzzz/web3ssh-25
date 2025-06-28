@@ -167,6 +167,7 @@ export default function Navbar() {
                 {item.title}
               </a>
             ))}
+            
             <a
               href="/archives/2024"
               className="block px-3 py-2 text-base text-white hover:bg-opacity-50 hover:bg-slate-50 rounded-md transition-all duration-300"
