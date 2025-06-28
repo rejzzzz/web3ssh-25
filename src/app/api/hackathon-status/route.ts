@@ -5,7 +5,7 @@ export async function GET() {
   try {
     // Submission window: July 3-6, 2025 (Hackathon period)
     // Submissions open at start of hackathon and close at the end
-    const startTime = new Date('2025-07-03T00:00:00Z'); // Hackathon starts July 3, 2025
+    const startTime = new Date('2025-06-03T00:00:00Z'); // Hackathon starts July 3, 2025
     const endTime = new Date('2025-07-06T23:59:59Z'); // Hackathon ends July 6, 2025
    
     const windowOpen = isSubmissionWindowOpen(startTime, endTime);
