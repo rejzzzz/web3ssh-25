@@ -113,7 +113,7 @@ export default function HeroSection() {
               </button>
             </a>
           </div>
-          
+
           <a href="/archives/2024" className="w-full max-w-[280px]">
             <button className="w-full bg-[#3770FF] flex items-center justify-center p-2 sm:p-3 text-sm sm:text-base rounded-full hover:-translate-y-1 transform transition duration-400">
               Check Out Web3SSH 2024
@@ -133,14 +133,8 @@ export default function HeroSection() {
               </svg>
             </button>
           </a>
-          
+
           {/* Simple Deadline Notice */}
-          <div className="flex items-center bg-red-500/50 px-4 py-1.5 rounded-full text-white font-medium text-sm animate-pulse shadow-lg border border-white/20">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Registration closes June 22, 2025
-          </div>
         </div>
       </div>
 
