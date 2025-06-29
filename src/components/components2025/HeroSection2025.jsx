@@ -63,7 +63,7 @@ export default function HeroSection() {
             Summer School: 29 June to 3 July, 2025
           </div>
           <div className="text-sm sm:text-lg font-medium text-center mt-1">
-            Hackathon: 3 July to 6 July, 2025
+            Hackathon: 3 July to 5 July, 2025
           </div>
         </div>
 
