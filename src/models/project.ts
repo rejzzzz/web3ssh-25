@@ -24,6 +24,13 @@ const projectSchema = new Schema<IProject>(
       type: String,
       trim: true,
     },
+    tracks: [
+      {
+        type: String,
+        required: true,
+        trim: true,
+      },
+    ],
     participantNames: [
       {
         type: String,

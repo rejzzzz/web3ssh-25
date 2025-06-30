@@ -47,6 +47,7 @@ interface FormData {
   liveDemoLink: string;
   supportingFiles: string[];
   termsAccepted: boolean;
+  tracks: string[];
 }
 
 const FORM_STEPS = [
@@ -79,6 +80,7 @@ export default function SubmissionForm({
     liveDemoLink: '',
     supportingFiles: [],
     termsAccepted: false,
+    tracks: [],
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [existingProject, setExistingProject] = useState<any>(null);
@@ -154,6 +156,9 @@ export default function SubmissionForm({
         if (!formData.projectName.trim()) {
           newErrors.projectName = 'Project name is required';
         }
+        if (!formData.tracks || formData.tracks.length === 0) {
+          newErrors.tracks = 'Please select at least one track';
+        }
         break;
       case 1: // Team Details
         if (formData.participantNames.length === 0) {
@@ -186,7 +191,8 @@ export default function SubmissionForm({
           newErrors.demoVideoLink = 'Demo video link is required';
         }
         if (formData.supportingFiles.length === 0) {
-          newErrors.supportingFiles = 'At least one Google Docs/Drive link is required';
+          newErrors.supportingFiles =
+            'At least one Google Docs/Drive link is required';
         }
         break;
       case 5: // Review
@@ -463,6 +469,72 @@ export default function SubmissionForm({
                   placeholder="Enter your team name (if applicable)"
                 />
               </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-white mb-2">
+                  Track <span>*</span>
+                </label>
+                <div className="flex gap-6 items-center mb-2">
+                  {/* Women Track */}
+                  <label className="inline-flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.tracks?.includes('Women')}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        let tracks = formData.tracks || [];
+                        if (checked) {
+                          tracks = [...tracks, 'Women'];
+                        } else {
+                          tracks = tracks.filter((t) => t !== 'Women');
+                        }
+                        updateFormData('tracks', tracks);
+                      }}
+                      className={`
+          appearance-none w-5 h-5 rounded-full border-2
+          border-purple-500
+          transition-colors
+          ${formData.tracks?.includes('Women') ? 'bg-purple-600 border-purple-600' : 'bg-transparent'}
+        `}
+                    />
+                    <span className="text-white">Women</span>
+                  </label>
+                  {/* Open Track */}
+                  <label className="inline-flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.tracks?.includes('Open')}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        let tracks = formData.tracks || [];
+                        if (checked) {
+                          tracks = [...tracks, 'Open'];
+                        } else {
+                          tracks = tracks.filter((t) => t !== 'Open');
+                        }
+                        updateFormData('tracks', tracks);
+                      }}
+                      className={`
+          appearance-none w-5 h-5 rounded-full border-2
+          border-purple-500
+          transition-colors
+          ${formData.tracks?.includes('Open') ? 'bg-purple-600 border-purple-600' : 'bg-transparent'}
+        `}
+                    />
+                    <span className="text-white">Open</span>
+                  </label>
+                </div>
+                <p className="text-xs text-yellow-200 mt-2">
+                  If you select the <span className="font-semibold">Women</span>{' '}
+                  track, your entire team must only contain women participants.
+                  Otherwise, your submission will be canceled.
+                </p>
+                {errors.tracks && (
+                  <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.tracks}
+                  </p>
+                )}
+              </div>
             </motion.div>
           )}
 
@@ -487,7 +559,11 @@ export default function SubmissionForm({
                     </div>
                     <div>
                       <p className="text-sm text-gray-300">
-                        <strong className="text-blue-400">Maximum 4 team members allowed.</strong> You&apos;re already included as the verified participant.
+                        <strong className="text-blue-400">
+                          Maximum 4 team members allowed.
+                        </strong>{' '}
+                        You&apos;re already included as the verified
+                        participant.
                       </p>
                     </div>
                   </div>
@@ -534,7 +610,9 @@ export default function SubmissionForm({
                         type="text"
                         value={newParticipant}
                         onChange={(e) => setNewParticipant(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
+                        onKeyPress={(e) =>
+                          e.key === 'Enter' && addParticipant()
+                        }
                         className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         placeholder="Add team member name"
                       />
@@ -549,10 +627,13 @@ export default function SubmissionForm({
                     <div className="p-4 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
                       <div className="flex items-center space-x-2">
                         <Users className="w-5 h-5 text-yellow-400" />
-                        <p className="text-yellow-400 font-medium">Team limit reached</p>
+                        <p className="text-yellow-400 font-medium">
+                          Team limit reached
+                        </p>
                       </div>
                       <p className="text-sm text-gray-300 mt-1">
-                        Maximum 4 team members allowed (including the verified participant)
+                        Maximum 4 team members allowed (including the verified
+                        participant)
                       </p>
                     </div>
                   )}
@@ -803,7 +884,8 @@ export default function SubmissionForm({
                 </label>
                 <p className="text-sm text-gray-400 mb-4">
                   Add Google Docs or Google Drive links containing project
-                  images, files, or any supporting materials. At least one link is required.
+                  images, files, or any supporting materials. At least one link
+                  is required.
                 </p>
 
                 <div className="space-y-3">

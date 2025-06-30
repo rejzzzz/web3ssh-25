@@ -7,7 +7,7 @@ export async function GET() {
     // Submissions open at start of hackathon and close at the end
     const startTime = new Date('2025-07-03T19:00:00Z'); // Hackathon starts July 3, 2025
     const endTime = new Date('2025-07-05T19:30:00Z'); // Hackathon ends July 5, 2025
-   
+
     const windowOpen = isSubmissionWindowOpen(startTime, endTime);
     const timeRemaining = getTimeRemaining(endTime);
 
@@ -16,7 +16,9 @@ export async function GET() {
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
       timeRemaining,
-      message: windowOpen ? 'Submission window is open' : 'Submissions open July 3-6, 2025',
+      message: windowOpen
+        ? 'Submission window is open'
+        : 'Submissions open July 3-5, 2025',
     });
   } catch (error) {
     console.error('Hackathon status API error:', error);
