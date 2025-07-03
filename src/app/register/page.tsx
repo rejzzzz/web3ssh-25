@@ -157,6 +157,7 @@ export default function Page() {
                           Register Now
                         </a>
                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -178,7 +179,7 @@ export default function Page() {
                       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg mb-4 lg:mb-0 [text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]">Become an Ambassador</h2>
                       <div className="flex items-center px-4 py-2 bg-white/15 rounded-full backdrop-blur-md border border-white/20 shadow-lg transform hover:scale-105 transition-transform duration-300">
                         <div className="px-3 py-1 bg-gradient-to-r from-purple-600/70 to-blue-600/70 rounded-full text-white font-semibold mr-3">
-                          Register by June 22, 2025
+                          Register by June 24, 2025
                         </div>
                       </div>
                     </div>

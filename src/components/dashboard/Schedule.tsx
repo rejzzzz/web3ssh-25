@@ -1,11 +1,19 @@
 'use client';
 
 import { ScheduleEvent } from 'types/dashboard';
-import { formatDate } from 'lib/dashboard-utils';
 
 interface ScheduleProps {
   events: ScheduleEvent[];
 }
+
+// Custom function to format date in IST
+const formatDateIST = (date: Date) => {
+  return date.toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    dateStyle: 'medium',
+    timeStyle: 'short'
+  });
+};
 
 export default function Schedule({ events }: ScheduleProps) {
   const getEventIcon = (type: ScheduleEvent['type']) => {
@@ -104,13 +112,13 @@ export default function Schedule({ events }: ScheduleProps) {
                               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                             />
                           </svg>
-                          {formatDate(event.startTime)}
+                          {formatDateIST(event.startTime)}
                         </div>
                         {event.startTime.getTime() !==
                           event.endTime.getTime() && (
                           <div className="flex items-center">
                             <span className="mx-2">→</span>
-                            {formatDate(event.endTime)}
+                            {formatDateIST(event.endTime)}
                           </div>
                         )}
                       </div>
@@ -121,7 +129,7 @@ export default function Schedule({ events }: ScheduleProps) {
             </div>
           </div>
 
-          {/* Timezone Notice */}
+          {/* IST Timezone Notice */}
           <div className="mt-8 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
             <div className="flex items-center">
               <svg
@@ -138,8 +146,7 @@ export default function Schedule({ events }: ScheduleProps) {
                 />
               </svg>
               <p className="text-blue-400 text-sm">
-                All times are displayed in your local timezone. Make sure to
-                convert accordingly if you&apos;re in a different timezone.
+                All times are displayed in Indian Standard Time (IST).
               </p>
             </div>
           </div>
