@@ -16,7 +16,7 @@ export default function Page() {
             <div className="g5"></div>
           </div>
         </div>
-        
+
         <main className="flex-grow z-10 relative">
           <div className="container mx-auto">
             <section className="py-20">
@@ -143,15 +143,7 @@ export default function Page() {
                             <span className="font-medium text-white/90">With Referral:</span>
                             <span className="font-bold text-lg text-purple-300">₹599</span>
                           </div>
-                          
-                          <div className="w-full mt-3 pt-3 border-t border-white/20">
-                            <div className="flex items-center justify-center text-center">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              <span className="text-sm font-semibold text-white">Registration ends June 24</span>
-                            </div>
-                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -165,15 +157,7 @@ export default function Page() {
                           Register Now
                         </a>
                       </div>
-                      
-                      <div className="flex justify-center mt-4">
-                        <span className="flex items-center bg-red-500/50 px-4 py-1.5 rounded-full text-white font-medium text-sm animate-pulse shadow-lg border border-white/20">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          Registration closes June 24, 2025
-                        </span>
-                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -287,15 +271,7 @@ export default function Page() {
                           Register as Ambassador
                         </a>
                       </div>
-                      
-                      <div className="flex justify-center mt-4">
-                        <span className="flex items-center bg-yellow-500/40 px-4 py-1.5 rounded-full text-white font-medium text-sm shadow-lg border border-white/20">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          Deadline: June 24, 2025 (Limited slots)
-                        </span>
-                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -303,7 +279,7 @@ export default function Page() {
             </section>
           </div>
         </main>
-        
+
         <div className="relative z-20">
           <Footer />
         </div>

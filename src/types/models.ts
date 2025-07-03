@@ -17,6 +17,7 @@ export interface IProject extends Document {
   uid: string;
   projectName: string;
   teamName?: string;
+  tracks:string[];
   participantNames: string[];
   description: string;
   problemStatement: string;

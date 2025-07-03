@@ -15,6 +15,7 @@ export const submissionSchema = z.object({
     .min(1, 'Project name is required')
     .max(200, 'Project name too long'),
   teamName: z.string().max(200, 'Team name too long').optional(),
+  tracks: z.array(z.string().min(1, 'Track is required')).max(50, 'Track name too long'),
   participantNames: z
     .array(z.string().min(1, 'Participant name cannot be empty'))
     .min(1, 'At least one participant required'),

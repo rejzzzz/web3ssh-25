@@ -68,18 +68,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new project submission
-    console.log('Creating project with data:', {
-      email: submissionData.email,
-      uid: submissionData.uid,
-      projectName: submissionData.projectName,
-      // ... other fields
-    });
+    // console.log('Creating project with data:', {
+    //   email: submissionData.email,
+    //   uid: submissionData.uid,
+    //   projectName: submissionData.projectName,
+    //   // ... other fields
+    // });
 
     const project = new Project({
       email: submissionData.email,
       uid: submissionData.uid,
       projectName: submissionData.projectName,
       teamName: submissionData.teamName,
+      tracks: submissionData.tracks,
       participantNames: submissionData.participantNames,
       description: submissionData.description,
       problemStatement: submissionData.problemStatement,
