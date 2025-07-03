@@ -96,9 +96,9 @@ export default function SubmitPage() {
               participantInfo={user}
               submissionWindow={{
                 isOpen: true,
-                startTime: new Date('2024-01-01'),
-                endTime: new Date('2030-12-31'),
-                timeRemaining: 999999999,
+                startTime: new Date('2025-07-03T19:00:00'),
+                endTime: new Date('2025-07-05T19:00:00'),
+                timeRemaining: Math.floor((new Date('2025-07-05T19:00:00').getTime() - Date.now()) / 1000)
               }}
               onSuccess={handleSubmissionSuccess}
               onError={handleSubmissionError}
