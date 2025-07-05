@@ -70,19 +70,10 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       // Provide more specific error message based on email format
-      const emailDomain = email.split('@')[1];
+    
       let errorMessage = 'Invalid email or UID. Please check your credentials.';
 
-      if (emailDomain && !emailDomain.includes('iiits.in')) {
-        errorMessage =
-          'Please use your IIIT Sri City email address (ending with @iiits.in).';
-      } else if (!uid.startsWith('SSH25')) {
-        errorMessage =
-          'Invalid UID format. Your UID should start with "SSH25" followed by numbers.';
-      } else {
-        errorMessage =
-          'Email or UID not found in our records. Please check your registration confirmation email or contact support at web3ssh@iiits.in';
-      }
+    
 
       return NextResponse.json(
         {
