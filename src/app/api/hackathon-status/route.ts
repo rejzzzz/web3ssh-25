@@ -7,7 +7,7 @@ export async function GET() {
     // Submissions open at start of hackathon and close at the end
     // IST is UTC+5:30, so to convert to UTC we subtract 5 hours 30 minutes
     const startTime = new Date('2025-07-03T13:30:00Z'); // 7:30 PM IST = 2:00 PM UTC
-   const endTime = new Date('2025-07-05T16:45:00Z');
+   const endTime = new Date('2025-07-05T16:55:00Z');
 // 10:00 PM IST = 4:30 PM UTC // 7:30 PM IST = 2:00 PM UTC
 
     const windowOpen = isSubmissionWindowOpen(startTime, endTime);
