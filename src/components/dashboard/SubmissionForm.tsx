@@ -1089,7 +1089,7 @@ export default function SubmissionForm({
                     <label htmlFor="terms" className="text-white text-sm">
                       I accept the{' '}
                       <a
-                        href="#"
+                        href="/terms-and-conditions"
                         className="text-purple-400 hover:text-purple-300 underline"
                       >
                         Terms and Conditions
