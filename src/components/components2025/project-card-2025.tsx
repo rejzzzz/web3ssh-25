@@ -17,6 +17,10 @@ import {
   Globe,
   Cpu,
   Play,
+  Trophy,
+  Crown,
+  Award,
+  Medal,
 } from 'lucide-react';
 
 export interface Project2025 {
@@ -67,6 +71,94 @@ const trackColors: Record<string, string> = {
   Women: 'bg-gradient-to-r from-pink-500 to-purple-500',
   Student: 'bg-gradient-to-r from-green-500 to-emerald-500',
   Professional: 'bg-gradient-to-r from-orange-500 to-red-500',
+};
+
+// Winners data for 2025 hackathon
+const winners = {
+  Open: {
+    '1st Place': 'Bhaisaaab',
+    '2nd Place': "Bohar's bit",
+    '3rd Place': 'ASCendant',
+    '4th Place': 'CryptoRizzz',
+  },
+  Women: {
+    '1st Place': 'Cryptonauts',
+    '2nd Place': 'Weathering with code',
+    '3rd Place': 'Nexachain',
+  },
+};
+
+// Function to get winner information for a team
+const getWinnerInfo = (teamName: string, tracks: string[]) => {
+  for (const track of tracks) {
+    const trackWinners = winners[track as keyof typeof winners];
+    if (trackWinners) {
+      for (const [position, winnerTeam] of Object.entries(trackWinners)) {
+        if (winnerTeam.toLowerCase() === teamName.toLowerCase()) {
+          return { position, track };
+        }
+      }
+    }
+  }
+  return null;
+};
+
+// Winner badge component
+const WinnerBadge = ({
+  position,
+  track,
+}: {
+  position: string;
+  track: string;
+}) => {
+  const getIcon = () => {
+    switch (position) {
+      case '1st Place':
+        return Crown;
+      case '2nd Place':
+        return Trophy;
+      case '3rd Place':
+        return Medal;
+      case '4th Place':
+        return Award;
+      default:
+        return Trophy;
+    }
+  };
+
+  const getColors = () => {
+    switch (position) {
+      case '1st Place':
+        return 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900';
+      case '2nd Place':
+        return 'bg-gradient-to-r from-gray-300 to-gray-500 text-gray-900';
+      case '3rd Place':
+        return 'bg-gradient-to-r from-amber-600 to-amber-800 text-amber-100';
+      case '4th Place':
+        return 'bg-gradient-to-r from-purple-500 to-purple-700 text-purple-100';
+      default:
+        return 'bg-gradient-to-r from-blue-500 to-blue-700 text-blue-100';
+    }
+  };
+
+  const IconComponent = getIcon();
+
+  return (
+    <motion.div
+      initial={{ scale: 0, rotate: -180 }}
+      animate={{ scale: 1, rotate: 0 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.2 }}
+      className={`absolute top-4 right-4 z-30 px-3 py-2 rounded-xl ${getColors()} shadow-2xl border-2 border-white/20 backdrop-blur-sm`}
+    >
+      <div className="flex items-center gap-2">
+        <IconComponent className="h-4 w-4" />
+        <div className="text-xs font-bold">
+          <div>{position}</div>
+          <div className="opacity-80">{track} Track</div>
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 export default function ProjectCard2025({
@@ -148,7 +240,7 @@ export default function ProjectCard2025({
     const hash = project.projectName
       .split('')
       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    
+
     const colors = [
       ['#667eea', '#764ba2'],
       ['#f093fb', '#f5576c'],
@@ -157,11 +249,11 @@ export default function ProjectCard2025({
       ['#fa709a', '#fee140'],
       ['#a8edea', '#fed6e3'],
       ['#ffecd2', '#fcb69f'],
-      ['#ff9a9e', '#fecfef']
+      ['#ff9a9e', '#fecfef'],
     ];
-    
+
     const colorPair = colors[hash % colors.length];
-    
+
     const svg = `
       <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -204,13 +296,13 @@ export default function ProjectCard2025({
   const getYouTubeThumbnail = (url: string) => {
     const videoId = getYouTubeVideoId(url);
     if (!videoId) return null;
-    
+
     // Try multiple thumbnail qualities as fallbacks
     return {
       high: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
       medium: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
       standard: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
-      default: `https://img.youtube.com/vi/${videoId}/default.jpg`
+      default: `https://img.youtube.com/vi/${videoId}/default.jpg`,
     };
   };
 
@@ -241,7 +333,10 @@ export default function ProjectCard2025({
   const [imageLoading, setImageLoading] = useState(true);
 
   const handleImageError = () => {
-    if (thumbnailUrls && currentThumbnailIndex < Object.values(thumbnailUrls).length - 1) {
+    if (
+      thumbnailUrls &&
+      currentThumbnailIndex < Object.values(thumbnailUrls).length - 1
+    ) {
       setCurrentThumbnailIndex(currentThumbnailIndex + 1);
       setImageLoading(true); // Reset loading state for next image
     } else {
@@ -257,18 +352,24 @@ export default function ProjectCard2025({
   const getCurrentThumbnail = () => {
     if (!thumbnailUrls) return getPlaceholderSVG();
     if (thumbnailError) return getPlaceholderSVG();
-    
+
     const thumbnailOptions = Object.values(thumbnailUrls);
     return thumbnailOptions[currentThumbnailIndex];
   };
 
   // Preload next thumbnail option for faster fallback
   useEffect(() => {
-    if (thumbnailUrls && currentThumbnailIndex < Object.values(thumbnailUrls).length - 1) {
+    if (
+      thumbnailUrls &&
+      currentThumbnailIndex < Object.values(thumbnailUrls).length - 1
+    ) {
       const nextImage = new Image();
       nextImage.src = Object.values(thumbnailUrls)[currentThumbnailIndex + 1];
     }
   }, [currentThumbnailIndex, thumbnailUrls]);
+
+  // Get winner information for this team
+  const winnerInfo = getWinnerInfo(project.teamName, project.tracks);
 
   return (
     <>
@@ -325,6 +426,16 @@ export default function ProjectCard2025({
             >
               {/* Header with project image/video */}
               <div className="relative h-80 lg:h-96 overflow-hidden">
+                {/* Winner Badge for Modal */}
+                {winnerInfo && (
+                  <div className="absolute top-6 left-6 z-30">
+                    <WinnerBadge
+                      position={winnerInfo.position}
+                      track={winnerInfo.track}
+                    />
+                  </div>
+                )}
+
                 {showVideo && videoId ? (
                   <div className="w-full h-full">
                     <iframe
@@ -605,6 +716,14 @@ export default function ProjectCard2025({
           >
             {/* Card Container */}
             <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 shadow-xl transition-all duration-300 group-hover:bg-white/15 group-hover:border-white/30 h-full">
+              {/* Winner Badge for Card */}
+              {winnerInfo && (
+                <WinnerBadge
+                  position={winnerInfo.position}
+                  track={winnerInfo.track}
+                />
+              )}
+
               {/* Image Section */}
               <div className="relative h-48 overflow-hidden">
                 {imageLoading && (
