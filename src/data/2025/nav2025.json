@@ -13,6 +13,10 @@
     "url": "/#schedule"
   },
   {
+      "title": "Projects",
+      "url": "/projects/2025"
+  },
+  {
     "title": "Leaderboard",
     "url": "/ambassadors/leaderboard"
   },
